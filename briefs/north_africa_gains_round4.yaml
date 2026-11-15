@@ -1,0 +1,78 @@
+title: 'North Africa''s two water shocks, weighed as seasonal gains: the 2024 Sahel-Sahara deluge and the 2026 Moroccan
+  drought break'
+mode: focused
+question: "Two exceptional wet seasons hit North Africa: record rain over the Sahel and the Sahara in Aug-Sep 2024, and\
+  \ the winter 2025-26 rains that ended Morocco's 2018-2024 drought (February 2026 Loukkos and Gharb floods). Earlier\
+  \ rounds tested the LEVEL of GRACE water storage in single years and found nothing significant: storage is a running\
+  \ total, so each year's level carries over from the previous one (carry-over up to 0.9 over Morocco) and only a few\
+  \ years are effectively independent. The physically right quantity is the storage GAIN within a season (from before\
+  \ the rains to after them), which barely carries over from year to year. Measure, with pre-registered tests on GRACE\
+  \ data the explorers never see: 1. Northern Morocco (about 31-36N, 10-1W): was the winter 2025-26 storage gain (Sep-Oct\
+  \ 2025 to Mar-Apr or\n   Apr-May 2026) unusual against the other winters since 2003? And is it larger or smaller than\
+  \ what rain minus\n   evaporation over the same months predicts? A gain SMALLER than the climate predicts would mean\
+  \ much of the\n   water did not stay (runoff to sea, evaporation from reservoirs, uptake by irrigation); LARGER would\
+  \ mean\n   recharge or storage the land models lack.\n2. Sahel and Lake Chad basin (about 10-17N) and the central Sahara\
+  \ (about 15-23N, 10-25E): was the 2024 wet-season\n   gain (Jun-Jul to Sep-Oct 2024) the largest since 2002, and beyond\
+  \ what rain minus evaporation predicts?\n3. Did the water STAY: was the following dry-season drawdown (Sep-Oct 2024\
+  \ to Apr-May 2025) smaller than usual\n   (less storage lost than in other dry seasons, beyond what the dry-season\
+  \ climate explains)? This is the\n   question round 1 hinted at (the level stayed about 6 cm above trend) but could\
+  \ not test with power.\nGains that merely follow the rain are expected; the most valuable results compare the gain\
+  \ with what the climate predicts (the \"driver\" option of the gain test) or show unusual persistence.\n"
+notes: "Data are monthly, 2002-2026 (MERRA-2 to Sep 2026, GLDAS to Jul 2026), 8-37N 18W-30E on a 1-degree grid. Explorers\
+  \ get MERRA-2 rainfall, root-zone soil wetness, runoff and temperature, and GLDAS soil moisture and evaporation. HELD\
+  \ OUT for code confirmation: GRACE/GRACE-FO total water storage from JPL (GRACE_TWS, to Aug 2026) and NASA GSFC (GRACE_GSFC_TWS,\
+  \ to Jun 2026, independent processing), and GPM IMERG rain (to Sep 2025 only). USE THE \"gain\" CONFIRM KIND for storage\
+  \ claims: {\"dataset\": \"GRACE_TWS\", \"kind\": \"gain\", \"box\": [S, N, W, E], \"from_months\": [9, 10], \"to_months\"\
+  : [3, 4],\n \"years\": [2003, 2026], \"test\": \"event\", \"event_years\": [2026], \"direction\": \"+\" | \"-\" | null,\n\
+  \ optional \"driver\": [\"MERRA2_PRECIP\", \"GLDAS_EVAP\"] (their means over the window between the two periods are\n\
+  \ regressed out, fitted on \"fit_years\", e.g. [2003, 2017] or [2003, 2023]), \"alpha\": 0.05}\nfrom_months later in\
+  \ the calendar than to_months means the from period is in the previous year (a winter gain). Because GSFC ends in Jun\
+  \ 2026, a 2026 gain must end by June (to_months within [1..6]). Boxes at least 4 x 5 degrees (GRACE resolution ~300\
+  \ km). Use direction null (two-sided) when the literature does not predict the sign. RULES ENFORCED IN CODE: every\
+  \ storage confirmation also runs on GSFC and both must pass; a hypothesis without a valid spec is never tested; a claim\
+  \ about a specific year cannot use a long-term trend test; specs that need months past a product's end are refused.\
+  \ \"New\" needs p <= 0.05 / (tests in this campaign + the 41 held-out tests earlier rounds already ran on these questions).\
+  \ Earlier rounds (all not significant, which is not evidence against): Sahara and Lake Chad 2024 levels, residuals\
+  \ and contrasts; northern Morocco 2026 level +5 to +9 cm above trend or climate prediction (p 0.15-0.7).\n"
+region:
+  lat_min: 8
+  lat_max: 37
+  lon_min: -18
+  lon_max: 30
+resolution: 1.0
+start_year: 2002
+end_year: 2026
+datasets:
+- MERRA2_PRECIP
+- MERRA2_SOILM
+- MERRA2_RUNOFF
+- MERRA2_T2M
+- GLDAS_SOILM
+- GLDAS_EVAP
+holdout:
+- GRACE_TWS
+- GRACE_GSFC_TWS
+- IMERG_PRECIP
+screen_pairs:
+- - MERRA2_SOILM
+  - GLDAS_SOILM
+prior_tests: 41
+learn: false
+known_literature:
+- 'Journal of Hydrology (2026): Long-term and interannual variability of African terrestrial water storage revealed by
+  GRACE/GRACE-FO and models (to Dec 2024; trends and ENSO/IOD modes)'
+- 'Weather and Climate Dynamics (2026): Synoptic drivers of the August 2024 record-breaking rainfall in the Chadian Sahara
+  (rainfall only)'
+- 'J. Hydrology: Regional Studies (2022): climate variability partly compensates for groundwater depletion in Morocco
+  (GRACE)'
+- '(2025) Evaluation of GRACE and GRACE-FO derived products for water storage in Moroccan aquifers: drought'
+- (2026) A multi-source geospatial and meteorological analysis of the 2026 Gharb Plain floods, Morocco (floods mapped,
+  storage not weighed)
+- 'Land (2025): Lake Iriqui''s revival after the September 2024 storms'
+literature_queries:
+- GRACE seasonal storage gain wet season Sahel 2024
+- Morocco 2026 water storage recovery GRACE
+- dry season storage drawdown recession GRACE drylands
+- water balance closure GRACE precipitation evapotranspiration North Africa
+- Lake Chad basin 2024 flood storage
+storage_kind: gain

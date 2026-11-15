@@ -1,0 +1,105 @@
+{
+ "A_lake_chad": {
+  "box": [
+   10,
+   17,
+   12,
+   18
+  ],
+  "months": [
+   8,
+   9,
+   10
+  ],
+  "event_year": 2024,
+  "primary": {
+   "n_seasons": 11,
+   "event_value": 0.18460269103523108,
+   "mean_other_years": 0.13469474391131203,
+   "departure_from_trend": 0.04596722861408592,
+   "z": 2.4894935973405956,
+   "p": 0.10095647277610416,
+   "carryover": 0.368424019492395,
+   "rank_of_event_year": 1,
+   "verdict": "not shown"
+  },
+  "quality_only": {
+   "n_seasons": 11,
+   "event_value": 0.16695777153790456,
+   "mean_other_years": 0.12977488448201552,
+   "departure_from_trend": 0.03276387931406499,
+   "z": 2.290797043649879,
+   "p": 0.09452677404738119,
+   "carryover": 0.29512835199163623,
+   "rank_of_event_year": 1,
+   "verdict": "not shown"
+  }
+ },
+ "B_central_sahara": {
+  "box": [
+   15,
+   23,
+   10,
+   25
+  ],
+  "months": [
+   8,
+   9,
+   10
+  ],
+  "event_year": 2024,
+  "primary": {
+   "n_seasons": 11,
+   "event_value": 0.06228097590926109,
+   "mean_other_years": 0.04221307381432574,
+   "departure_from_trend": 0.02105293595917799,
+   "z": 3.4934353644881706,
+   "p": 0.04935921014009793,
+   "carryover": 0.36936616806287514,
+   "rank_of_event_year": 1,
+   "verdict": "supported, not confirmed"
+  },
+  "quality_only": {
+   "n_seasons": 11,
+   "event_value": 0.06277625298393825,
+   "mean_other_years": 0.04256283177966442,
+   "departure_from_trend": 0.020958348748308278,
+   "z": 3.916168732246054,
+   "p": 0.021898458100630066,
+   "carryover": 0.2876302272835217,
+   "rank_of_event_year": 1,
+   "verdict": "supported, not confirmed"
+  }
+ },
+ "C_north_morocco": {
+  "box": [
+   31,
+   36,
+   -10,
+   -1
+  ],
+  "months": [
+   12,
+   1,
+   2,
+   3,
+   4
+  ],
+  "event_year": 2026,
+  "primary": {
+   "n_seasons": 11,
+   "event_value": 0.1850233608954192,
+   "mean_other_years": 0.13776016568015223,
+   "departure_from_trend": 0.050568507721613004,
+   "z": 3.3179656021610597,
+   "p": 0.010572045469405352,
+   "carryover": 0.0,
+   "rank_of_event_year": 1,
+   "verdict": "confirmed"
+  },
+  "quality_only": {
+   "verdict": "could not be tested",
+   "n_seasons": 10
+  }
+ }
+}

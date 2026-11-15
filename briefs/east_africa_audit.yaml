@@ -1,0 +1,47 @@
+title: "East Africa and the Horn: what the climate record says happened, and what really happened"
+question: >
+  A deep research programme on 45 years of NASA's surface-climate record for East Africa and the Horn.
+
+  PART 1 - Learn the region's normal behaviour. For every grid cell, learn how rainfall, root-zone soil
+  moisture, near-surface humidity and daily maximum and minimum temperature normally evolve together from month
+  to month: seasonal cycle, memory (how long a wet or dry spell persists in the soil), and how each variable
+  responds to the others (rain wets the soil, wet soil cools the day and humidifies the air). Learn it on part of
+  the record and prove it predicts the rest. Cover all cells, all five variables and all months, not a sample.
+
+  PART 2 - Find the impossible. Find every place and month between 1981 and 2025 where the record does something
+  its own learned behaviour says is close to impossible, and every place where variables that are physically
+  tied together stop agreeing (rain without wetter soil, dry soil without daytime heat, sudden changes in how the
+  variables relate). Rank the events by how surprising they are and how much land and time they cover.
+
+  PART 3 - Real or broken? For each major event, decide with independent observations (rain gauges, weather
+  stations, satellite rainfall and temperature, food-security and disaster records) whether it is a real climate
+  event (drought, flood, heatwave, lasting regime change) or a failure in how the data were produced.
+
+  PART 4 - Why does it break? Find what the failures have in common: geography, dates, seasons, sharp edges,
+  shared inputs or processing steps. Name the mechanism and the evidence for it.
+
+  PART 5 - What really changed? Measure how much of the region's apparent long-term change in rainfall, soil
+  moisture and heat is explained by the failures. Re-examine the East African paradox (the March-May long rains
+  declined while models project wetting) on the cleaned picture, and look for real changes in the seasons
+  (onset, length, intensity of the long and short rains), in heat, and in the coupling between water and heat
+  that have not been described before.
+
+  Deliverables: a trust map and dated catalogue of the record's failures with their causes; the corrected
+  picture of change; and any real, independently confirmed change in the region's climate that is new.
+region:
+  name: "East Africa and the Horn (Sudan and Chad border to Somalia, Ethiopia to Tanzania)"
+  lat_min: -12.0
+  lat_max: 18.0
+  lon_min: 22.0
+  lon_max: 52.0
+start_year: 1981
+end_year: 2025
+variables: [PRECTOTCORR, GWETROOT, RH2M, T2M_MAX, T2M_MIN]
+max_variables: 5
+notes: >
+  About 300 million people here depend on rain-fed farming and pastoralism, and famine early-warning, insurance
+  and drought programmes rely on gridded climate records like NASA POWER. A data failure mistaken for a drought,
+  or a drought hidden by a data failure, has real consequences. About 3,000 cells x 5 variables x 540 months:
+  the learned model in Part 1 must cover all of them. Every claim must survive the artifact checklist,
+  independent corroboration, and a literature novelty test. Prefer depth over breadth: follow each strong lead
+  until it is confirmed or killed.

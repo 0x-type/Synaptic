@@ -1,0 +1,22 @@
+openai>=1.40
+requests>=2.31
+numpy>=1.26
+pandas>=2.1
+scipy>=1.11
+matplotlib>=3.8
+statsmodels>=0.14
+pyyaml>=6.0
+python-dotenv>=1.0
+flask>=3.0
+markdown>=3.5
+kaggle>=2.0
+xarray>=2024.1
+netCDF4>=1.6
+h5py>=3.10
+reverse_geocoder>=1.5
+pycountry>=23.12
+tabulate>=0.9
+Pillow>=10.0
+pyhdf>=0.11  # MODIS atmosphere monthly files (HDF4): aerosol and cloud variables
+# GPU template only (installed on Kaggle already; locally only for the CPU fallback):
+# torch>=2.2

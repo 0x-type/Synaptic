@@ -1,0 +1,62 @@
+# Round 3 (new direction). Focused v4 campaign, held-out confirmation on two independent GRACE solutions.
+title: "Did Morocco's water come back? The 2025-26 drought break weighed from space"
+mode: focused
+question: >
+  From 2018 to 2024 Morocco and western Algeria lived through the longest drought on record, and GRACE showed the
+  land's total water storage (soil, snow, reservoirs, groundwater) falling to its lowest level since 2002. The
+  drought broke in the 2025-26 wet season: exceptional winter rain, the February 2026 Loukkos and Gharb floods,
+  reservoirs filling again. Papers so far describe the floods (radar flood maps, meteorology); none has weighed
+  what the rain put back into the land. Find out, with pre-registered tests on GRACE data the explorers never see:
+  1. HOW MUCH came back, and WHERE: is 2026 storage above the trend of the other years over northern Morocco
+     (Atlantic plains, Rif, Middle Atlas), and how does the south (Souss, Draa, pre-Saharan) compare?
+  2. DID IT FILL THE AQUIFERS OR ONLY THE SOIL: is 2026 storage above or below what the climate alone predicts?
+     The land models (MERRA-2, GLDAS) contain no irrigation, pumping, reservoirs or deep groundwater, so storage
+     beyond (or below) accumulated rain minus evaporation, fitted on the years BEFORE the drought, measures what
+     people and the deep ground did. A storage still below the climate prediction after record rain would mean
+     the aquifers did not recover (pumping); above it would mean reservoirs and recharge kept more than the
+     soils.
+  3. HOW FAST: did the gain arrive as a step in winter 2026, and is it holding into the dry season (May-Aug 2026)?
+  4. Is the 2026 recovery larger than any earlier wet year since 2002 (2009-10, 2014, 2018)?
+  Prefer tests that DISCRIMINATE (soil versus deep storage, north versus south, what the climate predicts versus
+  what the satellites weigh) over describing the rain.
+notes: >
+  Data are monthly, 2002-2026 (MERRA-2 to Sep 2026, GLDAS to Jul 2026), 27-37N 14W-2E on a 0.5-degree grid.
+  Explorers get MERRA-2 rainfall, temperature, root-zone soil wetness, runoff, snow mass, sea-level pressure and
+  water vapour, and GLDAS soil moisture, evaporation and snow depth. HELD OUT for code confirmation, never seen by
+  the explorers: GRACE/GRACE-FO total water storage from JPL (GRACE_TWS, to Aug 2026) and from NASA GSFC
+  (GRACE_GSFC_TWS, to Jun 2026, processed independently), and GPM IMERG rain (to Sep 2025 only: it cannot check
+  2026 rain).
+  RULES ENFORCED IN CODE: every storage confirmation runs on both GRACE solutions and both must pass; "new" needs
+  p <= 0.05 / (number of pre-registered tests, at least 10); a hypothesis without a valid confirm spec is never
+  tested. Write specs on GRACE_TWS. Because GSFC ends in Jun 2026, use months up to June for 2026 tests
+  (e.g. [2, 3, 4, 5, 6] or [3, 4, 5]).
+  DESIGN FOR POWER: GRACE's resolution is ~300 km: boxes at least 4 x 5 degrees; Morocco north of the Atlas is
+  about two GRACE footprints. For "storage beyond the climate" use the "residual" kind with driver
+  ["MERRA2_PRECIP", "GLDAS_EVAP"], "accumulate": true and "fit_years" BEFORE the drought (e.g. [2002, 2017]), then
+  test the 2026 residual ("test": "event", "event_years": [2026]). Storage is a running total, so accumulated rain
+  minus evaporation is the right driver. GRACE has an 11-month gap (mid-2017 to mid-2018).
+  Known artefacts: MERRA-2 stream changes in 1992, 2001 and 2011 (break in MERRA-2 vs GLDAS soil moisture in 2011
+  seen in an earlier campaign over Africa).
+region: {lat_min: 27, lat_max: 37, lon_min: -14, lon_max: 2}
+resolution: 0.5
+start_year: 2002
+end_year: 2026
+datasets: [MERRA2_PRECIP, MERRA2_T2M, MERRA2_SOILM, MERRA2_RUNOFF, MERRA2_SNOW, MERRA2_SLP, MERRA2_TQV,
+           GLDAS_SOILM, GLDAS_EVAP, GLDAS_SNOWDEPTH]
+holdout: [GRACE_TWS, GRACE_GSFC_TWS, IMERG_PRECIP]
+screen_pairs: [[MERRA2_SOILM, GLDAS_SOILM], [MERRA2_SNOW, GLDAS_SNOWDEPTH]]
+learn: false
+known_literature:
+  - "J. Hydrology: Regional Studies (2022): When climate variability partly compensates for groundwater depletion - an analysis of the GRACE signal in Morocco (wet years masked depletion)"
+  - "Ait Dhmane et al. (2024) Frontiers in Water: drought patterns in northwestern Morocco (Bouregreg; GRACE storage falls with rising evaporative demand while rainfall is stable)"
+  - "(2025) Evaluation of GRACE and GRACE-FO derived products for water storage assessment in Moroccan aquifers: analysis of drought"
+  - "(2026) Groundwater storage depletion and contamination trade-offs under contrasting irrigation practices in drought-stressed Morocco"
+  - "(2026) Hybrid ensemble learning for TWSA prediction in water-stressed regions: Casablanca-Settat, Morocco"
+  - "(2026) A multi-source geospatial and meteorological analysis of the 2026 Gharb Plain floods, Morocco; (2026) SAR-based flood detection in the Loukkos floodplain (floods mapped, storage not weighed)"
+  - "Environmental Research Letters (2023): persistent anticyclonic conditions and the 2022 European-Mediterranean drought"
+literature_queries:
+  - "Morocco GRACE water storage 2026 recovery drought end"
+  - "Morocco 2026 floods Gharb Loukkos rainfall"
+  - "Morocco groundwater depletion GRACE residual land surface model irrigation"
+  - "Maghreb drought 2018-2024 terrestrial water storage minimum"
+  - "groundwater recovery after multi-year drought wet year GRACE semi-arid"

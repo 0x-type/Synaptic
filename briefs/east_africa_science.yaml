@@ -1,0 +1,30 @@
+title: "East Africa: what drives the long and short rains now, and has it changed?"
+question: >
+  Science questions (the data are screened automatically before the agents start; do not spend tasks on data
+  quality beyond what a signal needs):
+  1. Drivers. How much of the year-to-year variation of the March-May long rains and the October-December short
+     rains, and of the following season's soil moisture and heat, is explained by the Indian Ocean Dipole, ENSO and
+     Atlantic temperatures? Where in the region, in which months, with which lead time?
+  2. Change. Has any of these links strengthened, weakened or moved since the late 1990s (sliding windows,
+     before/after comparisons on trusted cells)? A changed teleconnection that independent rain data confirm would
+     be a new result.
+  3. Land memory. How long does a dry or wet season persist in root-zone soil moisture, and does that memory
+     predict the next season's daytime heat? Has the coupling between dry soil and heat strengthened?
+  4. Predictability. With drivers and soil memory, how far ahead can the season be forecast out of sample, and
+     where does skill come from?
+  5. Impacts. Translate the results into what farmers and pastoralists experience: rainy-season length, onset,
+     dry spells, hot days, by sub-region.
+region:
+  name: "East Africa and the Horn"
+  lat_min: -12.0
+  lat_max: 18.0
+  lon_min: 22.0
+  lon_max: 52.0
+start_year: 1981
+end_year: 2025
+variables: [PRECTOTCORR, GWETROOT, RH2M, T2M_MAX, T2M_MIN]
+max_variables: 5
+notes: >
+  About 300 million people here depend on rain-fed farming and pastoralism; seasonal forecasts and drought early
+  warning rely on knowing what drives the rains. Results must hold on trusted cells and, for rain, against an
+  independent product (CHIRPS or stations). State what is new versus the literature precisely.

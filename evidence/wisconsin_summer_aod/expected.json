@@ -1,0 +1,13 @@
+{
+ "sen_per_decade": 0.022348336581573043,
+ "mk_p": 0.3091626948735827,
+ "recent_departure": 0.11968772054168146,
+ "recent_p": 0.005678546961952568,
+ "tolerance": {
+  "sen_per_decade": 1e-09,
+  "mk_p": 1e-09,
+  "recent_departure": 1e-09,
+  "recent_p": 1e-09
+ },
+ "claim": "Summer AOD over Wisconsin (MODIS Aqua, 2002-2025): no significant long-term trend (p = 0.31), but 2023-2025 sit well above the trend (+0.12, p = 0.006): the Canadian wildfire smoke years."
+}

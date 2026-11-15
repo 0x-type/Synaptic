@@ -1,0 +1,60 @@
+# Focused v4 campaign: one open problem, literature-first programme, held-out confirmation on independent satellites.
+title: "Did the 2024 Sahara-Sahel deluge recharge the desert? Weighing the water that stayed"
+mode: focused
+question: >
+  In August-September 2024 record rain fell on the Sahara and the Sahel: 100-400 mm in a month over the Tibesti,
+  Borkou and Ennedi massifs of northern Chad (more than 8 standard deviations above normal), an exceptional wet
+  season over Niger, Chad, Mali and northern Nigeria with floods around Lake Chad, and September storms that refilled
+  dry lakes in southeastern Morocco and southwestern Algeria. Weather papers explain WHY it rained. Nobody has
+  measured how much of that water the land KEPT. Rain that evaporates is gone in weeks; rain that soaks into
+  aquifers, fills lakes or wets deep soil stays as MASS, which NASA's GRACE-FO satellites weigh from orbit.
+  Find out, with pre-registered tests:
+  1. WHERE did the land gain water in 2024, and was it the largest gain since 2002 in each sub-region (central
+     Sahara, Lake Chad basin, central Sahel, NW Sahara)?
+  2. HOW LONG did it stay: is storage still above its pre-2024 trend in the following dry seasons (March-May 2025,
+     and March-May 2026), and does the water drain faster in some places than others (sand and desert vs basins
+     with lakes and aquifers)?
+  3. WHAT KIND of water: how much of the gain is NOT in the soil moisture the land models hold (MERRA-2 and GLDAS
+     have no groundwater, lakes or floodwater)? Storage that outlasts what the models' soils keep points to
+     recharge of aquifers or surface water.
+  4. Did the wet year change the desert SURFACE (green-up darkening the ground, less dust the following year)?
+  Prefer tests that DISCRIMINATE (place, season, timing, what the climate predicts versus what the satellite
+  weighs) over describing the rain.
+notes: >
+  Data are monthly, 2002-2026 (MERRA-2 to Sep 2026, GLDAS to Jul 2026), 8-33N 18W-30E on a 1-degree grid.
+  Explorers get MERRA-2 rainfall, root-zone soil wetness, runoff, temperature, water vapour and dust aerosol, and
+  GLDAS Noah top-soil moisture and evaporation. HELD OUT for code confirmation, never seen by the explorers:
+  GRACE/GRACE-FO total water storage (to Aug 2026; everything the land holds, including groundwater and lakes),
+  GPM IMERG satellite rainfall (to Sep 2025: an independent check of every rain claim) and CERES clear-sky
+  reflected sunlight (to Aug 2026: an independent measure of how bright the ground is).
+  Caveats. MERRA-2 rain over Africa is corrected with CMAP gauges and had a known error in 2025 over central Mali
+  (rainy season missing): confirm every rain claim on IMERG. GRACE's real resolution is about 300 km, so test boxes
+  must be at least about 5 x 5 degrees; it has an 11-month gap (mid-2017 to mid-2018); its values are anomalies in
+  cm of water. 2026 has data only to August. For persistence, use the dry season (months [3, 4, 5]) of 2025 or
+  2026 as the event year: the "event" confirm kind tests whether those years sit above the trend of the other
+  years. For "beyond what the land models hold", use the "residual" kind with a land-model driver. GRACE
+  storage is a running total: rain changes it month by month, so a driver of accumulated (rain minus evaporation)
+  uses "accumulate": true.
+region: {lat_min: 8, lat_max: 33, lon_min: -18, lon_max: 30}
+resolution: 1.0
+start_year: 2002
+end_year: 2026
+datasets: [MERRA2_PRECIP, MERRA2_SOILM, MERRA2_RUNOFF, MERRA2_T2M, MERRA2_TQV, MERRA2_AOD_DUST,
+           GLDAS_SOILM, GLDAS_EVAP]
+holdout: [GRACE_TWS, IMERG_PRECIP, CERES_SW_CLR]
+screen_pairs: [[MERRA2_SOILM, GLDAS_SOILM]]
+learn: false
+known_literature:
+  - "Weather and Climate Dynamics (2026): Synoptic drivers of the August 2024 record-breaking rainfall in the Chadian Sahara (CHIRPS, TAMSAT, ERA5: 100-400 mm over Tibesti/Borkou/Ennedi, +8 sigma; a moister 'new normal' since the early 2000s). Rainfall and meteorology only, no water storage."
+  - "Journal of Hydrology (2026): Long-term and interannual variability of African terrestrial water storage revealed by GRACE/GRACE-FO and models (Apr 2002-Dec 2024; continental TWS +96 Gt/yr with acceleration; lakes drive the gains; land-model soil moisture declines; ENSO/IOD modes). Long-term trends, not the 2024 event or its persistence; ends Dec 2024."
+  - "ISPRS Archives (2026): Estimating long-term groundwater storage change in the Chad Basin, Nigeria, using GRACE/GRACE-FO and GLDAS (basin TWS +5.9 mm/yr; groundwater not rising). Long-term trend."
+  - "Land (2025): Lake Iriqui's remarkable revival after the September 2024 storms (Google Earth Engine surface water extent >80 km2)."
+  - "EGU (2025): Meteorological ingredients of heavy precipitation and subsequent lake-filling episodes in the northwestern Sahara; EGU24: The hydrometeorological ingredients needed to fill dry Saharan lakes (Sebkha el Melah)."
+  - "Rodell et al. (2018) Nature: Emerging trends in global freshwater availability (GRACE 2002-2016)."
+literature_queries:
+  - "GRACE terrestrial water storage Sahel 2024 flood anomaly"
+  - "Sahara 2024 extreme rainfall groundwater recharge"
+  - "Lake Chad basin 2024 flood water storage GRACE-FO"
+  - "Saharan aquifer recharge episodic heavy rainfall satellite gravimetry"
+  - "Sahel greening after wet season surface albedo dust emission following year"
+  - "terrestrial water storage persistence after extreme rainfall drylands decay timescale"

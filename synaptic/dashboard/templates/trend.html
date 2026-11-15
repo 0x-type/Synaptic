@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trend Detective · Synaptic</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#f6f6f2;--fg:#1c2226;--muted:#66707a;--card:#fff;--line:#e1e1da;--accent:#1f6f95;--accent2:#d1495b;
+--ok:#2e7d4f;--warn:#b7791f;--chip:#eef2f4;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#121518;--fg:#e8eaed;--muted:#9aa3ab;--card:#1b2025;--line:#2b3238;
+--accent:#5fb3d9;--accent2:#ef6f80;--ok:#5cc489;--warn:#e3b04b;--chip:#232a30;color-scheme:dark}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:18px max(16px,3vw) 10px;display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+header h1{font-size:1.35rem;margin:0}header .sub{color:var(--muted)}header a{color:var(--accent);margin-left:auto;font-size:.9rem}
+main{display:grid;grid-template-columns:330px 1fr;gap:18px;padding:18px max(16px,3vw) 48px;max-width:1500px;margin:0 auto}
+@media (max-width:900px){main{grid-template-columns:1fr}}
+.panel,.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.step{margin-bottom:16px}.step h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 6px}
+.step h3 b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;margin-right:6px;font-size:.75rem}
+select,input{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);font:inherit}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.months{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:6px}
+.months label{display:block;text-align:center;padding:4px 0;border:1px solid var(--line);border-radius:6px;cursor:pointer;font-size:.8rem;user-select:none}
+.months input{display:none}.months input:checked+span{color:#fff}.months label:has(input:checked){background:var(--accent);border-color:var(--accent);color:#fff}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.chip{padding:3px 9px;border-radius:999px;background:var(--chip);cursor:pointer;font-size:.8rem;border:1px solid var(--line)}
+button{font:inherit;border:0;border-radius:9px;padding:10px 14px;cursor:pointer}
+.go{background:var(--accent);color:#fff;width:100%;font-weight:600}.ghost{background:var(--chip);color:var(--fg);border:1px solid var(--line)}
+.note{color:var(--muted);font-size:.83rem;margin-top:6px}.demo{width:100%;margin-top:8px}
+#out{display:grid;gap:16px;align-content:start}
+.verdict{border-left:5px solid var(--muted)}.verdict.sig{border-left-color:var(--ok)}.verdict.nosig{border-left-color:var(--warn)}
+.verdict h2{margin:0 0 6px;font-size:1.15rem}.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:12px}
+.stat{background:var(--bg);border-radius:9px;padding:9px 11px}.stat b{display:block;font-size:1.15rem}.stat span{color:var(--muted);font-size:.8rem}
+canvas{max-height:340px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media (max-width:1100px){.grid2{grid-template-columns:1fr}}
+#map img{width:100%;border-radius:8px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.progress{color:var(--muted);font-style:italic}.empty{color:var(--muted);text-align:center;padding:60px 20px}
+.src{font-size:.82rem;color:var(--muted);margin-top:8px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Trend Detective</h1>
+  <span class="sub">NASA Earth data, five steps, honest statistics</span>
+  <a href="/findings">What our AI research group found →</a>
+  <a href="/" style="margin-left:0">Mission control →</a>
+</header>
+<main>
+  <aside class="panel">
+    <div class="step"><h3><b>1</b>Variable</h3>
+      <select id="var"></select><div class="note" id="varnote"></div></div>
+    <div class="step"><h3><b>2</b>Region</h3>
+      <select id="rtype"><option value="named">Country or US state</option><option value="box">Box (lat/lon)</option><option value="world">Whole world</option></select>
+      <div id="rnamed" style="margin-top:6px"><input id="rname" list="rlist" placeholder="e.g. Morocco, Wisconsin (USA)"><datalist id="rlist"></datalist></div>
+      <div id="rbox" style="display:none;margin-top:6px">
+        <div class="row"><input id="S" type="number" placeholder="South" value="30"><input id="N" type="number" placeholder="North" value="36"></div>
+        <div class="row" style="margin-top:6px"><input id="W" type="number" placeholder="West" value="-10"><input id="E" type="number" placeholder="East" value="-1"></div>
+      </div></div>
+    <div class="step"><h3><b>3</b>Time period</h3>
+      <div class="row"><input id="y0" type="number" value="2002"><input id="y1" type="number" value="2025"></div>
+      <div class="note">Season (leave empty for the whole year)</div>
+      <div class="months" id="months"></div>
+      <div class="chips"><span class="chip" data-s="12,1,2">Winter DJF</span><span class="chip" data-s="3,4,5">Spring</span><span class="chip" data-s="6,7,8">Summer JJA</span><span class="chip" data-s="9,10,11">Autumn</span><span class="chip" data-s="">All</span></div></div>
+    <div class="step"><h3><b>4</b>Time series &amp; <b>5</b>significance</h3>
+      <button class="go" id="run">Detect the trend</button>
+      <div class="note" style="margin-top:12px">Or try an example:</div>
+      <div id="demos"></div>
+      <div class="note">Data are fetched live from NASA Earthdata Cloud. The first request for a dataset can take a minute. Finished analyses are saved, so examples and repeated questions answer at once, even offline.</div></div>
+  </aside>
+  <section id="out"><div class="card empty">Pick a variable, a region and a period, then <b>Detect the trend</b>.<br>Or try the example from the challenge video.</div></section>
+</main>
+<script>
+const $=s=>document.querySelector(s);let CAT=[],charts=[],JOB=null;
+const MN="JFMAMJJASOND";
+function monthsSel(){return [...document.querySelectorAll('#months input:checked')].map(i=>+i.value)}
+function setMonths(list){document.querySelectorAll('#months input').forEach(i=>i.checked=list.includes(+i.value))}
+$('#months').innerHTML=[...MN].map((m,i)=>`<label><input type="checkbox" value="${i+1}"><span>${m}</span></label>`).join('');
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>setMonths(c.dataset.s?c.dataset.s.split(',').map(Number):[]));
+$('#rtype').onchange=()=>{$('#rnamed').style.display=$('#rtype').value=='named'?'':'none';$('#rbox').style.display=$('#rtype').value=='box'?'':'none'};
+fetch('/api/td/catalog').then(r=>r.json()).then(c=>{CAT=c;const g={};c.forEach(v=>(g[v.group]=g[v.group]||[]).push(v));
+ $('#var').innerHTML=Object.entries(g).map(([k,vs])=>`<optgroup label="${k}">`+vs.map(v=>`<option value="${v.id}">${v.label}</option>`).join('')+'</optgroup>').join('');
+ $('#var').onchange();});
+$('#var').onchange=()=>{const v=CAT.find(x=>x.id==$('#var').value);if(!v)return;$('#varnote').textContent=`${v.source}, from ${v.start}. ${v.note||''}`;if(+$('#y0').value<v.start)$('#y0').value=v.start};
+fetch('/api/td/regions').then(r=>r.json()).then(rs=>{$('#rlist').innerHTML=rs.map(r=>`<option value="${r.name}">`).join('')});
+function spec(){const t=$('#rtype').value;let region={type:t};if(t=='named')region.name=$('#rname').value;
+ if(t=='box')region.bbox=['S','N','W','E'].map(k=>+$('#'+k).value);
+ return{var:$('#var').value,region,y0:+$('#y0').value,y1:+$('#y1').value,months:monthsSel()}}
+fetch('/api/td/demos').then(r=>r.json()).then(ds=>{$('#demos').innerHTML=ds.map((d,i)=>`<button class="ghost demo" data-i="${i}">${d.label}</button>`).join('');
+ document.querySelectorAll('#demos button').forEach(b=>b.onclick=()=>{const s=ds[+b.dataset.i].spec;$('#var').value=s.var;$('#var').onchange();
+  $('#rtype').value=s.region.type;$('#rtype').onchange();if(s.region.name)$('#rname').value=s.region.name;
+  if(s.region.bbox)['S','N','W','E'].forEach((k,j)=>$('#'+k).value=s.region.bbox[j]);
+  $('#y0').value=s.y0;$('#y1').value=s.y1;setMonths(s.months||[]);run()})});
+$('#run').onclick=()=>run();
+async function run(fresh){const s=spec();if(fresh===true)s.fresh=true;if(s.region.type=='named'&&!s.region.name){alert('Choose a country or state');return}
+ $('#out').innerHTML='<div class="card progress" id="prog">Starting…</div>';
+ const r=await fetch('/api/td/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(s)}).then(r=>r.json());
+ if(r.error){$('#out').innerHTML=`<div class="card">${r.error}</div>`;return}JOB=r.job;poll()}
+async function poll(){const j=await fetch('/api/td/job/'+JOB).then(r=>r.json());
+ if(j.status=='running'){$('#prog').textContent=j.progress||'Working…';setTimeout(poll,1500);return}
+ if(j.status=='error'){$('#out').innerHTML=`<div class="card">Could not complete: ${j.error}</div>`;return}show(j.result)}
+const fmt=(v,d=2)=>v==null||isNaN(v)?'–':(Math.abs(v)<0.01&&v!=0?v.toExponential(2):(+v).toFixed(d));
+function show(r){setTimeout(()=>{const f=$('#fresh');if(f)f.onclick=e=>{e.preventDefault();run(true)}},0);charts.forEach(c=>c.destroy());charts=[];const t=r.trend||{};const u=r.units?' '+r.units:'';
+ const cls=r.significant==null?'':(r.significant?'sig':'nosig');
+ $('#out').innerHTML=`<div class="card verdict ${cls}"><h2>${r.significant==null?'Not enough data':(r.significant?'Significant trend':'No significant trend')}</h2>
+ <div>${r.verdict}</div>${r.saved?`<div class="note">Saved result, computed from NASA data on ${r.saved}. <a href="#" id="fresh">Fetch again</a></div>`:''}
+ <div class="stats">
+  <div class="stat"><b>${fmt(t.sen_per_decade,3)}${u}</b><span>trend per decade (Sen)</span></div>
+  <div class="stat"><b>${fmt(t.mk_p,3)}</b><span>p-value (Mann-Kendall, carry-over adjusted)</span></div>
+  <div class="stat"><b>[${fmt((t.sen_ci95_per_decade||[])[0],3)}, ${fmt((t.sen_ci95_per_decade||[])[1],3)}]</b><span>95% interval of the trend per decade</span></div>
+  <div class="stat"><b>${r.n_years} (${fmt(t.n_eff,0)})</b><span>years (independent years)</span></div>
+  ${r.shift&&r.shift.p_selection_aware<0.05?`<div class="stat"><b>${r.shift.year}</b><span>abrupt step beyond the trend, p=${fmt(r.shift.p_selection_aware,3)}</span></div>`:''}
+  ${r.recent&&r.recent.p<0.05?`<div class="stat"><b>${fmt(r.recent.departure,3)}${u}</b><span>${r.recent.years[0]}-${r.recent.years[2]} above/below the trend, p=${fmt(r.recent.p,3)}</span></div>`:''}
+  ${r.season_timing?`<div class="stat"><b>${fmt(r.season_timing.peak_shift_days,1)} d</b><span>shift of the seasonal peak (${r.season_timing.halves.join(' vs ')})</span></div>`:''}
+ </div>
+ <div class="src">${r.dataset.label} · ${r.dataset.source}${r.dataset.doi?` · <a href="https://doi.org/${r.dataset.doi}" target="_blank">doi:${r.dataset.doi}</a>`:''} · ${r.spec.region_label}</div>
+ <div class="actions"><a class="ghost" style="padding:8px 12px;border-radius:9px;text-decoration:none" href="/api/td/job/${JOB}/csv">Download CSV</a>
+ <button class="ghost" id="ai">Ask the AI research group to explain it</button></div></div>
+ <div class="grid2"><div class="card"><h3 style="margin-top:0">${r.label}, ${r.season} (yearly)</h3><canvas id="c1"></canvas></div>
+ <div class="card"><h3 style="margin-top:0">Every month</h3><canvas id="c2"></canvas></div></div>
+ ${r.by_month?'<div class="card"><h3 style="margin-top:0">Trend in each month (seasonal trends)</h3><canvas id="c3"></canvas><div class="note">Filled bars: significant at p&lt;0.05.</div></div>':''}
+ ${r.map_png?`<div class="card" id="map"><h3 style="margin-top:0">Where is it changing?</h3><img src="${r.map_png}" alt="trend map"></div>`:''}`;
+ const css=getComputedStyle(document.documentElement),acc=css.getPropertyValue('--accent').trim(),acc2=css.getPropertyValue('--accent2').trim(),mut=css.getPropertyValue('--muted').trim();
+ Chart.defaults.color=mut;Chart.defaults.borderColor=css.getPropertyValue('--line').trim();
+ const yl=r.yearly.map(p=>p.year),yv=r.yearly.map(p=>p.value);
+ const line=t.line?r.yearly.map(p=>t.line[0].value+(t.line[1].value-t.line[0].value)*(p.year-t.line[0].year)/(t.line[1].year-t.line[0].year)):[];
+ charts.push(new Chart($('#c1'),{type:'line',data:{labels:yl,datasets:[{label:r.label+u,data:yv,borderColor:acc,backgroundColor:acc,pointRadius:3,tension:0},
+  {label:'linear trend',data:line,borderColor:acc2,borderDash:[6,4],pointRadius:0}]},options:{plugins:{legend:{display:true}},scales:{y:{title:{display:true,text:r.units||''}}}}}));
+ const ms=r.series.filter(p=>p.value!=null);
+ charts.push(new Chart($('#c2'),{type:'line',data:{labels:ms.map(p=>p.year+'-'+String(p.month).padStart(2,'0')),datasets:[{label:'monthly'+u,data:ms.map(p=>p.value),borderColor:acc,pointRadius:0,borderWidth:1.2}]},options:{plugins:{legend:{display:false}},scales:{x:{ticks:{maxTicksLimit:10}}}}}));
+ if(r.by_month){charts.push(new Chart($('#c3'),{type:'bar',data:{labels:r.by_month.map(m=>MN[m.month-1]),datasets:[{label:'trend per decade'+u,data:r.by_month.map(m=>m.sen_per_decade),
+  backgroundColor:r.by_month.map(m=>m.p<0.05?acc:'transparent'),borderColor:acc,borderWidth:1.5}]},options:{plugins:{legend:{display:false}}}}))}
+ $('#ai').onclick=async()=>{const x=await fetch('/api/td/detective',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(r.spec)}).then(r=>r.json());
+  $('#ai').textContent=x.ok?'Campaign launched: follow it in mission control':'Could not launch'}}
+</script>
+</body>
+</html>

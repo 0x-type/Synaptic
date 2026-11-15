@@ -1,0 +1,99 @@
+title: 'Track B v2: where in Africa does stored water drift away from what rain and evaporation explain? Found in 2002-2015,
+  confirmed on 2016-2025'
+mode: focused
+question: "GRACE satellites weigh the water stored on and under the land: soil, groundwater, lakes, wetlands, reservoirs.\
+  \ Over most of the world the seasonal storage gain follows rain minus evaporation. Where it does NOT, something the\
+  \ climate models do not contain is at work: groundwater pumping for irrigation, unmapped wetlands and floodplains that\
+  \ hold water, reservoirs, lakes, springs, or evaporation the models get wrong. Search all of Africa, using GRACE 2002-2015\
+  \ together with rain (MERRA-2), evaporation and soil moisture (GLDAS), for places (blocks at least 4 x 4 degrees, GRACE\
+  \ resolution ~300 km) where: 1. the seasonal storage GAIN (wet season) or DRAWDOWN (dry season) is systematically larger\
+  \ or smaller than rain\n   minus evaporation over the same months predicts;\n2. that departure points to a physical\
+  \ cause you can name (irrigation season, floodplain, lake, reservoir, aquifer,\n   evaporation bias), and is not explained\
+  \ by a known data artefact;\nthen pre-register, for each, a test that the SAME departure, in the SAME direction, appears\
+  \ again in 2016-2026, years the search never saw. A pattern found in one era and reappearing in another, never-seen\
+  \ era is hard to dismiss as chance. Prefer places and behaviours that are not in the literature (check it), and physically\
+  \ specific claims (which season, which direction, how much) over vague ones.\n  A code sweep of the exploration years\
+  \ (2002-2015) is in your context: (a) seasonal gains and drawdowns showed NO\n  drifts beyond chance (18 of 392 block-seasons\
+  \ at p < 0.05, about 20 expected), so do not build on them; (b) the\n  annual storage LEVEL beyond accumulated rain\
+  \ minus evaporation shows many more trends than chance. Those trends are\n  the candidates. Most strong ones are documented\
+  \ (North-Western Sahara Aquifer System depletion around Ghadames and\n  Hassi Messaoud, Yemen, dam and reservoir filling):\
+  \ name the cause and check the literature for each. The\n  discovery we are looking for is a block whose drift is real,\
+  \ CONTINUES in 2016-2025 (years nobody in this campaign\n  has seen), and is not already reported for that place."
+notes: "Data: monthly, 2002-2026, Africa 35S-37N 18W-52E on a 1-degree grid. Explorers get MERRA-2 rainfall, temperature\
+  \ and root-zone soil wetness, GLDAS soil moisture and evaporation, and GRACE_TWS (JPL mascons) ONLY UP TO 2015 (the\
+  \ campaign table and the data tool stop at 2015). TIME-HELD-OUT for confirmation: GRACE_TWS and GRACE_GSFC_TWS (independent\
+  \ NASA GSFC mascons) from 2016 on. The JPL GRACE table for 2002-2015 is in data/: explore it freely. CONFIRM SPECS:\
+  \ for a level drift found in the sweep,\n  {\"dataset\": \"GRACE_TWS\", \"kind\": \"residual\", \"box\": [lat-2, lat+2,\
+  \ lon-2, lon+2], \"months\": null,\n   \"years\": [2003, 2025], \"driver\": [\"MERRA2_PRECIP\", \"GLDAS_EVAP\"], \"\
+  accumulate\": true, \"test\": \"later\",\n   \"after\": 2015, \"direction\": sign of the drift}\n  The model (storage\
+  \ = a + b * accumulated rain + c * accumulated evaporation) is fitted on 2003-2015 only; a drift\n  that continues\
+  \ leaves the 2016-2025 years beyond it in the drift's direction. End years at 2025 (GSFC stops in\n  Jun 2026, so a\
+  \ 2026 annual mean cannot be replicated). Use one box per block, at least 4 x 4 degrees, on land.\n  RULES ENFORCED\
+  \ IN CODE: every GRACE confirmation also runs on the independent GSFC solution and both must pass;\n  \"new\" needs\
+  \ p <= 0.05 / (number of pre-registered tests, at least 10) and a NASA ADS novelty check; boxes earlier\n  rounds examined\
+  \ after 2016 (Sahel-Sahara 8-23N 18W-30E, Morocco 27-37N 14W-2E) are tested at alpha 0.005.\n  The campaign GRACE table\
+  \ stops at 2015 and contains land cells only."
+region:
+  lat_min: -35
+  lat_max: 37
+  lon_min: -18
+  lon_max: 52
+resolution: 1.0
+start_year: 2002
+end_year: 2026
+datasets:
+- GRACE_TWS
+- MERRA2_PRECIP
+- MERRA2_T2M
+- MERRA2_SOILM
+- GLDAS_SOILM
+- GLDAS_EVAP
+holdout: []
+time_holdout:
+  datasets:
+  - GRACE_TWS
+  - GRACE_GSFC_TWS
+  explore_end: 2015
+alpha_rules:
+- box:
+  - 8
+  - 23
+  - -18
+  - 30
+  from_year: 2016
+  alpha: 0.005
+  why: Sahel-Sahara examined by rounds 1-4
+- box:
+  - 27
+  - 37
+  - -14
+  - 2
+  from_year: 2016
+  alpha: 0.005
+  why: Morocco examined by rounds 3-4
+screen_pairs:
+- - MERRA2_SOILM
+  - GLDAS_SOILM
+learn: false
+known_literature:
+- 'Rodell et al. (2018) Nature: Emerging trends in global freshwater availability (GRACE hotspots 2002-2016, incl. NW
+  Sahara aquifer, Nile, Lake Victoria)'
+- 'Journal of Hydrology (2026): Long-term and interannual variability of African terrestrial water storage revealed by
+  GRACE/GRACE-FO and models (lakes and reservoirs drive gains; land models miss them)'
+- 'Scanlon et al. (2022) Environmental Research Letters: Linkages between GRACE water storage, hydrologic extremes and
+  climate teleconnections in major African aquifers'
+- Lake Victoria rise of 2019-2020 (many papers); Grand Ethiopian Renaissance Dam filling 2020-2025 seen by GRACE (several
+  papers)
+- 'Werth et al.; Ndehedehe et al.: GRACE over African basins (Congo, Niger, Lake Chad, Okavango, Zambezi)'
+- 'North-Western Sahara Aquifer System (Algeria, Tunisia, Libya) depletion seen by GRACE: many papers (e.g. Gonçalvès
+  et al. 2013; Richey et al. 2015)'
+- Arabian Peninsula / Yemen groundwater depletion with GRACE (Joodaki et al. 2014; Wada & Bierkens)
+- 'Sahelian paradox: rising groundwater and ponds despite drought (Favreau et al. 2009, SW Niger; Gal et al. 2017, Gourma,
+  Mali)'
+- Nubian Sandstone Aquifer and Toshka lakes (Egypt) GRACE studies; Lake Nasser storage
+literature_queries:
+- GRACE terrestrial water storage Africa land surface model discrepancy irrigation groundwater
+- GRACE water balance residual Africa seasonal storage
+- groundwater depletion Africa GRACE hotspot irrigation
+- floodplain wetland storage GRACE Africa Sudd Okavango Inner Niger Delta
+- evapotranspiration bias GLDAS Africa GRACE

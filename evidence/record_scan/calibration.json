@@ -1,0 +1,62 @@
+{
+ "carryover_0.0_months_4": {
+  "false_alarm_at_0.05": 0.033,
+  "power_p<0.01_shift_1.5sd": 0.52,
+  "power_p<0.01_shift_2.5sd": 0.92
+ },
+ "carryover_0.0_months_6": {
+  "false_alarm_at_0.05": 0.05,
+  "power_p<0.01_shift_1.5sd": 0.7,
+  "power_p<0.01_shift_2.5sd": 0.99
+ },
+ "carryover_0.0_months_8": {
+  "false_alarm_at_0.05": 0.045,
+  "power_p<0.01_shift_1.5sd": 0.84,
+  "power_p<0.01_shift_2.5sd": 1.0
+ },
+ "carryover_0.3_months_4": {
+  "false_alarm_at_0.05": 0.05,
+  "power_p<0.01_shift_1.5sd": 0.32,
+  "power_p<0.01_shift_2.5sd": 0.81
+ },
+ "carryover_0.3_months_6": {
+  "false_alarm_at_0.05": 0.044,
+  "power_p<0.01_shift_1.5sd": 0.46,
+  "power_p<0.01_shift_2.5sd": 0.92
+ },
+ "carryover_0.3_months_8": {
+  "false_alarm_at_0.05": 0.051,
+  "power_p<0.01_shift_1.5sd": 0.58,
+  "power_p<0.01_shift_2.5sd": 0.97
+ },
+ "carryover_0.6_months_4": {
+  "false_alarm_at_0.05": 0.037,
+  "power_p<0.01_shift_1.5sd": 0.18,
+  "power_p<0.01_shift_2.5sd": 0.55
+ },
+ "carryover_0.6_months_6": {
+  "false_alarm_at_0.05": 0.047,
+  "power_p<0.01_shift_1.5sd": 0.21,
+  "power_p<0.01_shift_2.5sd": 0.69
+ },
+ "carryover_0.6_months_8": {
+  "false_alarm_at_0.05": 0.037,
+  "power_p<0.01_shift_1.5sd": 0.28,
+  "power_p<0.01_shift_2.5sd": 0.77
+ },
+ "carryover_0.8_months_4": {
+  "false_alarm_at_0.05": 0.018,
+  "power_p<0.01_shift_1.5sd": 0.09,
+  "power_p<0.01_shift_2.5sd": 0.34
+ },
+ "carryover_0.8_months_6": {
+  "false_alarm_at_0.05": 0.026,
+  "power_p<0.01_shift_1.5sd": 0.11,
+  "power_p<0.01_shift_2.5sd": 0.42
+ },
+ "carryover_0.8_months_8": {
+  "false_alarm_at_0.05": 0.027,
+  "power_p<0.01_shift_1.5sd": 0.14,
+  "power_p<0.01_shift_2.5sd": 0.45
+ }
+}

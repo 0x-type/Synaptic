@@ -1,0 +1,102 @@
+# Known data-quality issues in NASA POWER (and its inputs), found by Synaptic campaigns or documented by the
+# producers. The automatic screen adds every entry that overlaps a campaign's region to its trust map, so
+# agents never spend time re-discovering them. Add new entries as they are confirmed.
+#
+# kind: break (from year_from on, the series is offset), period (only year_from..year_to is wrong),
+#       caveat (documented warning: treat trends across these years with care)
+
+- id: power-rain-mali-2025
+  variables: [PRECTOTCORR, GWETROOT, GWETTOP, GWETPROF, RH2M, T2M, T2M_MAX, T2M_MIN, QV2M]
+  box: [13.0, 16.0, -9.5, -5.0]
+  year_from: 2025
+  year_to: 2025
+  kind: period
+  description: >
+    June-September 2025 rainy season almost absent in POWER over central Mali (0.1-0.3 mm/day vs 3.6 CHIRPS,
+    6.4 GPCP); inherited from the CMAP input MERRA-2 uses over Africa (CMAP 0.01 mm/day). Spurious +5 C Tmax,
+    -26 point RH, very dry soil follow.
+  source: Synaptic test, 16 Oct 2026 (CMAP vs GPCP vs CHIRPS vs POWER)
+  confidence: high
+
+- id: power-rain-nsenegal-2025
+  variables: [PRECTOTCORR, GWETROOT, GWETTOP, GWETPROF, RH2M, T2M_MAX]
+  box: [14.5, 16.5, -16.0, -12.0]
+  year_from: 2025
+  year_to: 2025
+  kind: period
+  description: Northern Senegal 2025 rainy season 4-8x normal in POWER (Matam June 35 mm/day vs 2.4 at the station); CMAP 9.6 vs GPCP 2.8 mm/day.
+  source: Synaptic test, 16 Oct 2026
+  confidence: high
+
+- id: power-rain-nigeria-1999
+  variables: [PRECTOTCORR, GWETROOT, RH2M, T2M_MAX]
+  box: [9.0, 13.5, 6.0, 12.5]
+  year_from: 1999
+  kind: break
+  description: POWER May-Oct rain drops ~27% in 1999 over northern Nigeria with no change in CHIRPS; soil, humidity and Tmax follow.
+  source: Synaptic test, 15 Oct 2026 (interactive + blind rediscovery)
+  confidence: medium
+
+- id: power-eastafrica-1998
+  variables: [PRECTOTCORR, GWETROOT, GWETTOP, GWETPROF, RH2M, T2M_MAX]
+  box: [-6.0, 12.0, 22.0, 40.0]
+  year_from: 1998
+  kind: break
+  description: >
+    POWER rain, root-zone soil moisture and humidity step drier at 1997/98 (strongest 2S-1N, 26-28E, Congo side);
+    absent in CHIRPS (0 FDR-significant cells), GHCN, ESA CCI. An extra +0.8-1.0 C Tmax step on top of ~+0.5 C real
+    warming (Berkeley Earth), rainy season, dry-bias -> warm-bias co-variation proven cell by cell. Consistent with
+    CMAP's documented caveat of an artificial downward trend after 1996.
+  source: Synaptic East Africa campaign c_c6b3edcb, 16 Oct 2026
+  confidence: high
+
+- id: power-rain-yemen-zeros
+  variables: [PRECTOTCORR]
+  box: [15.0, 18.5, 45.0, 52.0]
+  year_from: 2007
+  year_to: 2010
+  kind: period
+  description: Multi-year runs of exactly zero monthly rain (84-92% of months) where CHIRPS has rain every month; gap filling.
+  source: Synaptic East Africa campaign, 16 Oct 2026
+  confidence: high
+
+- id: power-soil-sudan-2024-fill
+  variables: [GWETROOT, GWETPROF]
+  box: [14.0, 19.0, 22.0, 30.0]
+  year_from: 2024
+  year_to: 2024
+  kind: period
+  description: Root-zone/profile soil wetness frozen at a constant value (0.34) January-June 2024; delivery gap fill.
+  source: Synaptic East Africa campaign, 16 Oct 2026
+  confidence: high
+
+- id: power-rain-mtwara-2020-04
+  variables: [PRECTOTCORR]
+  box: [-11.5, -9.5, 39.0, 41.0]
+  year_from: 2020
+  year_to: 2020
+  kind: period
+  description: April 2020 record rain in POWER around Mtwara not seen in CHIRPS or at the station (single-month correction failure).
+  source: Synaptic East Africa campaign, 16 Oct 2026
+  confidence: medium
+
+- id: cmap-caveat-post1996
+  variables: [PRECTOTCORR]
+  box: [-40.0, 40.0, -20.0, 55.0]
+  year_from: 1996
+  kind: caveat
+  description: >
+    NOAA CPC's CMAP (the rain input MERRA-2 applies in full over Africa) warns of an artificial downward trend
+    after 1996 and discontinuities before/after 2009. Rain trends in POWER over Africa crossing these years need an
+    independent check before interpretation.
+  source: CMAP monthly v2505 announcement (ftp.cpc.ncep.noaa.gov/precip/cmap/monthly/cmap_mon_v2505_announcement)
+  confidence: documented
+
+- id: power-solar-srb-ceres-2001
+  variables: [ALLSKY_SFC_SW_DWN, CLRSKY_SFC_SW_DWN, ALLSKY_SFC_LW_DWN, ALLSKY_KT, CLOUD_AMT]
+  box: [-90.0, 90.0, -180.0, 180.0]
+  year_from: 2001
+  kind: caveat
+  description: POWER solar and cloud fields switch from GEWEX SRB to CERES SYN1deg in 2001.
+  source: NASA POWER documentation
+  confidence: documented

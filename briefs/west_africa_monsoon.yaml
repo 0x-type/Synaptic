@@ -1,0 +1,20 @@
+title: "West African monsoon belt: hidden change in the water cycle and surface climate"
+question: >
+  Where, when and how did rainfall, soil moisture, humidity and daytime heat across the West African
+  monsoon belt change between 1981 and 2025 in ways that are NOT yet documented? Look for abrupt regime
+  shifts, seasonal-cycle changes, changes in variability, and decouplings between variables that normally
+  move together. Distinguish real climate change from changes in how the data were produced.
+region:
+  name: "West African monsoon belt (Senegal to Lake Chad)"
+  lat_min: 4.0
+  lat_max: 16.0
+  lon_min: -18.0
+  lon_max: 16.0
+start_year: 1981
+end_year: 2025
+variables: [PRECTOTCORR, GWETROOT, T2M_MAX, RH2M]
+max_variables: 5
+notes: >
+  Hundreds of millions of people farm rain-fed crops here, and NASA POWER is widely used for crop and
+  energy modelling in the region, so both real changes and data problems matter. Every claim must survive
+  the artifact checklist, independent corroboration where possible, and a literature novelty test.

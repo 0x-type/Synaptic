@@ -1,0 +1,44 @@
+# Focused v4 campaign: one open problem, a literature-first programme, held-out confirmation.
+title: "Why did Earth's low clouds thin in 2023? The record-low planetary albedo"
+mode: focused
+question: >
+  In 2023 Earth reflected less sunlight than ever measured and global temperature jumped by more than
+  greenhouse gases and El Nino explain. Satellite studies point to fewer low clouds over the northern mid-latitude
+  and tropical oceans, but WHY the low clouds thinned is unresolved. Candidate explanations: (1) the 2020 shipping
+  fuel rules (IMO 2020) cut sulfate aerosol over shipping lanes, so clouds got fewer, larger droplets and reflected
+  less; (2) a low-cloud feedback to the warming sea surface (an emerging feedback would mean more future warming);
+  (3) circulation and natural variability: weaker trade winds, El Nino onset, the shrinking of storm-cloud zones;
+  (4) less Saharan dust over the tropical Atlantic. Use NASA satellite records to test which explanations hold,
+  WHERE, and how much of the 2023 cloud loss each can account for. Look for evidence that DISCRIMINATES between
+  explanations (fingerprints in space, time, droplet size, aerosol type), not for the largest anomaly.
+notes: >
+  Data are monthly, 2002-2025, 60S-60N on a 2.5-degree grid. Explorers get MODIS Aqua clouds, droplet radius and
+  aerosol, and MERRA-2 clouds, aerosol types, sea surface temperature, wind and water vapour. The CERES radiation
+  record (reflected sunlight, all-sky and clear-sky, net energy, cloud area) is HELD OUT: every claim about what
+  clouds did to Earth's energy budget is confirmed by code on CERES, which the explorers never see. MODIS Aqua's
+  orbit drift after ~2022 can mimic cloud changes: check against MERRA-2 and keep it in mind for 2023-2025.
+  MODIS AOD and MERRA-2 AOD are not independent (MERRA-2 assimilates MODIS AOD).
+region: {lat_min: -60, lat_max: 60, lon_min: -180, lon_max: 180}
+resolution: 2.5
+start_year: 2002
+end_year: 2025
+datasets: [MODIS_CLOUD, MODIS_CLOUD_REFF, MODIS_AOD, MERRA2_CLDLOW, MERRA2_CLDTOT, MERRA2_AOD_SULFATE,
+           MERRA2_AOD_DUST, MERRA2_SST, MERRA2_WIND, MERRA2_TQV]
+holdout: [CERES_SW_UP, CERES_SW_CLR, CERES_NET, CERES_CLOUD]
+screen_pairs: [[MODIS_CLOUD, MERRA2_CLDTOT]]
+learn: false
+known_literature:
+  - "Goessling, Rackow & Jung (2024) Science: Recent global temperature surge intensified by record-low planetary albedo (CERES; low-cloud decline)"
+  - "Loeb et al. (2021) Geophysical Research Letters: Satellite and ocean data reveal marked increase in Earth's heating rate (CERES)"
+  - "Yuan et al. (2024) Communications Earth & Environment: Abrupt reduction in shipping emission as an inadvertent geoengineering termination shock produces substantial radiative warming (NASA GSFC)"
+  - "Hodnebrog et al. (2024) Communications Earth & Environment: Recent reductions in aerosol emissions have increased Earth's energy imbalance"
+  - "Raghuraman et al. (2024) Atmospheric Chemistry and Physics: The 2023 global warming spike was driven by the El Nino-Southern Oscillation"
+  - "Schmidt (2024) Nature: Climate models can't explain 2023's huge heat anomaly - we could be in uncharted territory"
+  - "Nature Geoscience editorial (2025) 'Temperature rising': the reason behind the drop in cloud cover remains under debate"
+literature_queries:
+  - "2023 record low planetary albedo low cloud decline cause"
+  - "IMO 2020 shipping sulfur regulation cloud droplet effective radius radiative forcing satellite"
+  - "low cloud feedback sea surface temperature 2023 North Atlantic marine heatwave"
+  - "storm track cloud zone contraction reflectivity CERES"
+  - "Saharan dust 2023 tropical Atlantic sea surface temperature record"
+  - "Earth energy imbalance increase 2023 2024 cloud aerosol attribution"

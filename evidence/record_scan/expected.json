@@ -1,0 +1,21 @@
+{
+ "CO_departure": -0.001191265143247324,
+ "CO_p": 0.9143139655852246,
+ "BO_departure": 0.07430136150087992,
+ "BO_p": 0.014357073254621405,
+ "CN_departure": 0.015190175001444144,
+ "CN_p": 0.3959072876753227,
+ "T2_departure": -0.0237090317776476,
+ "T2_p": 0.3686913252193086,
+ "tolerance": {
+  "CO_departure": 1e-09,
+  "CO_p": 1e-09,
+  "BO_departure": 1e-09,
+  "BO_p": 1e-09,
+  "CN_departure": 1e-09,
+  "CN_p": 1e-09,
+  "T2_departure": 1e-09,
+  "T2_p": 1e-09
+ },
+ "claim": "Registered SMAP tests of the record-scan candidates; verdicts in REPORT.md."
+}

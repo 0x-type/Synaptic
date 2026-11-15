@@ -1,0 +1,33 @@
+title: "Planet Earth 1981-2025: how the land's water and heat cycles are changing, and what drives them"
+question: >
+  A whole-Earth research programme on NASA's MERRA-2 record of the land surface (all continents, 60S-80N, 2 x 2.5
+  degree cells, 1981-2025): rainfall, near-surface temperature, humidity, root-zone soil moisture and evaporation.
+  The data are screened automatically before the agents start (the trust map); do not spend tasks re-proving data
+  problems. Find real changes in the climate system and explain them:
+  1. Where on Earth have rainfall, soil moisture, humidity, evaporation and heat changed most, and is each change a
+     trend, an abrupt shift, a change in the seasons, or a change in year-to-year variability?
+  2. Water-heat coupling: where has the link between dry soils and heat strengthened (land-atmosphere feedback
+     hotspots), and where is evaporation now limited by water rather than by energy?
+  3. Drivers: how much of each region's variability comes from ENSO, the Indian Ocean Dipole, the Atlantic, the PDO
+     and the NAO, and where have these teleconnections strengthened, weakened or moved since the 1980s-90s?
+  4. Predictability: where can a season's rain, soil moisture or heat be forecast months ahead from drivers and
+     soil memory, and has that predictability changed?
+  5. Impacts: translate the main results into what people experience (growing seasons, dry spells, hot months)
+     in the regions most affected.
+  Every claim must hold on trusted cells and against at least one independent dataset (GPCP or CHIRPS rain,
+  Berkeley Earth or station temperature), and state precisely what is new versus the literature.
+region:
+  name: "All land, 60S-80N"
+  global: true
+  lat_min: -60.0
+  lat_max: 80.0
+  lon_min: -180.0
+  lon_max: 180.0
+start_year: 1981
+end_year: 2025
+variables: [PRECTOTCORR, T2M, RH2M, GWETROOT, EVLAND]
+max_variables: 5
+notes: >
+  Rain-fed agriculture, water supply and heat health on every continent depend on how these cycles behave.
+  Prefer depth over breadth: follow the strongest real signals until they are explained or killed. Regional
+  warming alone is documented; new science lies in where, when, why, and in changed relationships.

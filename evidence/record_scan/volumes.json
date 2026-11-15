@@ -1,0 +1,182 @@
+{
+ "T1": {
+  "name": "North-east Turkey and south-west Georgia",
+  "box": [
+   39.0,
+   43.0,
+   40.0,
+   44.0
+  ],
+  "land_area_km2": 124033,
+  "JPL": {
+   "event_gain_cm": 31.6,
+   "normal_gain_cm": 17.9,
+   "sd_cm": 3.9,
+   "excess_cm": 13.7,
+   "excess_km3": 17.0,
+   "excess_km3_90pct": [
+    9.1,
+    24.9
+   ],
+   "rank": 1,
+   "n_seasons": 21
+  },
+  "GSFC": {
+   "event_gain_cm": 34.3,
+   "normal_gain_cm": 19.1,
+   "sd_cm": 4.7,
+   "excess_cm": 15.3,
+   "excess_km3": 18.9,
+   "excess_km3_90pct": [
+    9.4,
+    28.5
+   ],
+   "rank": 1,
+   "n_seasons": 21
+  }
+ },
+ "CO": {
+  "name": "South-west Colombia and northern Ecuador",
+  "box": [
+   -1.0,
+   3.0,
+   -80.0,
+   -76.0
+  ],
+  "land_area_km2": 163783,
+  "JPL": {
+   "event_gain_cm": 9.8,
+   "normal_gain_cm": 4.2,
+   "sd_cm": 1.7,
+   "excess_cm": 5.7,
+   "excess_km3": 9.3,
+   "excess_km3_90pct": [
+    4.7,
+    13.9
+   ],
+   "rank": 1,
+   "n_seasons": 21
+  },
+  "GSFC": {
+   "event_gain_cm": 17.3,
+   "normal_gain_cm": 8.4,
+   "sd_cm": 2.7,
+   "excess_cm": 8.8,
+   "excess_km3": 14.4,
+   "excess_km3_90pct": [
+    7.1,
+    21.7
+   ],
+   "rank": 1,
+   "n_seasons": 21
+  }
+ },
+ "BO": {
+  "name": "Eastern Bolivia (Santa Cruz, Beni)",
+  "box": [
+   -17.0,
+   -13.0,
+   -64.0,
+   -60.0
+  ],
+  "land_area_km2": 191049,
+  "JPL": {
+   "event_gain_cm": 64.7,
+   "normal_gain_cm": 32.9,
+   "sd_cm": 6.4,
+   "excess_cm": 31.8,
+   "excess_km3": 60.8,
+   "excess_km3_90pct": [
+    40.6,
+    81.0
+   ],
+   "rank": 1,
+   "n_seasons": 21
+  },
+  "GSFC": {
+   "event_gain_cm": 49.8,
+   "normal_gain_cm": 32.8,
+   "sd_cm": 5.4,
+   "excess_cm": 17.1,
+   "excess_km3": 32.6,
+   "excess_km3_90pct": [
+    15.8,
+    49.4
+   ],
+   "rank": 1,
+   "n_seasons": 21
+  }
+ },
+ "CN": {
+  "name": "Loess Plateau, northern China (Shanxi, Shaanxi)",
+  "box": [
+   35.0,
+   39.0,
+   108.0,
+   112.0
+  ],
+  "land_area_km2": 157961,
+  "JPL": {
+   "event_gain_cm": 14.8,
+   "normal_gain_cm": 4.1,
+   "sd_cm": 3.4,
+   "excess_cm": 10.7,
+   "excess_km3": 16.9,
+   "excess_km3_90pct": [
+    8.0,
+    25.8
+   ],
+   "rank": 1,
+   "n_seasons": 20
+  },
+  "GSFC": {
+   "event_gain_cm": 19.5,
+   "normal_gain_cm": 3.5,
+   "sd_cm": 4.1,
+   "excess_cm": 16.0,
+   "excess_km3": 25.3,
+   "excess_km3_90pct": [
+    14.7,
+    35.9
+   ],
+   "rank": 1,
+   "n_seasons": 20
+  }
+ },
+ "T2": {
+  "name": "South-east Turkey and northern Syria",
+  "box": [
+   35.0,
+   39.0,
+   36.0,
+   40.0
+  ],
+  "land_area_km2": 157961,
+  "JPL": {
+   "event_gain_cm": 35.8,
+   "normal_gain_cm": 16.9,
+   "sd_cm": 6.1,
+   "excess_cm": 18.9,
+   "excess_km3": 29.9,
+   "excess_km3_90pct": [
+    13.9,
+    45.9
+   ],
+   "rank": 1,
+   "n_seasons": 21
+  },
+  "GSFC": {
+   "event_gain_cm": 34.2,
+   "normal_gain_cm": 15.1,
+   "sd_cm": 4.6,
+   "excess_cm": 19.1,
+   "excess_km3": 30.2,
+   "excess_km3_90pct": [
+    18.2,
+    42.2
+   ],
+   "rank": 1,
+   "n_seasons": 21
+  }
+ }
+}

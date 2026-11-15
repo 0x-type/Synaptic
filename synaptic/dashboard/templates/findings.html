@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Findings · Synaptic</title>
+<style>
+:root{--bg:#f6f6f2;--fg:#1c2226;--muted:#66707a;--card:#fff;--line:#e1e1da;--accent:#1f6f95;--ok:#2e7d4f;--warn:#b7791f;--chip:#eef2f4;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#121518;--fg:#e8eaed;--muted:#9aa3ab;--card:#1b2025;--line:#2b3238;--accent:#5fb3d9;--ok:#5cc489;--warn:#e3b04b;--chip:#232a30;color-scheme:dark}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:18px max(16px,3vw) 10px;display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+header h1{font-size:1.35rem;margin:0}header .sub{color:var(--muted)}header a{color:var(--accent);margin-left:auto;font-size:.9rem}
+main{max-width:1060px;margin:0 auto;padding:18px max(16px,3vw) 56px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.card{min-width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+h2{font-size:1.1rem;margin:0 0 6px}h3{font-size:1rem;margin:0 0 4px}p{margin:6px 0}
+.lede{font-size:1.05rem}.muted{color:var(--muted)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:10px 0}
+.tile{background:var(--chip);border-radius:10px;padding:10px 12px}.tile b{display:block;font-size:1.45rem;line-height:1.2}
+.tile span{color:var(--muted);font-size:.83rem}
+img{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--line);background:#fcfcfb;margin-top:8px}
+.badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.8rem;font-weight:600;border:1px solid var(--line);background:var(--chip)}
+.badge.ok{color:var(--ok)}.badge.warn{color:var(--warn)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600}.scroll{overflow-x:auto}code{background:var(--chip);padding:1px 5px;border-radius:5px;font-size:.88em}
+</style>
+</head>
+<body>
+<header>
+  <h1>What our AI research group found</h1>
+  <span class="sub">and what it refused to claim</span>
+  <a href="/trend">← Trend Detective</a>
+</header>
+<main>
+  <section class="card">
+    <p class="lede"><b>How much of a record rain does the land keep?</b> In 2024 record rain fell on the Sahara and the Sahel.
+    In winter 2025-26 rain ended Morocco's seven-year drought. NASA's GRACE satellites weigh the water held in the
+    ground from orbit. We used them to measure what stayed. We found no published study that had done so.</p>
+    <p class="muted">These are measurements, not a claimed discovery. Our agents and we ran 81 pre-registered tests on data
+    not seen beforehand. Everything that would have made the water result surprising (more water than the rain explains, a
+    new trend) came back <b>not shown</b>, and we say so below. One further test, on air pollution, is reported
+    after the water results.</p>
+  </section>
+
+  {% if rivers %}
+  <section class="card">
+    <h2>Re-testing the trends in NASA's own reference paper</h2>
+    <p>The challenge's resource list includes a NASA study of ocean chlorophyll off ten river mouths, measured by the
+      SeaWiFS satellite from 1998 to 2007. It reported significant trends off the Mississippi (decreasing) and the Eel
+      (increasing in summer). We asked: with 24 years of MODIS Aqua data and a test that accounts for the carry-over
+      from one month to the next, are those trends still there?</p>
+    <div class="scroll"><table>
+      <tr><th>River mouth</th><th>Reported for 1998-2007</th><th>MODIS 2002-2025: change per decade</th>
+        <th>p, the paper's method</th><th>p, corrected for carry-over</th><th>Result</th></tr>
+      {% for name, r in rivers.items() %}{% set a = r.modis_2002_2025 %}
+      <tr><td>{{ name }}</td><td>{{ r.paper_1998_2007 }}</td><td>{{ '%+.1f'|format(a.percent_per_decade) }}%</td>
+        <td>{{ '%.2g'|format(a.p_uncorrected) }}</td><td>{{ '%.2g'|format(a.p_corrected) }}</td>
+        <td>{% if a.p_corrected < 0.05 %}<b>significant {{ 'decrease' if a.percent_per_decade < 0 else 'increase' }}</b>{% else %}no trend detected{% endif %}</td></tr>
+      {% endfor %}
+    </table></div>
+    <p><b>None of the paper's three significant trends is detected in the longer record.</b> Off Mississippi East,
+      even the 2002-2007 overlap with the paper's period is significant with the paper's method
+      (p = {{ '%.3f'|format(rivers['Mississippi East'].modis_2002_2007.p_uncorrected) }}) and not once carry-over is
+      accounted for (p = {{ '%.3f'|format(rivers['Mississippi East'].modis_2002_2007.p_corrected) }}): the choice of
+      test changes the answer. One river, the Guadalquivir, does show a decrease on MODIS.</p>
+    <p class="muted">"No trend detected" means not significant: small trends are not excluded, and 2002 to 2025 is a
+      different period and sensor from the paper's. Coastal chlorophyll near the Amazon and Ganges is affected by
+      sediment and dissolved matter. These numbers were computed with this app's own code
+      (<code>scripts/river_recheck.py</code>) as an independent check of a longer campaign by our team, which also
+      tested a second satellite (VIIRS) held out from the agents; there, most re-tests were too short to be
+      conclusive and the Guadalquivir decrease was not significant on VIIRS alone (p = 0.19). We found no published
+      re-test of these trends.</p>
+  </section>
+  {% endif %}
+
+  {% for L in leads %}
+  <section class="card">
+    <h2>{{ L.name }}, {{ L.event_year }}</h2>
+    <div class="tiles">
+      <div class="tile"><b>{{ '%.0f'|format(L.solutions.JPL.excess_km3) }} – {{ '%.0f'|format(L.solutions.GSFC.excess_km3) }} km³</b><span>extra water versus a normal year (two GRACE datasets)</span></div>
+      <div class="tile"><b>#{{ L.solutions.JPL.rank_of_event_gain }}{% if L.solutions.GSFC.rank_of_event_gain != L.solutions.JPL.rank_of_event_gain %} / #{{ L.solutions.GSFC.rank_of_event_gain }}{% endif %} of {{ L.solutions.JPL.n_years }}</b><span>rank of this season's gain since 2003</span></div>
+      {% if L.solutions.JPL.share_left is defined and L.solutions.JPL.share_left %}
+      <div class="tile"><b>{{ '%.0f'|format(100*L.solutions.GSFC.share_left) }} – {{ '%.0f'|format(100*L.solutions.JPL.share_left) }}%</b><span>of the extra water still there 7 months later</span></div>
+      {% endif %}
+      <div class="tile"><b>{{ '{:,}'.format(L.land_area_km2) }} km²</b><span>land area measured</span></div>
+    </div>
+    <p class="muted">Range from year-to-year variability (90%): {{ L.solutions.JPL.excess_km3_90pct[0] }} to {{ L.solutions.JPL.excess_km3_90pct[1] }} km³ (JPL),
+      {{ L.solutions.GSFC.excess_km3_90pct[0] }} to {{ L.solutions.GSFC.excess_km3_90pct[1] }} km³ (NASA Goddard).</p>
+    <img src="/evidence/figures/{{ L.key }}_grace_gains.png" alt="Seasonal storage gain per year for {{ L.name }}, two GRACE datasets; {{ L.event_year }} is highlighted">
+    {% if L.smap and L.smap.p is defined %}
+    <h3 style="margin-top:14px">Independent check: NASA SMAP soil moisture
+      <span class="badge {{ 'ok' if L.smap.verdict == 'confirmed' else 'warn' }}">{{ L.smap.verdict }}</span></h3>
+    <p class="muted">Registered in git before any SMAP data were downloaded (<code>docs/preregistrations/1_water_gains_smap.md</code>).
+      {{ L.event_year }} versus the trend of the other {{ L.smap.n_seasons - 1 }} seasons:
+      {{ '%+.3f'|format(L.smap.departure_from_trend) }} m³/m³, p = {{ '%.3g'|format(L.smap.p) }}
+      (rank {{ L.smap.rank_of_event_year }} of {{ L.smap.n_seasons }}).
+      {% if L.smap_q and L.smap_q.p is defined %}Recommended-quality retrievals only: p = {{ '%.3g'|format(L.smap_q.p) }}.{% endif %}</p>
+    {% if L.has_smap_fig %}<img src="/evidence/figures/{{ L.key }}_smap.png" alt="Season-mean SMAP soil moisture per year for {{ L.name }}">{% endif %}
+    {% elif L.smap %}
+    <p class="muted">Independent SMAP check: {{ L.smap.verdict }}.</p>
+    {% elif not has_smap %}
+    <p class="muted">Independent SMAP check: registered, not yet run.</p>
+    {% endif %}
+  </section>
+  {% endfor %}
+
+  {% if uae %}
+  <section class="card">
+    <h2>Also detected: a human-made change in the air (UAE, 2022)</h2>
+    <p>Traffic and power plants put nitrogen dioxide into the air, and there is less of it on rest days. On
+      1 January 2022 the United Arab Emirates moved its weekend from Friday-Saturday to Saturday-Sunday. NASA's OMI
+      instrument, which has measured this gas every day since 2004, shows the cleanest day of the week over Dubai and
+      Abu Dhabi moving from Friday to Sunday in that year.</p>
+    <div class="tiles">
+      <div class="tile"><b>{{ '%.0f'|format(100*(1-uae.cities['Dubai'].R_up_before)) }}% → {{ '%.0f'|format(100*(1-uae.cities['Dubai'].R_up_after)) }}%</b><span>Friday: how far below a working day, before → after (Dubai)</span></div>
+      <div class="tile"><b>{{ '%.0f'|format(100*(1-uae.cities['Dubai'].R_down_before)) }}% → {{ '%.0f'|format(100*(1-uae.cities['Dubai'].R_down_after)) }}%</b><span>Sunday: how far below a working day, before → after (Dubai)</span></div>
+      <div class="tile"><b>p = {{ '%.5f'|format(uae.p) }}</b><span>test registered before the data were downloaded</span></div>
+      <div class="tile"><b>0 of 4</b><span>control cities showing a change on that date</span></div>
+    </div>
+    <img src="/evidence/weekend/UAE_2022_yearly.png" alt="NO2 on Fridays and Sundays relative to working days over Dubai and Abu Dhabi, each year 2005 to 2026; the two lines swap in 2022">
+    <p class="muted">This is a step change in a weekly pattern, not a long-term trend, and it says nothing about
+      tonnes of emissions or health: OMI passes at about 13:30 local time. Registered in <code>docs/preregistrations/3_weekend_shift.md</code>
+      before any data for these cities were downloaded. We found no published measurement of this change.
+      The same test on Oman and Saudi Arabia (2013) also passed, but a control city showed a similar shift without a
+      weekend change, so we do not rely on those two; Algeria (2009) was not shown.</p>
+  </section>
+  {% endif %}
+
+  <section class="card">
+    <h2>What we tested and did not find</h2>
+    <p class="muted">"Not shown" means the test was not significant. It is absence of evidence, not proof of absence.</p>
+    <div class="scroll"><table>
+      <tr><th>Question</th><th>Tests</th><th>Result</th></tr>
+      <tr><td>Did the land keep more water than rain minus evaporation explains (deep recharge)?</td><td>Sahara, Sahel, Lake Chad, Morocco</td><td>Not shown</td></tr>
+      <tr><td>Did the 2024 water drain more slowly than usual in the following dry season?</td><td>Sahel, central Sahara</td><td>Not shown</td></tr>
+      <tr><td>Did the desert surface darken, or dust drop, the year after the rain?</td><td>CERES clear-sky reflection</td><td>Not shown</td></tr>
+      <tr><td>Is Morocco's winter recharge changing over 2003-2026?</td><td>Seasonal gain trend</td><td>Not shown</td></tr>
+      <tr><td>Do water-storage drifts found across Africa in 2003-2015 continue in 2016-2025?</td><td>14 regions, years no agent saw</td><td>Not shown (10 of 14 kept their direction: a hint)</td></tr>
+      <tr><td>Did any season of 2025-26 break the GRACE water-storage record, anywhere in the world?</td><td>Worldwide scan, 5 candidates checked with SMAP</td><td>None confirmed (1 supported, 3 not shown, 1 could not be tested)</td></tr>
+      <tr><td>Did the weekly air-pollution cycle move when Saudi Arabia, Oman (2013) and Algeria (2009) moved their weekends?</td><td>OMI nitrogen dioxide, daily</td><td>Saudi Arabia and Oman passed the test but a control city failed, so not relied on; Algeria not shown</td></tr>
+    </table></div>
+  </section>
+
+  {% if gio %}
+  <section class="card">
+    <h2>Checked against NASA Giovanni</h2>
+    <p class="muted">Giovanni is NASA's own time-series tool. We fetched the same grid cell from Giovanni and through
+      this app's data path and compared month by month. All {{ gio|length }} series agree: the largest difference is
+      {{ '%.4f'|format(gio|map(attribute='max_rel_diff_pct')|max) }}% of the mean.</p>
+    <div class="scroll"><table>
+      <tr><th>Variable</th><th>Place</th><th>Months compared</th><th>Correlation</th><th>Largest difference</th></tr>
+      {% for g in gio %}<tr><td>{{ g.variable }}</td><td>{{ g.place|replace('_', ' ') }}</td><td>{{ g.months }}</td>
+        <td>{{ '%.6f'|format(g.correlation) }}</td><td>{{ '%.4f'|format(g.max_rel_diff_pct) }}%</td></tr>{% endfor %}
+    </table></div>
+  </section>
+  {% endif %}
+
+  <section class="card">
+    <h2>Why you can check this</h2>
+    <p>Agents propose; code decides. Every claim is tested by code on data the agents never see, with the test
+      written down first. A result must repeat on a second, independently processed dataset, survive a correction
+      for the number of tests, and pass a NASA ADS literature search before it can be called new. Nothing passed
+      all of that, so nothing is called new.</p>
+    <p class="muted">Re-run the numbers on this page offline: <code>python -m synaptic reproduce</code>. Full record of
+      every round: <code>docs/research/research_log.md</code>.</p>
+  </section>
+</main>
+</body>
+</html>

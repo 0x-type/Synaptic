@@ -1,0 +1,275 @@
+{
+ "registered": "2026-11-14",
+ "scan_summary": {
+  "jpl_file": "GRCTellus.JPL.200204_202609.GLO.RL06.3M.MSCNv04CRI.nc",
+  "gsfc_file": "GSFC.glb_.200204_202606_RL06v2.0_OBP-ICE6GD_HALFDEGREE.nc",
+  "blocks_with_windows": 452,
+  "block_seasons_tested": 1534,
+  "records_on_both": 97,
+  "candidates": 5,
+  "expected_records_by_chance": 148.0,
+  "expected_candidates_by_chance": 13.4
+ },
+ "candidates": [
+  {
+   "id": "T1",
+   "name": "North-east Turkey and south-west Georgia",
+   "event_group": "turkey_2026",
+   "box": [
+    39.0,
+    43.0,
+    40.0,
+    44.0
+   ],
+   "kind": "wet-season gain",
+   "gain_window_months": [
+    10,
+    4
+   ],
+   "season_end": "2026-05",
+   "direction": "+",
+   "event_months": [
+    [
+     2025,
+     11
+    ],
+    [
+     2025,
+     12
+    ],
+    [
+     2026,
+     1
+    ],
+    [
+     2026,
+     2
+    ],
+    [
+     2026,
+     3
+    ],
+    [
+     2026,
+     4
+    ]
+   ],
+   "grace": {
+    "z_jpl": 3.54,
+    "z_gsfc": 3.26,
+    "gain_cm_jpl": 31.6,
+    "normal_cm_jpl": 17.9,
+    "gain_cm_gsfc": 34.3,
+    "normal_cm_gsfc": 19.1
+   }
+  },
+  {
+   "id": "CO",
+   "name": "South-west Colombia and northern Ecuador",
+   "event_group": "colombia_2025",
+   "box": [
+    -1.0,
+    3.0,
+    -80.0,
+    -76.0
+   ],
+   "kind": "wet-season gain",
+   "gain_window_months": [
+    10,
+    6
+   ],
+   "season_end": "2025-07",
+   "direction": "+",
+   "event_months": [
+    [
+     2024,
+     11
+    ],
+    [
+     2024,
+     12
+    ],
+    [
+     2025,
+     1
+    ],
+    [
+     2025,
+     2
+    ],
+    [
+     2025,
+     3
+    ],
+    [
+     2025,
+     4
+    ],
+    [
+     2025,
+     5
+    ],
+    [
+     2025,
+     6
+    ]
+   ],
+   "grace": {
+    "z_jpl": 3.32,
+    "z_gsfc": 3.26,
+    "gain_cm_jpl": 9.8,
+    "normal_cm_jpl": 4.2,
+    "gain_cm_gsfc": 17.3,
+    "normal_cm_gsfc": 8.4
+   }
+  },
+  {
+   "id": "BO",
+   "name": "Eastern Bolivia (Santa Cruz, Beni)",
+   "event_group": "bolivia_2025",
+   "box": [
+    -17.0,
+    -13.0,
+    -64.0,
+    -60.0
+   ],
+   "kind": "wet-season gain",
+   "gain_window_months": [
+    10,
+    4
+   ],
+   "season_end": "2025-05",
+   "direction": "+",
+   "event_months": [
+    [
+     2024,
+     11
+    ],
+    [
+     2024,
+     12
+    ],
+    [
+     2025,
+     1
+    ],
+    [
+     2025,
+     2
+    ],
+    [
+     2025,
+     3
+    ],
+    [
+     2025,
+     4
+    ]
+   ],
+   "grace": {
+    "z_jpl": 4.94,
+    "z_gsfc": 3.19,
+    "gain_cm_jpl": 64.7,
+    "normal_cm_jpl": 32.9,
+    "gain_cm_gsfc": 49.8,
+    "normal_cm_gsfc": 32.8
+   }
+  },
+  {
+   "id": "CN",
+   "name": "Loess Plateau, northern China (Shanxi, Shaanxi)",
+   "event_group": "china_2025",
+   "box": [
+    35.0,
+    39.0,
+    108.0,
+    112.0
+   ],
+   "kind": "wet-season gain",
+   "gain_window_months": [
+    6,
+    10
+   ],
+   "season_end": "2025-11",
+   "direction": "+",
+   "event_months": [
+    [
+     2025,
+     7
+    ],
+    [
+     2025,
+     8
+    ],
+    [
+     2025,
+     9
+    ],
+    [
+     2025,
+     10
+    ]
+   ],
+   "grace": {
+    "z_jpl": 3.14,
+    "z_gsfc": 3.94,
+    "gain_cm_jpl": 14.8,
+    "normal_cm_jpl": 4.1,
+    "gain_cm_gsfc": 19.5,
+    "normal_cm_gsfc": 3.5
+   }
+  },
+  {
+   "id": "T2",
+   "name": "South-east Turkey and northern Syria",
+   "event_group": "turkey_2026",
+   "box": [
+    35.0,
+    39.0,
+    36.0,
+    40.0
+   ],
+   "kind": "wet-season gain",
+   "gain_window_months": [
+    10,
+    4
+   ],
+   "season_end": "2026-05",
+   "direction": "+",
+   "event_months": [
+    [
+     2025,
+     11
+    ],
+    [
+     2025,
+     12
+    ],
+    [
+     2026,
+     1
+    ],
+    [
+     2026,
+     2
+    ],
+    [
+     2026,
+     3
+    ],
+    [
+     2026,
+     4
+    ]
+   ],
+   "grace": {
+    "z_jpl": 3.08,
+    "z_gsfc": 4.13,
+    "gain_cm_jpl": 35.8,
+    "normal_cm_jpl": 16.9,
+    "gain_cm_gsfc": 34.2,
+    "normal_cm_gsfc": 15.1
+   }
+  }
+ ]
+}

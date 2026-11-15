@@ -1,0 +1,22 @@
+# Research brief: what the campaign is asked to discover. Edit freely; the planner reads it.
+title: "Hidden hydroclimate change in Morocco and the western Maghreb"
+question: >
+  Where, when and how did the water cycle and surface climate of Morocco change between 1981 and 2025
+  in ways that are NOT yet documented? Look for abrupt regime shifts, changes in the seasonal cycle,
+  changes in variability, and decouplings between variables that normally move together (e.g. rain
+  vs. soil moisture), not just the expected warming trend.
+region:
+  name: "Morocco and western Maghreb"
+  lat_min: 27.5
+  lat_max: 36.0
+  lon_min: -13.5
+  lon_max: -1.0
+start_year: 1981
+end_year: 2025
+variables: [PRECTOTCORR, GWETROOT, T2M_MAX, ALLSKY_SFC_SW_DWN]
+max_variables: 6
+notes: >
+  Morocco has experienced multi-year droughts and groundwater decline. Prioritise signals that matter
+  for water resources and agriculture. Treat any step in solar/cloud fields near 2001 as a possible
+  data-source artifact (POWER switches from SRB to CERES SYN1deg). Every claim must survive the
+  artifact checklist and a literature novelty test before it is called new.

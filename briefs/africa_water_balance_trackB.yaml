@@ -1,0 +1,65 @@
+# Track B: a continent-wide search with a TIME holdout. Explorers see GRACE 2002-2015; code confirms on 2016-2026.
+title: "Where does Africa's ground water not follow the rain? A continent-wide search, confirmed on years the search never saw"
+mode: focused
+question: >
+  GRACE satellites weigh the water stored on and under the land: soil, groundwater, lakes, wetlands, reservoirs. Over
+  most of the world the seasonal storage gain follows rain minus evaporation. Where it does NOT, something the climate
+  models do not contain is at work: groundwater pumping for irrigation, unmapped wetlands and floodplains that hold
+  water, reservoirs, lakes, springs, or evaporation the models get wrong. Search all of Africa, using GRACE 2002-2015
+  together with rain (MERRA-2), evaporation and soil moisture (GLDAS), for places (blocks at least 4 x 4 degrees,
+  GRACE resolution ~300 km) where:
+  1. the seasonal storage GAIN (wet season) or DRAWDOWN (dry season) is systematically larger or smaller than rain
+     minus evaporation over the same months predicts;
+  2. that departure points to a physical cause you can name (irrigation season, floodplain, lake, reservoir, aquifer,
+     evaporation bias), and is not explained by a known data artefact;
+  then pre-register, for each, a test that the SAME departure, in the SAME direction, appears again in 2016-2026,
+  years the search never saw. A pattern found in one era and reappearing in another, never-seen era is hard to
+  dismiss as chance. Prefer places and behaviours that are not in the literature (check it), and physically specific
+  claims (which season, which direction, how much) over vague ones.
+notes: >
+  Data: monthly, 2002-2026, Africa 35S-37N 18W-52E on a 1-degree grid. Explorers get MERRA-2 rainfall, temperature
+  and root-zone soil wetness, GLDAS soil moisture and evaporation, and GRACE_TWS (JPL mascons) ONLY UP TO 2015
+  (the campaign table and the data tool stop at 2015). TIME-HELD-OUT for confirmation: GRACE_TWS and GRACE_GSFC_TWS
+  (independent NASA GSFC mascons) from 2016 on. The JPL GRACE table for 2002-2015 is in data/: explore it freely.
+  CONFIRM SPECS (structured, pre-registered, checked by code):
+  {"dataset": "GRACE_TWS", "kind": "gain", "box": [S, N, W, E], "from_months": [..], "to_months": [..],
+   "driver": ["MERRA2_PRECIP", "GLDAS_EVAP"], "test": "later", "after": 2015, "years": [2003, 2026],
+   "direction": "+" or "-"}
+  = fit "gain = a + b*rain + c*evaporation" on 2003-2015, then test whether 2016-2026 gains depart from that model in
+  the stated direction. A departure found in 2002-2015 that is PERSISTENT should show up as the same-sign departure
+  later only if the model's intercept is fitted without it: so for a persistent offset (e.g. "drawdown always 3 cm
+  larger than the climate predicts"), prefer comparing the box with a nearby control box, or test a CHANGE you found
+  emerging before 2015 (e.g. a departure growing over 2002-2015 should be larger in 2016-2026 than the fit predicts).
+  Also allowed: any kind with "years" starting in 2016 or later (e.g. a trend over [2016, 2026]). GSFC ends Jun 2026,
+  GLDAS Jul 2026: keep to_months of 2026 within [1..6] or end "years" at 2025.
+  RULES ENFORCED IN CODE: every GRACE confirmation also runs on GSFC and both must pass; "new" needs
+  p <= 0.05 / (number of pre-registered tests, at least 10) plus a NASA ADS novelty check; boxes an earlier search
+  already examined after 2016 (Sahel-Sahara 8-23N 18W-30E, Morocco 27-37N 14W-2E) are tested at alpha 0.005.
+  Known artefacts: MERRA-2 stream changes 1992/2001/2011; GLDAS 2.1 has no irrigation, groundwater, lakes or
+  reservoirs (that is the point: GRACE minus the model shows what it lacks); GRACE gap mid-2017 to mid-2018; leakage
+  near coasts and big lakes (Victoria, Tanganyika, Malawi, Volta, Kariba, Nasser).
+region: {lat_min: -35, lat_max: 37, lon_min: -18, lon_max: 52}
+resolution: 1.0
+start_year: 2002
+end_year: 2026
+datasets: [GRACE_TWS, MERRA2_PRECIP, MERRA2_T2M, MERRA2_SOILM, GLDAS_SOILM, GLDAS_EVAP]
+holdout: []
+time_holdout: {datasets: [GRACE_TWS, GRACE_GSFC_TWS], explore_end: 2015}
+storage_kind: gain
+alpha_rules:
+  - {box: [8, 23, -18, 30], from_year: 2016, alpha: 0.005, why: "Sahel-Sahara examined by rounds 1-4"}
+  - {box: [27, 37, -14, 2], from_year: 2016, alpha: 0.005, why: "Morocco examined by rounds 3-4"}
+screen_pairs: [[MERRA2_SOILM, GLDAS_SOILM]]
+learn: false
+known_literature:
+  - "Rodell et al. (2018) Nature: Emerging trends in global freshwater availability (GRACE hotspots 2002-2016, incl. NW Sahara aquifer, Nile, Lake Victoria)"
+  - "Journal of Hydrology (2026): Long-term and interannual variability of African terrestrial water storage revealed by GRACE/GRACE-FO and models (lakes and reservoirs drive gains; land models miss them)"
+  - "Scanlon et al. (2022) Environmental Research Letters: Linkages between GRACE water storage, hydrologic extremes and climate teleconnections in major African aquifers"
+  - "Lake Victoria rise of 2019-2020 (many papers); Grand Ethiopian Renaissance Dam filling 2020-2025 seen by GRACE (several papers)"
+  - "Werth et al.; Ndehedehe et al.: GRACE over African basins (Congo, Niger, Lake Chad, Okavango, Zambezi)"
+literature_queries:
+  - "GRACE terrestrial water storage Africa land surface model discrepancy irrigation groundwater"
+  - "GRACE water balance residual Africa seasonal storage"
+  - "groundwater depletion Africa GRACE hotspot irrigation"
+  - "floodplain wetland storage GRACE Africa Sudd Okavango Inner Niger Delta"
+  - "evapotranspiration bias GLDAS Africa GRACE"

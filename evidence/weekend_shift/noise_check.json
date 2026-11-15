@@ -1,0 +1,51 @@
+{
+ "UAE_2022:Dubai": {
+  "valid_ref_days_before": 734,
+  "per_weekday": 183.5,
+  "mean": 8.56,
+  "cv": 0.43,
+  "approx_se_of_one_ratio": 0.032
+ },
+ "UAE_2022:Abu Dhabi": {
+  "valid_ref_days_before": 772,
+  "per_weekday": 193.0,
+  "mean": 3.12,
+  "cv": 0.62,
+  "approx_se_of_one_ratio": 0.045
+ },
+ "SAUDI_2013:Riyadh": {
+  "valid_ref_days_before": 1517,
+  "per_weekday": 379.2,
+  "mean": 7.48,
+  "cv": 0.53,
+  "approx_se_of_one_ratio": 0.027
+ },
+ "SAUDI_2013:Jeddah": {
+  "valid_ref_days_before": 1534,
+  "per_weekday": 383.5,
+  "mean": 3.77,
+  "cv": 0.57,
+  "approx_se_of_one_ratio": 0.029
+ },
+ "SAUDI_2013:Dammam": {
+  "valid_ref_days_before": 1435,
+  "per_weekday": 358.8,
+  "mean": 6.18,
+  "cv": 0.43,
+  "approx_se_of_one_ratio": 0.023
+ },
+ "OMAN_2013:Muscat": {
+  "valid_ref_days_before": 1475,
+  "per_weekday": 368.8,
+  "mean": 2.02,
+  "cv": 0.34,
+  "approx_se_of_one_ratio": 0.017
+ },
+ "ALGERIA_2009:Algiers": {
+  "valid_ref_days_before": 807,
+  "per_weekday": 201.8,
+  "mean": 3.29,
+  "cv": 0.61,
+  "approx_se_of_one_ratio": 0.043
+ }
+}

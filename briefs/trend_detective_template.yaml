@@ -1,0 +1,12 @@
+# Template for the "Be an Earth System Trend Detective" challenge. Copy, then edit region/question
+# once the full challenge statement is published (Oct 28).
+title: "Earth system trend detective: <region>"
+question: >
+  Detect and explain environmental change in NASA data for <region>, separating real change from
+  data artifacts, and surface any change not yet described in the literature.
+region: {name: "<region>", lat_min: 0, lat_max: 10, lon_min: 0, lon_max: 10}
+start_year: 1981
+end_year: 2025
+variables: [T2M, PRECTOTCORR, GWETROOT]
+max_variables: 6
+notes: "Replace the box with the challenge's area of interest (max 40x40 degrees per campaign)."

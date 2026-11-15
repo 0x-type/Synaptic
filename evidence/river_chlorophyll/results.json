@@ -1,0 +1,302 @@
+{
+ "Mississippi West": {
+  "box": [
+   28,
+   29,
+   -91.5,
+   -90.5
+  ],
+  "months": null,
+  "paper_1998_2007": "decreasing, p ~ 0.002",
+  "modis_2002_2025": {
+   "months": 282,
+   "slope_log10_per_decade": 0.015682929841669992,
+   "percent_per_decade": 3.6771212457443747,
+   "p_uncorrected": 0.20524457427045537,
+   "p_corrected": 0.42596668219697836,
+   "ci95_log10_per_decade": [
+    -0.023212508457254685,
+    0.05457836814059468
+   ],
+   "carryover": 0.43258175288899214,
+   "se_ratio": 1.5889420509471743
+  },
+  "modis_2002_2007": {
+   "months": 66,
+   "slope_log10_per_decade": -0.09168578439195149,
+   "percent_per_decade": -19.03185015067388,
+   "p_uncorrected": 0.19520623573324758,
+   "p_corrected": 0.319828146201297,
+   "ci95_log10_per_decade": [
+    -0.27590171381188705,
+    0.09253014502798401
+   ],
+   "carryover": 0.25524068235984876,
+   "se_ratio": 1.2982416275178943
+  },
+  "mean_mg_m3": 2.4109193175400914
+ },
+ "Mississippi East": {
+  "box": [
+   29,
+   30,
+   -88.5,
+   -87.5
+  ],
+  "months": null,
+  "paper_1998_2007": "decreasing, p ~ 0.017",
+  "modis_2002_2025": {
+   "months": 282,
+   "slope_log10_per_decade": 0.024600259384827745,
+   "percent_per_decade": 5.82791976519228,
+   "p_uncorrected": 0.17061785688266662,
+   "p_corrected": 0.40280953558061894,
+   "ci95_log10_per_decade": [
+    -0.033474184810116214,
+    0.08267470357977172
+   ],
+   "carryover": 0.45566096416959057,
+   "se_ratio": 1.6352922482798917
+  },
+  "modis_2002_2007": {
+   "months": 66,
+   "slope_log10_per_decade": -0.4275512561048056,
+   "percent_per_decade": -62.63639743204057,
+   "p_uncorrected": 0.003715179155059452,
+   "p_corrected": 0.05568426960059559,
+   "ci95_log10_per_decade": [
+    -0.8662412006934617,
+    0.011138688483850537
+   ],
+   "carryover": 0.38820970671589133,
+   "se_ratio": 1.5063512331259659
+  },
+  "mean_mg_m3": 1.3263103576970203
+ },
+ "Eel (summer)": {
+  "box": [
+   40,
+   41,
+   -125.5,
+   -124.5
+  ],
+  "months": [
+   6,
+   7,
+   8
+  ],
+  "paper_1998_2007": "increasing, p ~ 0.035",
+  "modis_2002_2025": {
+   "months": 71,
+   "slope_log10_per_decade": -0.029910277639497055,
+   "percent_per_decade": -6.655287513472363,
+   "p_uncorrected": 0.34563624723652286,
+   "p_corrected": 0.37265378987388276,
+   "ci95_log10_per_decade": [
+    -0.0964972812463322,
+    0.03667672596733809
+   ],
+   "carryover": 0.0557284508024498,
+   "se_ratio": 1.0573716461303828
+  },
+  "modis_2002_2007": {
+   "months": 17,
+   "slope_log10_per_decade": -0.15294982211968478,
+   "percent_per_decade": -29.68464432635297,
+   "p_uncorrected": 0.5716379032112299,
+   "p_corrected": 0.5822583492986736,
+   "ci95_log10_per_decade": [
+    -0.735168366669757,
+    0.4292687224303876
+   ],
+   "carryover": 0.02678969508884601,
+   "se_ratio": 1.0271583507350985
+  },
+  "mean_mg_m3": 1.050584810685489
+ },
+ "Po": {
+  "box": [
+   44.3,
+   45.3,
+   12.5,
+   13.5
+  ],
+  "months": null,
+  "paper_1998_2007": "decreasing, p ~ 0.065 without the 2000 flood",
+  "modis_2002_2025": {
+   "months": 281,
+   "slope_log10_per_decade": 0.025267810716612625,
+   "percent_per_decade": 5.990712280376065,
+   "p_uncorrected": 0.11148580751395379,
+   "p_corrected": 0.3626115273929616,
+   "ci95_log10_per_decade": [
+    -0.02958997241816967,
+    0.08012559385139491
+   ],
+   "carryover": 0.5055060869105101,
+   "se_ratio": 1.7448607876698274
+  },
+  "modis_2002_2007": {
+   "months": 66,
+   "slope_log10_per_decade": -0.12261330381957909,
+   "percent_per_decade": -24.59733491000724,
+   "p_uncorrected": 0.2984261053034671,
+   "p_corrected": 0.5171810741207737,
+   "ci95_log10_per_decade": [
+    -0.507585002099345,
+    0.2623583944601867
+   ],
+   "carryover": 0.43548355302572234,
+   "se_ratio": 1.5946332329034492
+  },
+  "mean_mg_m3": 1.644567740223956
+ },
+ "Pearl": {
+  "box": [
+   21,
+   22,
+   113.5,
+   114.5
+  ],
+  "months": null,
+  "paper_1998_2007": "increasing, not significant (p ~ 0.068)",
+  "modis_2002_2025": {
+   "months": 270,
+   "slope_log10_per_decade": 0.009441750948569921,
+   "percent_per_decade": 2.1978480181494175,
+   "p_uncorrected": 0.5589112244577868,
+   "p_corrected": 0.627751725870223,
+   "ci95_log10_per_decade": [
+    -0.028910494368042695,
+    0.04779399626518255
+   ],
+   "carryover": 0.18420392061263255,
+   "se_ratio": 1.2048207550952033
+  },
+  "modis_2002_2007": {
+   "months": 65,
+   "slope_log10_per_decade": 0.09551129532210155,
+   "percent_per_decade": 24.59806428624902,
+   "p_uncorrected": 0.42142765139046057,
+   "p_corrected": 0.4214276513904607,
+   "ci95_log10_per_decade": [
+    -0.14034710094296657,
+    0.3313696915871695
+   ],
+   "carryover": 0.0,
+   "se_ratio": 1.0
+  },
+  "mean_mg_m3": 1.1029611219194202
+ },
+ "Guadalquivir": {
+  "box": [
+   36,
+   37,
+   -7.5,
+   -6.5
+  ],
+  "months": null,
+  "paper_1998_2007": "decreasing, not significant (p ~ 0.07)",
+  "modis_2002_2025": {
+   "months": 282,
+   "slope_log10_per_decade": -0.07245508495461432,
+   "percent_per_decade": -15.365990662202867,
+   "p_uncorrected": 1.2467375621901132e-11,
+   "p_corrected": 6.774429014770731e-05,
+   "ci95_log10_per_decade": [
+    -0.1069761045648564,
+    -0.037934065344372214
+   ],
+   "carryover": 0.48436546118714796,
+   "se_ratio": 1.6966779672104895
+  },
+  "modis_2002_2007": {
+   "months": 66,
+   "slope_log10_per_decade": -0.29872331135314345,
+   "percent_per_decade": -49.733726646807455,
+   "p_uncorrected": 0.00023332048909857503,
+   "p_corrected": 0.013946919209416726,
+   "ci95_log10_per_decade": [
+    -0.5319909627147301,
+    -0.06545565999155681
+   ],
+   "carryover": 0.37684162103668073,
+   "se_ratio": 1.4864242212580174
+  },
+  "mean_mg_m3": 0.5706223135411856
+ },
+ "Ganges": {
+  "box": [
+   19.5,
+   20.5,
+   89,
+   90
+  ],
+  "months": null,
+  "paper_1998_2007": "decreasing",
+  "modis_2002_2025": {
+   "months": 246,
+   "slope_log10_per_decade": 0.00883114231629616,
+   "percent_per_decade": 2.054261021777304,
+   "p_uncorrected": 0.4924821068806407,
+   "p_corrected": 0.5710359461698675,
+   "ci95_log10_per_decade": [
+    -0.02188462559408255,
+    0.039546910226674864
+   ],
+   "carryover": 0.18909877278961498,
+   "se_ratio": 1.2109465845184437
+  },
+  "modis_2002_2007": {
+   "months": 58,
+   "slope_log10_per_decade": 0.11079774536301226,
+   "percent_per_decade": 29.06180818077393,
+   "p_uncorrected": 0.1307966364755303,
+   "p_corrected": 0.23410639857827137,
+   "ci95_log10_per_decade": [
+    -0.07506216433674788,
+    0.2966576550627723
+   ],
+   "carryover": 0.23158658649414776,
+   "se_ratio": 1.26600379184817
+  },
+  "mean_mg_m3": 0.30053216533622507
+ },
+ "Amazon": {
+  "box": [
+   0,
+   4,
+   -52,
+   -48
+  ],
+  "months": null,
+  "paper_1998_2007": "no trend",
+  "modis_2002_2025": {
+   "months": 127,
+   "slope_log10_per_decade": 0.014228134403999431,
+   "percent_per_decade": 3.3304056683410854,
+   "p_uncorrected": 0.05433315304930399,
+   "p_corrected": 0.14855133218555033,
+   "ci95_log10_per_decade": [
+    -0.005198238864588544,
+    0.03365450767258741
+   ],
+   "carryover": 0.2774788433910737,
+   "se_ratio": 1.3296935863217323
+  },
+  "modis_2002_2007": {
+   "months": 29,
+   "slope_log10_per_decade": 0.05381299628357532,
+   "percent_per_decade": 13.191286569637374,
+   "p_uncorrected": 0.25511678199413723,
+   "p_corrected": 0.36088235308075356,
+   "ci95_log10_per_decade": [
+    -0.06712639018599648,
+    0.17475238275314714
+   ],
+   "carryover": 0.21038214680962902,
+   "se_ratio": 1.2380915941729345
+  },
+  "mean_mg_m3": 5.86381064748971
+ }
+}

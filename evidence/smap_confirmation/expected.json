@@ -1,0 +1,17 @@
+{
+ "A_lake_chad_departure": 0.04596722861408592,
+ "A_lake_chad_p": 0.10095647277610416,
+ "B_central_sahara_departure": 0.02105293595917799,
+ "B_central_sahara_p": 0.04935921014009793,
+ "C_north_morocco_departure": 0.050568507721613004,
+ "C_north_morocco_p": 0.010572045469405352,
+ "tolerance": {
+  "A_lake_chad_departure": 1e-09,
+  "A_lake_chad_p": 1e-09,
+  "B_central_sahara_departure": 1e-09,
+  "B_central_sahara_p": 1e-09,
+  "C_north_morocco_departure": 1e-09,
+  "C_north_morocco_p": 1e-09
+ },
+ "claim": "Pre-registered SMAP check of three GRACE leads (alpha 0.05/3): northern Morocco winter 2025-26 confirmed (p = 0.011); central Sahara Aug-Oct 2024 supported, not confirmed (p = 0.049); Lake Chad basin Aug-Oct 2024 not shown (p = 0.10)."
+}

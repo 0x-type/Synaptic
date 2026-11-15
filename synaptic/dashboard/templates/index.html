@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synaptic mission control</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="mast-left">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true" class="brand-mark"><path d="M3 26 C9 20 11 14 16 13 S25 9 29 4" /><path d="M16 13 C15 18 17 22 22 27" /><path d="M9 19 C7 22 7 25 8 29" /><circle cx="16" cy="13" r="2.2"/></svg>
+      <span>Synaptic</span>
+    </div>
+    <h1 id="title">Waiting for a campaign</h1>
+    <p id="question" class="question"></p>
+  </div>
+  <div class="mast-right">
+    <div class="controls">
+      <label class="sr" for="campaign">Campaign</label>
+      <select id="campaign"></select>
+      <button id="stop" class="btn quiet" type="button">Stop campaign</button>
+      <button id="launch-open" class="btn" type="button">Launch campaign</button>
+    </div>
+    <p id="mode" class="mode"></p>
+  </div>
+</header>
+
+<section class="vitals" aria-label="Campaign vitals">
+  <ol id="stages" class="stages"></ol>
+  <p id="counters" class="counters"></p>
+</section>
+
+<main class="workspace">
+  <section class="network-wrap" aria-label="Task network">
+    <div class="section-head">
+      <h2>Task network</h2>
+      <p class="hint">Trunks are tasks from the research brief. Branches are follow-ups the agents opened themselves. Select a node to read the agent's work.</p>
+    </div>
+    <div id="network" class="network"></div>
+    <ul class="legend" aria-label="Legend">
+      <li><svg width="14" height="14"><circle cx="7" cy="7" r="5.5" class="n-mission"/></svg>From the brief</li>
+      <li><svg width="14" height="14"><circle cx="7" cy="7" r="5.5" class="n-worker"/></svg>Opened by a worker</li>
+      <li><svg width="14" height="14"><circle cx="7" cy="7" r="5.5" class="n-supervisor"/></svg>Opened by a supervisor</li>
+      <li><svg width="14" height="14"><circle cx="7" cy="7" r="5" class="n-hollow"/></svg>Waiting or declined</li>
+      <li><svg width="14" height="14"><circle cx="7" cy="7" r="5.5" class="n-mission"/><circle cx="7" cy="7" r="6.5" class="ring-running"/></svg>Running</li>
+      <li><svg width="12" height="12"><rect x="2.5" y="2.5" width="7" height="7" transform="rotate(45 6 6)" class="v-new_signal"/></svg>Verdict (green new, ochre known, magenta artifact, grey not robust)</li>
+    </ul>
+  </section>
+
+  <aside class="inspector" id="inspector" aria-label="Task inspector" tabindex="-1">
+    <div class="empty-state">
+      <h2>Inspector</h2>
+      <p>Select a task in the network to see its plan, every tool call, what the agent looked at, and the supervisor's review.</p>
+    </div>
+  </aside>
+</main>
+
+<nav class="tabs" role="tablist" aria-label="Views">
+  <button role="tab" aria-selected="true" data-tab="discoveries">Discoveries</button>
+  <button role="tab" aria-selected="false" data-tab="map">Anomaly map</button>
+  <button role="tab" aria-selected="false" data-tab="kb">Knowledge base</button>
+  <button role="tab" aria-selected="false" data-tab="bench">Benchmark</button>
+  <button role="tab" aria-selected="false" data-tab="log">Live log</button>
+</nav>
+
+<section class="panel" id="tab-discoveries" role="tabpanel">
+  <div class="discoveries">
+    <ol id="reports" class="reports"></ol>
+    <article id="report" class="report"><p class="muted">Ranked reports appear here once deep dives finish and the editor files them.</p></article>
+  </div>
+</section>
+<section class="panel" id="tab-map" role="tabpanel" hidden>
+  <div class="map-layout">
+    <div id="map" class="map"></div>
+    <div class="map-side">
+      <h3>Anomaly families</h3>
+      <p class="hint">Every spatially coherent change the sweep found. Outlined families passed the pre-registered filters; filled ones were promoted to a deep dive and coloured by verdict.</p>
+      <ul class="legend vertical" id="map-legend"></ul>
+      <h3>Locked thresholds</h3>
+      <dl id="thresholds" class="thresholds"></dl>
+    </div>
+  </div>
+</section>
+<section class="panel" id="tab-kb" role="tabpanel" hidden>
+  <ul id="kb" class="kb"></ul>
+</section>
+<section class="panel" id="tab-bench" role="tabpanel" hidden>
+  <div id="bench" class="bench"></div>
+</section>
+<section class="panel" id="tab-log" role="tabpanel" hidden>
+  <ol id="log" class="log"></ol>
+</section>
+
+<dialog id="launch">
+  <form method="dialog" id="launch-form">
+    <h2>Launch a campaign</h2>
+    <label>Research brief <select id="brief"></select></label>
+    <label class="check"><input type="checkbox" id="mock"> Offline demo (scripted agents, real NASA data, no API calls)</label>
+    <div class="dialog-actions">
+      <button value="cancel" class="btn quiet" type="submit">Cancel</button>
+      <button value="go" class="btn" id="launch-go" type="submit">Launch</button>
+    </div>
+  </form>
+</dialog>
+<dialog id="lightbox"><img alt=""><form method="dialog"><button class="btn quiet">Close</button></form></dialog>
+<script src="/static/app.js"></script>
+</body>
+</html>

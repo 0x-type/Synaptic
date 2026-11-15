@@ -1,0 +1,210 @@
+{
+ "tests": {
+  "UAE_2022": {
+   "what": "UAE: Friday-Saturday weekend became Saturday-Sunday (Friday a half day), 1 Jan 2022",
+   "D": 0.3838329087654612,
+   "p": 4.999750012499375e-05,
+   "null_sd": 0.06037049409409933,
+   "z": 6.357955397336684,
+   "weeks_before": 260,
+   "weeks_after": 209,
+   "cities": {
+    "Dubai": {
+     "R_up_before": 0.7500670522570541,
+     "R_up_after": 0.9674801566413375,
+     "R_down_before": 0.9704783353382472,
+     "R_down_after": 0.7474993350298863,
+     "valid_days_before": 1099,
+     "valid_days_after": 905
+    },
+    "Abu Dhabi": {
+     "R_up_before": 0.7622064226836938,
+     "R_up_after": 0.9294185380135987,
+     "R_down_before": 0.9289256584368658,
+     "R_down_after": 0.7688640609284927,
+     "valid_days_before": 1164,
+     "valid_days_after": 909
+    }
+   },
+   "holm_p": 0.000199990000499975,
+   "verdict": "confirmed"
+  },
+  "SAUDI_2013": {
+   "what": "Saudi Arabia: Thursday-Friday weekend became Friday-Saturday, 29 Jun 2013",
+   "D": 0.07469558484078963,
+   "p": 0.010349482525873706,
+   "null_sd": 0.029244640227042047,
+   "z": 2.554163233361299,
+   "weeks_before": 443,
+   "weeks_after": 442,
+   "cities": {
+    "Riyadh": {
+     "R_up_before": 0.979455915186914,
+     "R_up_after": 0.9925880097336306,
+     "R_down_before": 0.9999042568795717,
+     "R_down_after": 0.9357249819573648,
+     "valid_days_before": 2273,
+     "valid_days_after": 1973
+    },
+    "Jeddah": {
+     "R_up_before": 0.9456134174220105,
+     "R_up_after": 0.9864244063445312,
+     "R_down_before": 0.9431526683065262,
+     "R_down_after": 0.9172797897878968,
+     "valid_days_before": 2302,
+     "valid_days_after": 2052
+    },
+    "Dammam": {
+     "R_up_before": 0.9684126262711527,
+     "R_up_after": 0.9936321371327405,
+     "R_down_before": 1.0023451783512192,
+     "R_down_after": 0.9474731716005119,
+     "valid_days_before": 2160,
+     "valid_days_after": 1923
+    }
+   },
+   "holm_p": 0.02069896505174741,
+   "verdict": "confirmed"
+  },
+  "OMAN_2013": {
+   "what": "Oman: Thursday-Friday weekend became Friday-Saturday, 1 May 2013",
+   "D": 0.1523386623899201,
+   "p": 9.99950002499875e-05,
+   "null_sd": 0.036744388702916866,
+   "z": 4.145902755971745,
+   "weeks_before": 435,
+   "weeks_after": 450,
+   "cities": {
+    "Muscat": {
+     "R_up_before": 0.9603549447224798,
+     "R_up_after": 1.017105312088845,
+     "R_down_before": 1.030233936384274,
+     "R_down_after": 0.934645641360719,
+     "valid_days_before": 2216,
+     "valid_days_after": 2078
+    }
+   },
+   "holm_p": 0.0002999850007499625,
+   "verdict": "confirmed"
+  },
+  "ALGERIA_2009": {
+   "what": "Algeria: Thursday-Friday weekend became Friday-Saturday, 14 Aug 2009",
+   "D": 0.11323755998054742,
+   "p": 0.11639418029098544,
+   "null_sd": 0.07202357997589334,
+   "z": 1.5722289841528094,
+   "weeks_before": 241,
+   "weeks_after": 281,
+   "cities": {
+    "Algiers": {
+     "R_up_before": 0.9392296584238323,
+     "R_up_after": 1.0333441272526267,
+     "R_down_before": 0.9388830781927484,
+     "R_down_after": 0.9197599870409953,
+     "valid_days_before": 1217,
+     "valid_days_after": 1067
+    }
+   },
+   "holm_p": 0.11639418029098544,
+   "verdict": "not shown"
+  }
+ },
+ "placebos": {
+  "UAE_2022:Kuwait City": {
+   "D": -0.0018108742143284062,
+   "p": 0.9806038792241552,
+   "null_sd": 0.06704458165549745,
+   "z": -0.027010000951805776,
+   "weeks_before": 261,
+   "weeks_after": 208
+  },
+  "UAE_2022:Doha": {
+   "D": 0.10521493622042122,
+   "p": 0.15596880623875226,
+   "null_sd": 0.07396086653229905,
+   "z": 1.4225757640964545,
+   "weeks_before": 261,
+   "weeks_after": 209
+  },
+  "UAE_2022:Cairo": {
+   "D": 0.03937695742088099,
+   "p": 0.5022995400919816,
+   "null_sd": 0.05885379159153932,
+   "z": 0.6690640714224048,
+   "weeks_before": 260,
+   "weeks_after": 209
+  },
+  "UAE_2022:Tehran": {
+   "D": 0.07691500757900277,
+   "p": 0.3291341731653669,
+   "null_sd": 0.07773728078672132,
+   "z": 0.9894224084069196,
+   "weeks_before": 260,
+   "weeks_after": 208
+  },
+  "SAUDI_2013:Kuwait City": {
+   "D": 0.18682585736065274,
+   "p": 0.0005998800239952009,
+   "null_sd": 0.0534201101961022,
+   "z": 3.4972944959272008,
+   "weeks_before": 443,
+   "weeks_after": 441
+  },
+  "SAUDI_2013:Doha": {
+   "D": 0.03873391309326937,
+   "p": 0.4341131773645271,
+   "null_sd": 0.04850232022573265,
+   "z": 0.7985991786165995,
+   "weeks_before": 443,
+   "weeks_after": 441
+  },
+  "SAUDI_2013:Cairo": {
+   "D": -0.020031270678965964,
+   "p": 0.6184763047390522,
+   "null_sd": 0.04195946225569691,
+   "z": -0.47739579113043284,
+   "weeks_before": 443,
+   "weeks_after": 442
+  },
+  "SAUDI_2013:Tehran": {
+   "D": 0.03350877658364088,
+   "p": 0.5592881423715257,
+   "null_sd": 0.05638105988785406,
+   "z": 0.594326829795187,
+   "weeks_before": 443,
+   "weeks_after": 440
+  },
+  "OMAN_2013:Kuwait City": {
+   "D": 0.17930823655354824,
+   "p": 0.0003999200159968006,
+   "null_sd": 0.0504778326373938,
+   "z": 3.552217422677481,
+   "weeks_before": 435,
+   "weeks_after": 450
+  },
+  "OMAN_2013:Doha": {
+   "D": 0.037329848802420726,
+   "p": 0.39852029594081184,
+   "null_sd": 0.0439276494867508,
+   "z": 0.8498030110552566,
+   "weeks_before": 435,
+   "weeks_after": 450
+  },
+  "OMAN_2013:Cairo": {
+   "D": -0.014854933246909287,
+   "p": 0.7018596280743852,
+   "null_sd": 0.03868762465386097,
+   "z": -0.38397118923213047,
+   "weeks_before": 435,
+   "weeks_after": 450
+  },
+  "OMAN_2013:Tehran": {
+   "D": 0.02921907084753962,
+   "p": 0.5912817436512697,
+   "null_sd": 0.05413829492850264,
+   "z": 0.5397116936565436,
+   "weeks_before": 435,
+   "weeks_after": 451
+  }
+ }
+}

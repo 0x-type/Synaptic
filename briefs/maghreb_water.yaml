@@ -1,0 +1,52 @@
+# Focused v4 campaign: one open regional problem, held-out confirmation on independent NASA satellites.
+title: "Morocco's missing water: why storage keeps falling after the 2018-2024 drought"
+mode: focused
+question: >
+  Since 2018 Morocco and western Algeria have lived through the longest drought on record, and NASA's GRACE /
+  GRACE-FO satellites show the region's total water storage (soil, snow, reservoirs and groundwater) falling to the
+  lowest level ever measured, with no recovery yet. Published studies disagree on WHY and HOW MUCH: a rain deficit
+  from persistent winter anticyclones (a positive NAO), heat-driven evaporation (several studies find rising
+  evaporative demand, not falling rain, drives the drought indices), the collapse of the High Atlas snowpack that
+  recharges the plains, or groundwater pumping for irrigation that the climate cannot explain (one GRACE study found
+  wet years had been HIDING depletion). Use NASA data to separate these explanations: how much of the storage loss
+  does the climate account for, WHEN did the loss start (a step at the drought onset or a decline that began
+  earlier), WHERE is it concentrated (irrigated Atlantic plains and Atlas piedmont versus the rain-fed and desert
+  south), and is any part of it beyond what rain, evaporation and snow explain? Prefer tests that DISCRIMINATE
+  between explanations (fingerprints in season, place, timing, and in what the climate predicts versus what the
+  satellites measure) over describing the drought.
+notes: >
+  Data are monthly, 2002-2025, 27-37N 14W-2E (Morocco, northern Western Sahara and western Algeria) on a
+  0.5-degree grid. Explorers get MERRA-2 rainfall, temperature, root-zone soil wetness, runoff, snow mass,
+  sea-level pressure and water vapour, and GLDAS Noah soil moisture, evapotranspiration and snow depth, plus
+  climate indices (NAO first). Neither MERRA-2 nor GLDAS includes irrigation or groundwater pumping, so they show
+  what the CLIMATE alone does to the land. HELD OUT for code confirmation, never seen by the explorers: GRACE /
+  GRACE-FO total water storage (what the land actually lost, including groundwater) and GPM IMERG satellite
+  rainfall (an independent check of every rain claim; MERRA-2 rain is a model corrected with gauges).
+  GRACE caveats: its real resolution is ~300 km (mascons), so only large sub-regions can be contrasted; it has an
+  11-month gap between missions (mid-2017 to mid-2018); values are anomalies in cm of water. A claim of human
+  depletion must show storage falling BEYOND what accumulated rain and evaporation explain (the "residual" confirm
+  kind), not just storage falling.
+region: {lat_min: 27, lat_max: 37, lon_min: -14, lon_max: 2}
+resolution: 0.5
+start_year: 2002
+end_year: 2025
+datasets: [MERRA2_PRECIP, MERRA2_T2M, MERRA2_SOILM, MERRA2_RUNOFF, MERRA2_SNOW, MERRA2_SLP, MERRA2_TQV,
+           GLDAS_SOILM, GLDAS_EVAP, GLDAS_SNOWDEPTH]
+holdout: [GRACE_TWS, IMERG_PRECIP]
+screen_pairs: [[MERRA2_SOILM, GLDAS_SOILM], [MERRA2_SNOW, GLDAS_SNOWDEPTH]]
+learn: false
+known_literature:
+  - "J. Hydrology: Regional Studies (2022): When climate variability partly compensates for groundwater depletion - an analysis of the GRACE signal in Morocco (wet years masked depletion)"
+  - "Ait Dhmane et al. (2024) Frontiers in Water: Spatiotemporal characterization and hydrological impact of drought patterns in northwestern Morocco (Bouregreg; GRACE TWS falls with rising evaporative demand while rainfall is stable; anthropogenic factors not separated)"
+  - "Dynamics of seasonal snowpack over the High Atlas (2022, HAL insu-03668283): High Atlas snow and its role in recharge"
+  - "CESBIO (2022-2023): Snow drought in the High Atlas of Morocco (MODIS snow cover)"
+  - "Environmental Research Letters (2023): Persistent anticyclonic conditions and climate change exacerbated the exceptional 2022 European-Mediterranean drought"
+  - "Snowpack and groundwater recharge in the Atlas mountains: new evidence and key drivers"
+  - "JRC Global Drought Observatory reports (2023-2024): drought in the Maghreb"
+literature_queries:
+  - "Morocco GRACE total water storage decline groundwater depletion drought 2018 2023"
+  - "Morocco drought 2018-2024 cause NAO anticyclone rainfall deficit"
+  - "High Atlas snowpack decline groundwater recharge Morocco"
+  - "Morocco evaporative demand temperature drought SPEI trend"
+  - "Souss Haouz Saiss aquifer groundwater depletion irrigation satellite"
+  - "Maghreb multi-year drought persistence soil moisture memory"

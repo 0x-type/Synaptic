@@ -1,0 +1,11 @@
+{
+ "series_compared": 12,
+ "lowest_correlation": 0.9999999999798777,
+ "largest_difference_pct": 0.0006648731137585573,
+ "tolerance": {
+  "series_compared": 0,
+  "lowest_correlation": 1e-09,
+  "largest_difference_pct": 1e-09
+ },
+ "claim": "The app's data path reproduces NASA Giovanni: 12 monthly grid-cell series (IMERG rain, GLDAS soil moisture and evaporation 2001-2024, MERRA-2 temperature 2020; Marrakech, Wisconsin, Lake Chad) agree to better than 0.001%."
+}
