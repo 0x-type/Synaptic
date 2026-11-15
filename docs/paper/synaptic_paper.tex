@@ -2,383 +2,786 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage[margin=1in]{geometry}
-\usepackage{amsmath}
+\usepackage{mathptmx}
+\usepackage[scaled=0.92]{helvet}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{tabularx}
-\usepackage{caption}
+\usepackage{threeparttable}
+\usepackage[font=small,labelfont=bf]{caption}
 \usepackage{enumitem}
 \usepackage{microtype}
-\usepackage[hidelinks]{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
 \usepackage{xurl}
+\usepackage{authblk}
+\usepackage{titlesec}
 
-\captionsetup{font=small,labelfont=bf}
-\setlist{itemsep=2pt,topsep=4pt}
-\setlength{\emergencystretch}{1.5em}
+\titleformat{\section}{\normalfont\large\bfseries}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.2ex plus .5ex}{0.6ex}
+\titlespacing*{\subsection}{0pt}{1ex plus .4ex}{0.4ex}
+\setlist{itemsep=1pt,topsep=3pt,parsep=0pt}
+\setlength{\emergencystretch}{2em}
+\renewcommand{\Affilfont}{\normalsize\normalfont}
+\renewcommand{\Authands}{ and }
 
-\title{\textbf{Synaptic: Agents Propose, Code Decides}\\[4pt]
-\large Honest trend detection in NASA Earth data with a pre-registered AI research group}
+\newcommand{\Dexp}{\mathcal{D}_{\mathrm{exp}}}
+\newcommand{\Dho}{\mathcal{D}_{\mathrm{ho}}}
+\newcommand{\km}{\,km$^3$}
 
-\author{Nassim Abouelfadile \and Reda Louriki\\[4pt]
-\normalsize Team Synaptic, Casablanca, Morocco\\
-\normalsize NASA Space Apps Challenge 2026 --- \emph{Be an Earth System Trend Detective!}}
+\title{\textbf{Agents Propose, Code Decides:\\ Pre-registered, Held-out Confirmation for an Autonomous\\ AI Research Group on NASA Earth Observation Data}}
 
+\author{Reda Louriki}
+\author{Nassim Abouelfadile}
+\affil{Team Synaptic, Casablanca, Morocco\\
+\small NASA International Space Apps Challenge 2026: \emph{Be an Earth System Trend Detective!}}
 \date{November 2026}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-A line drawn through Earth observation data is easy to over-read. Year-to-year memory in climate series makes
-ordinary trend tests call chance ``significant'', and testing many ideas guarantees that some pass by luck. We present
-\emph{Synaptic}, which answers this problem at two levels. \emph{Trend Detective} is an application that lets anyone
-choose one of 41 NASA variables, any region and any period, and returns the time series with a verdict in plain
-words, computed with tests that account for carry-over between years. Behind it, an AI research group of NVIDIA
-Nemotron agents searches NASA data for changes, but no agent can promote its own claim: every hypothesis carries a
-confirmation test written down before its data are downloaded, and code runs that test on data the agents never saw.
-Applied to NASA data, the system (i) re-tested the river-mouth chlorophyll trends of a NASA reference study and did not
-detect them in 24 years of MODIS once carry-over is accounted for ($p = 0.37$--$0.43$); (ii) measured that the
-winter 2025--26 rains in northern Morocco added 17--21\,km$^3$ of water storage, confirmed on a second satellite, SMAP
-($p = 0.011$, below a pre-set threshold of 0.0167); (iii) measured the largest seasonal water gains since 2003 around
-Lake Chad (about 75\,km$^3$) and in the central Sahara (46--73\,km$^3$) after the 2024 rains; and (iv) found that when
-the United Arab Emirates moved its weekend in 2022, the day with the cleanest air over Dubai and Abu Dhabi moved from
-Friday to Sunday ($p = 0.00005$). Of 81 pre-registered tests, most came back ``not shown'', and we report them all.
+\noindent
+Testing whether a line drawn through Earth observation data reflects a real change is harder than drawing it. Serial
+correlation in climate series inflates the false-positive rate of standard trend tests, and any search over many
+regions, variables and periods produces some significant results by chance. Autonomous research agents built on large
+language models (LLMs) make the second problem worse: they test many ideas quickly and tend to over-claim. We present
+\emph{Synaptic}, a system with two layers. \emph{Trend Detective} is an application in which any user selects one of
+41 NASA variables, a region and a period, and receives the time series together with a plain-language verdict
+computed by trend tests corrected for year-to-year carry-over; its downloads agree with NASA Giovanni to better than
+0.001\% on twelve test series. Behind it, a multi-agent research group of NVIDIA Nemotron models explores NASA data
+under a single architectural rule: \emph{agents propose, code decides}. Each hypothesis carries a confirmation test
+that is fixed before its data are downloaded, confirmation datasets are withheld from the agents' tools, and verdicts
+are governed by a ratchet that only code can move upward. Applied to NASA data, the system (i) did not detect, in 24
+years of MODIS Aqua data, the three river-mouth chlorophyll trends reported as significant by a NASA reference study
+once serial correlation is accounted for ($p = 0.37$ to $0.43$); (ii) measured that the 2025-26 winter rains in
+northern Morocco added 17 to 21\km{} of terrestrial water storage on two GRACE/GRACE-FO solutions, a result confirmed by
+a pre-registered test on an independent satellite, SMAP ($p = 0.011$, threshold $0.0167$); (iii) measured the largest
+seasonal storage gains since 2003 around Lake Chad and in the central Sahara after the 2024 rains, which the SMAP test
+did not confirm; and (iv) detected that when the United Arab Emirates moved its weekend in 2022, the day with the
+lowest nitrogen dioxide over Dubai and Abu Dhabi moved from Friday to Sunday ($p = 5\times10^{-5}$). Of 81
+pre-registered tests, most returned ``not shown''; all are reported, and every reported result is recomputed offline
+by a single command.
 \end{abstract}
 
-% ---------------------------------------------------------------------------------------------------------------
+\medskip
+\noindent\textbf{Keywords:} trend detection; serial correlation; multiple testing; pre-registration; LLM agents;
+autonomous science; GRACE; SMAP; OMI; NASA Earth data.
+
+% =====================================================================================================================
 \section{Introduction}
 
-NASA publishes decades of free satellite and model data about the Earth system. The 2026 Space Apps challenge
-\emph{Be an Earth System Trend Detective} asks for a tool that lets anyone choose a variable, a region and a period,
-build the time series, and test whether its trend is statistically significant. The difficulty is not drawing the
-line; it is deciding honestly whether the line means anything. Three things routinely mislead:
+NASA distributes decades of open satellite and model data about the Earth system. The 2026 Space Apps challenge
+\emph{Be an Earth System Trend Detective} asks for a tool with which anyone can choose a variable, a region and a
+period, build the corresponding time series and decide whether its trend is statistically significant. Fitting the
+line is trivial; deciding honestly whether it means anything is not. Three difficulties recur.
 
 \begin{enumerate}
-  \item \textbf{Noisy years.} A single wet, hot or smoky year can tilt a short record.
-  \item \textbf{Hidden memory.} Climate series remember the previous year (soil water, ocean heat, slow cycles).
-        Standard tests assume independent years and therefore report trends that are not there. In our own
-        experiments on synthetic data, carry-over alone made 35\% of pure-noise grid cells ``significant'' before
-        correction.
-  \item \textbf{Too many tries.} An automated search that tests hundreds of regions and variables will always find
-        something with $p < 0.05$.
+  \item \textbf{Short, noisy records.} Many satellite records span 20 to 25 years. A single extreme year can tilt a
+        fitted slope.
+  \item \textbf{Serial correlation.} Climate series carry memory from one year to the next through soil water, ocean
+        heat and slow modes of variability. Tests that assume independent observations then report trends that are
+        not there \citep{hamed1998,yue2002}. In our own calibration on synthetic fields with lag-one autocorrelation
+        $r = 0.5$, an uncorrected change-point test flagged 35\% of pure-noise grid cells as significant.
+  \item \textbf{Multiplicity.} A search over hundreds of regions and variables guarantees results with $p < 0.05$
+        \citep{livezey1983,wilks2016,ioannidis2005}.
 \end{enumerate}
 
-Recent work has shown that teams of large-language-model agents can carry out real scientific search, for example
-in genome mining \cite{yoon2026} and hypothesis generation for biomedicine \cite{gottweis2026}. Such systems are
-powerful, but they also amplify the third problem: an agent that runs many analyses and is rewarded for finding
-something will over-claim. Synaptic adapts the multi-agent design of Yoon et al.\ \cite{yoon2026} to Earth
-observation and adds one rule that shapes everything else: \textbf{agents propose, code decides.}
+LLM-based agents are now able to conduct parts of the scientific process autonomously, from hypothesis generation to
+data analysis \citep{lu2024,gottweis2026,ghareeb2026,yoon2026}. Yoon et al.\ \citep{yoon2026} showed that a harness of
+worker and supervisor agents surveying 1.9 billion metagenomic protein clusters could surface a previously
+undescribed family of reverse transcriptases, and that the decisive observation came from an agent reading raw
+sequence data. These systems amplify the third difficulty: an agent that runs many analyses and is asked to find
+something will find something. The usual defence in empirical science, pre-registration of hypotheses and analyses
+before data are seen \citep{nosek2018,simmons2011}, has not, to our knowledge, been built into an agentic research
+loop as a hard constraint.
 
-Our contributions are:
+We present \emph{Synaptic}, which adapts the harness design of Yoon et al.\ \citep{yoon2026} from genome mining to
+Earth observation and adds one rule that shapes the rest of the design: \textbf{agents propose, code decides}. Our
+contributions are:
+
 \begin{itemize}
-  \item an open application for the challenge's five steps, with statistics that account for carry-over and a
-        verdict in plain language, cross-checked against NASA Giovanni;
-  \item an agentic research workflow in which hypotheses are pre-registered in git, confirmation data are held out
-        from the agents, and verdicts can only be raised by code;
-  \item four results on NASA data, each with its test registered before its data were downloaded, and a full
-        account of what was tested and not shown.
+  \item \textbf{An application for the challenge's five steps} (variable, region, period, time series, significance)
+        whose tests account for serial correlation and whose verdicts are written in plain language
+        (Section~\ref{sec:app}).
+  \item \textbf{An agentic research architecture with held-out confirmation} in which (a) every hypothesis carries a
+        machine-readable confirmation test fixed before the data it uses are downloaded, (b) confirmation datasets are
+        removed from the agents' tools, and (c) a verdict ratchet enforced in code allows only confirmation code to
+        raise a claim (Section~\ref{sec:system}).
+  \item \textbf{Four results on NASA data}, each judged by a test registered before its data were downloaded, and a
+        complete account of the tests that returned ``not shown'' (Section~\ref{sec:results}).
+  \item \textbf{An empirical account of agent failure modes} observed while building the system, and of the
+        mechanisms added in response (Section~\ref{sec:agents}).
 \end{itemize}
 
-% ---------------------------------------------------------------------------------------------------------------
-\section{Trend Detective: the application}
+% =====================================================================================================================
+\section{Related work}
+\label{sec:related}
 
-Figure~\ref{fig:app} shows the user's path. The user chooses (1) a variable from 41 monthly NASA variables, described
-in plain language: MERRA-2 reanalysis fields, MODIS Aqua aerosol, cloud, sea surface temperature and chlorophyll,
-OMI nitrogen dioxide and ozone, AIRS temperature at four heights, GPM IMERG rainfall, GLDAS land variables, CERES
-radiation and GRACE/GRACE-FO water storage; (2) a region: any country, US state, a box or the whole world; and (3) a
-period and season. The application fetches only that variable and region from NASA Earthdata Cloud (OPeNDAP and
-Harmony subsetting), then (4) draws the yearly and monthly time series and a map of where the variable changes, and
-(5) tests significance.
+\paragraph{Trend detection under serial correlation.} The Theil-Sen estimator \citep{theil1950,sen1968} and the
+Mann-Kendall test \citep{mann1945,kendall1975} are standard for hydro-climatic series because they are robust to
+outliers and make no distributional assumption. Positive serial correlation inflates the variance of the Mann-Kendall
+statistic; Hamed and Rao \citep{hamed1998} proposed a variance correction based on an effective sample size, and Yue et
+al.\ \citep{yue2002} analysed the interaction of pre-whitening with trend. The effective number of independent
+observations under first-order autoregression, $n_{\mathrm{eff}} = n(1-\rho)/(1+\rho)$, is discussed by Bretherton et
+al.\ \citep{bretherton1999} and Wilks \citep{wilks2011}. Change points are commonly tested with Pettitt's statistic
+\citep{pettitt1979}, which suffers from the same problem.
+
+\paragraph{Multiplicity and field significance.} When a test is repeated over many grid cells, the fraction of
+significant cells must be compared with what spatially correlated noise produces \citep{livezey1983,wilks2016}.
+Family-wise error can be controlled with the Holm procedure \citep{holm1979} and the false-discovery rate with the
+Benjamini-Hochberg procedure \citep{benjamini1995}. Surrogate data that preserve the autocorrelation structure
+\citep{theiler1992} provide null distributions when analytical ones are unavailable. Outside the geosciences,
+flexibility in analysis choices is a known source of false positives \citep{simmons2011,ioannidis2005}, and
+pre-registration is the main procedural remedy \citep{nosek2018}.
+
+\paragraph{LLM agents for science.} The AI Scientist \citep{lu2024} automated the cycle of idea, experiment and paper
+in machine learning. Co-Scientist \citep{gottweis2026} uses a multi-agent system built on Gemini to generate, debate and
+rank hypotheses in a tournament, with experimental validation in biomedicine; Robin \citep{ghareeb2026} automates
+discovery cycles in a similar setting. Yoon et al.\ \citep{yoon2026} ran a long autonomous campaign with worker and
+supervisor agents, a shared record, follow-up tasks proposed by the agents, novelty checks against the literature and a
+tournament with Bradley-Terry ranking of reports. These systems emphasise the generation of hypotheses and use
+evaluation by other agents or by experiments. Synaptic focuses on the complementary step: preventing agent-generated
+claims from being reported unless code confirms them on data the agents never had.
+
+\paragraph{The Earth observation data used here.} GRACE and GRACE-FO measure monthly changes in terrestrial water
+storage from time-variable gravity \citep{tapley2004,landerer2020}; we use the JPL \citep{watkins2015} and NASA GSFC
+\citep{loomis2019} mascon solutions. SMAP measures surface soil moisture with an L-band radiometer \citep{entekhabi2010}.
+OMI on Aura measures tropospheric NO$_2$ columns \citep{levelt2006}; weekly cycles of NO$_2$ were first observed from
+space by Beirle et al.\ \citep{beirle2003}. The agents also use MERRA-2 \citep{gelaro2017}, whose precipitation over
+land is corrected with gauge-based products \citep{reichle2017}, GLDAS \citep{rodell2004}, CERES EBAF \citep{loeb2018}
+and CHIRPS \citep{funk2015}.
+
+% =====================================================================================================================
+\section{Statistical methods}
+\label{sec:stats}
+
+Let $x_1,\dots,x_n$ be a yearly (or seasonal) series at times $t_1,\dots,t_n$, obtained by averaging a NASA variable
+over a region and a set of months.
+
+\paragraph{Trend.} The slope is the Sen estimator
+\begin{equation}
+  \hat\beta = \operatorname{median}_{i<j} \frac{x_j - x_i}{t_j - t_i}.
+\end{equation}
+Significance uses the Mann-Kendall statistic $S = \sum_{i<j}\operatorname{sgn}(x_j-x_i)$ with the tie-corrected null
+variance $V_0 = \bigl[n(n-1)(2n+5) - \sum_g c_g(c_g-1)(2c_g+5)\bigr]/18$, where $c_g$ are the sizes of tied groups.
+To account for serial correlation we estimate the lag-one autocorrelation $\hat r$ of the Sen-detrended residuals, add
+the first-order small-sample bias correction, and inflate the variance by the long-run factor of an AR(1) process:
+\begin{equation}
+  \tilde r = \min\!\Bigl\{0.9,\ \max\!\bigl(r_{\mathrm{floor}},\ \hat r + \tfrac{1 + 4\max(\hat r,0)}{n},\ 0\bigr)\Bigr\},
+  \qquad
+  V = V_0\,\frac{1+\tilde r}{1-\tilde r},
+  \qquad
+  Z = \frac{S - \operatorname{sgn}(S)}{\sqrt{V}} .
+  \label{eq:mk}
+\end{equation}
+In regional sweeps, $r_{\mathrm{floor}}$ is the median carry-over of the field, so that one noisy cell estimate cannot
+undo the correction. The application also reports the effective number of independent years
+$n_{\mathrm{eff}} = n(1-\tilde r)/(1+\tilde r)$ and a 95\% interval for the slope.
+
+\paragraph{Event departure.} To ask whether a set of event years $E$ (for example the most recent years, or a known
+wet season) lies beyond the trend of the other years, we fit an ordinary least-squares line to the years outside $E$,
+with residual standard deviation $s$ and bias-corrected lag-one autocorrelation $\tilde r$, and compute the mean
+departure $d = |E|^{-1}\sum_{e\in E}\bigl(x_e - \hat x_e\bigr)$. Its standard error combines the variance of the
+event mean under AR(1) dependence and the extrapolation variance of the fitted line:
+\begin{equation}
+  \mathrm{SE}(d) = s\,\sqrt{\frac{1}{|E|^2}\sum_{e,e'\in E}\tilde r^{\,|e-e'|}
+      + \mathbf{a}^\top (A^\top A)^{-1}\mathbf{a}\;\frac{1+\tilde r}{1-\tilde r}},
+  \label{eq:event}
+\end{equation}
+where $A$ is the design matrix of the baseline fit and $\mathbf{a}$ its row evaluated at the mean event time. The test
+statistic $z = d/\mathrm{SE}(d)$ is referred to a $t$ distribution with $n_{\mathrm{eff}}-2$ degrees of freedom.
+
+\paragraph{Shift in a weekly cycle.} For a city and a period, let $R_k$ be the mean NO$_2$ column on weekday $k$
+divided by the mean on reference days that are working days both before and after a dated change. If day $u$ is
+predicted to rise (it becomes a working day) and day $f$ to fall (it becomes a rest day), the statistic is
+\begin{equation}
+  D = \bigl(R_u - R_f\bigr)_{\mathrm{after}} - \bigl(R_u - R_f\bigr)_{\mathrm{before}},
+  \label{eq:weekend}
+\end{equation}
+averaged over the cities of a test. Under the null hypothesis that the weekly cycle did not change, the
+before/after labels of whole weeks are exchangeable; $p$ is obtained from 20{,}000 permutations of those labels.
+Using ratios within each period removes seasonality and long-term trends in the NO$_2$ level.
+
+\paragraph{Multiplicity.} Each registration fixes its own family of tests and its threshold in advance: Bonferroni
+($\alpha/k$) or Holm \citep{holm1979}. Results obtained from earlier exploratory tests are treated as leads, not
+evidence, and must be confirmed by a fresh registered test. In regional sweeps, an anomaly ``family'' of neighbouring
+cells is accepted only if it is larger than the largest cluster found in phase-randomised surrogate fields that
+preserve each cell's autocorrelation and the correlation between cells \citep{theiler1992}; the field test fails
+closed, so a family it cannot evaluate cannot pass.
+
+% =====================================================================================================================
+\section{System}
+\label{sec:system}
+
+\subsection{Trend Detective: the application}
+\label{sec:app}
+
+Figure~\ref{fig:app} shows the path through the application. The user chooses (1) a variable among 41 monthly NASA
+variables described in plain language (MERRA-2 reanalysis fields; MODIS Aqua aerosol, clouds, sea surface temperature
+and chlorophyll; OMI NO$_2$ and ozone; AIRS temperature at four heights between 1.5 and 20\,km; GPM IMERG rainfall;
+GLDAS land variables; CERES radiation; GRACE/GRACE-FO water storage), (2) a region (a country, a US state, a box or the
+globe) and (3) a period and season. The application requests only that variable and region from NASA Earthdata Cloud
+through OPeNDAP and Harmony subsetting, then (4) draws yearly and monthly series and a map of local change and (5)
+applies the tests of Section~\ref{sec:stats}. The verdict is written in words, for example: \emph{``No significant
+trend ($p = 0.31$). That does not prove there is no trend; the change is not distinguishable from year-to-year
+variability with this many years.''}
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures/fig_app.png}
+  \includegraphics[width=\linewidth]{figures/pb4_trend_detective.pdf}
   \caption{Trend Detective. The user chooses a variable, a region and a period; the application downloads only that
-  data, draws the series and gives a verdict in plain words. The example is the challenge video's own case, summer
-  aerosol over Wisconsin. One click hands the question to the AI research group. (Illustration made with AI assistance.)}
+  subset, draws the series and states a verdict. The series shown is the real result for the challenge's own
+  example: summer aerosol optical depth over Wisconsin (MODIS Aqua, 2002 to 2025). Illustration drawn with AI assistance.}
   \label{fig:app}
 \end{figure}
 
-\paragraph{Statistics that do not over-claim.} The trend is estimated with the Sen slope \cite{sen1968} and tested
-with the Mann--Kendall test \cite{mann1945,kendall1975}. Because climate series carry memory from one year to the
-next, the test variance is inflated by the long-run factor of a first-order autoregressive process fitted to the
-detrended series (lag-1 autocorrelation, bias-corrected, with a regional floor). The application reports the
-effective number of independent years and a 95\% interval for the slope. A separate test asks whether the latest
-years sit beyond the trend, so that one record event is not mistaken for a trend. The verdict is written in words, for
-example: \emph{``No significant trend ($p = 0.31$). That does not prove there is no trend; the change is not
-distinguishable from year-to-year variability with this many years.''} For the challenge video's example, summer
-aerosol optical depth over Wisconsin (MODIS Aqua, 2002--2025), the long-term trend is $+0.02$ per decade and not
-significant ($p = 0.31$), while 2023--2025 sit clearly above it ($p = 0.006$): the Canadian wildfire years.
+For the challenge's own example, summer aerosol optical depth over Wisconsin (MODIS Aqua, 2002 to 2025), the Sen slope is
+$+0.02$ per decade with a 95\% interval that includes zero, and the corrected Mann-Kendall test gives $p = 0.31$; the
+event-departure test shows that 2023 to 2025 lie above the trend ($p = 0.006$), coinciding with the Canadian wildfire
+seasons. To validate data access, twelve monthly series were retrieved both through the application and through NASA
+Giovanni \citep{acker2007}; they agree to better than 0.001\%.
 
-\paragraph{Checked against NASA's own tool.} Twelve monthly series fetched through the application and through NASA
-Giovanni agree to better than 0.001\%. Finished analyses are saved, so examples answer offline.
-
-% ---------------------------------------------------------------------------------------------------------------
-\section{The agentic workflow}
+\subsection{The research group}
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures/fig_framework.png}
-  \caption{The Synaptic framework. Agents explore the data they are allowed to see ($D_{exp}$) and propose
-  hypotheses with tests written first. Code runs the confirmation gates on held-out data ($D_{ho}$) that no agent can
-  read. Review agents can only lower a verdict. (Illustration made with AI assistance.)}
+  \includegraphics[width=\linewidth]{figures/pb1_synaptic_framework.pdf}
+  \caption{Overview of Synaptic's research harness. Agents explore only the data they are allowed to see
+  ($\Dexp$) and propose hypotheses whose tests are written first. Five confirmation gates run as code; the
+  held-out data ($\Dho$) are read only by code. Review agents can lower a verdict but never raise it. Illustration drawn with AI assistance.}
   \label{fig:framework}
 \end{figure*}
 
-\subsection{Roles}
-Synaptic organises language-model agents as a small research group (Figure~\ref{fig:framework}). A campaign starts
-from a \emph{research brief} written by the team: an open question, the region, the variables the agents may explore
-and the datasets reserved for confirmation.
+A campaign starts from a research brief written by the team: an open question, a region, the variables the agents
+may explore and the datasets reserved for confirmation. Agents are organised as a small research group
+(Figure~\ref{fig:framework}):
 
-\begin{description}[leftmargin=1.2em,style=nextline]
-  \item[Planner.] Turns the brief into a plan and \emph{locks every threshold before any data is seen}.
-  \item[Principal investigator (PI).] Reads a literature scan of the open problem and writes 10--16 falsifiable
-        hypotheses, each with its confirmation test and kill criteria written first; the rest wait in a reserve pool.
-  \item[The lab.] Worker and supervisor pairs run in parallel. Workers must \emph{look at the data}: raw numbers and
-        figures are placed in the vision model's context, and a task cannot be finished without it. Supervisors
-        review every plan and every result. \emph{Lab meetings} every few tasks drop dead ends, order deeper tests
-        and promote hypotheses from the reserve.
-  \item[Referees (``Reviewer 2'').] Recompute and attack every supported claim, with at least three real checks.
-  \item[Auditor.] A sceptical agent that re-reads every claim before reports are written. It can only lower a
+\begin{description}[leftmargin=1em,style=unboxed,font=\normalfont\bfseries]
+  \item[Planner.] Converts the brief into stages and fixes every numerical threshold before any data are read.
+  \item[Principal investigator (PI).] Reads a literature scan of the open problem and writes 10 to 16 falsifiable
+        hypotheses, each with a confirmation test and kill criteria; further hypotheses wait in a reserve pool.
+  \item[Lab.] Pairs of a worker and a supervisor run tasks in parallel. Workers must inspect the data: raw tables and
+        figures are placed in the context of a vision-language model, and a task cannot finish until the worker has
+        done so. Supervisors review each plan and each result (at most three revision rounds). A lab meeting after
+        every six finished tasks closes dead ends, orders deeper tests and promotes reserve hypotheses.
+  \item[Referees.] Recompute and attack each supported claim, with at least three real checks.
+  \item[Auditor.] Re-reads the full verdict history of every claim before reports are written; it can only lower a
         verdict.
-  \item[Editor and judge.] Write result reports and rank them in a tournament in which every pair is judged in
-        both orders, to cancel position bias.
+  \item[Editor and judge.] Write result dossiers and rank them in a tournament in which each pair is judged in both
+        orders to cancel position bias, with a Bradley-Terry model.
 \end{description}
 
-The judgement roles (PI, auditor, judge) run on NVIDIA Nemotron 3 Ultra; workers run on Nemotron 3.5 Super VL, which
-can read figures. Agent code runs in a sandbox with no network and no credentials. All actions, plans, results and
-verdicts are written to a shared record.
+Workers run on NVIDIA Nemotron 3.5 Super VL, a vision-language model; the PI, the auditor and the judge run on Nemotron
+3 Ultra. Every plan, action, image inspected, review and verdict is written to a shared SQLite record. Agent-written
+code runs in a sandbox without network access or credentials, with read-only data and a memory limit.
 
 \subsection{Held-out data and pre-registration}
-The central design choice is a separation between what agents can see and what decides. Two kinds of hold-out are
-used. In a \emph{dataset hold-out}, whole products (for example GRACE water storage, IMERG rainfall or CERES radiation)
-are removed from the agents' tools; agents explore other products and propose claims. In a \emph{time hold-out}, agents
-see a product only up to a cut-off year (for example GRACE up to 2015) and code confirms on the later years.
 
-Every confirmation test is fixed in advance: dataset, region, months, event years, direction and threshold. The
-specification is committed to git and pushed before the confirmation data are downloaded, and the results are
-appended afterwards with any deviation listed (Figure~\ref{fig:prereg}). For the SMAP check of northern Morocco, the
-registration was pushed at 07:45 and the results appended at 07:54: nothing in the specification could change after
-the data were seen.
+The central design choice separates the data that agents can see from the data that decide. In a \emph{dataset
+hold-out}, entire products (for example GRACE water storage, CERES radiation or IMERG rainfall) are removed from the
+agents' tools: the data tool refuses them. In a \emph{time hold-out}, agents see a product only up to a cut-off year
+and code confirms on later years. We write $\Dexp$ for the data available to agents and $\Dho$ for the held-out data.
+
+Each hypothesis carries a machine-readable confirmation specification $\tau$: dataset, region, months, kind of test
+(trend, step, event, correlation, contrast or residual), split or event years, expected direction and threshold
+(Appendix~\ref{app:spec}). When an agent reports a success, code executes $\tau$ on $\Dho$; nothing an agent writes can
+change $\tau$ or the outcome. For the confirmations reported in Section~\ref{sec:results}, each specification was
+written down and committed before any of its data were downloaded, and the results
+were appended afterwards together with any deviation (Figure~\ref{fig:prereg}). For the SMAP test of northern Morocco,
+the registration was pushed at 07:45 UTC and the results appended at 07:54 UTC.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures/fig_preregistration.png}
-  \caption{Held-out confirmation, pre-registered in git. (a) The test specification is pushed before its data exist
-  on disk. (b) Only a claim goes into the confirmation code and only a verdict comes out; agents cannot read the
-  held-out data. The SMAP points are the real season means. (Illustration made with AI assistance.)}
+  \includegraphics[width=\linewidth]{figures/pb2_heldout_confirmation.pdf}
+  \caption{Held-out confirmation. (a) The test specification is fixed and pushed before its data exist on disk.
+  (b) Only a claim enters the confirmation code and only a verdict leaves it. The SMAP points are the real season
+  means for northern Morocco. Illustration drawn with AI assistance.}
   \label{fig:prereg}
 \end{figure}
 
-\subsection{Confirmation gates run by code}
-A claim from the lab passes through five gates that no agent can override:
+\subsection{Confirmation gates}
+A claim from the lab passes through five gates implemented as code:
 \begin{enumerate}
-  \item \textbf{Data screen.} A trust map of every grid cell, comparing reanalysis with independent rainfall and
-        temperature products, before any test.
-  \item \textbf{Evidence engine.} The same statistic recomputed on independent products (for example GPCP, IMERG,
-        Berkeley Earth, GLDAS), a robustness suite (leave-one-year-out, end points, without strong El Ni\~no years,
-        block bootstrap) and field significance with spatial correlation preserved.
-  \item \textbf{Held-out test.} The pre-registered test, run on data no agent has seen.
-  \item \textbf{Correction for the number of tests.} A Bonferroni or Holm \cite{holm1979} threshold across the tests
-        of a registration, plus a charge for earlier tests in the campaign.
-  \item \textbf{Novelty check.} A NASA ADS literature search. Without a working search, novelty is reported as
-        ``unverified'', never ``new''.
+  \item \textbf{Data screen.} A per-cell trust map that compares reanalysis fields with independent rainfall and
+        temperature products and flags gap fills, suppressed variability and known data issues.
+  \item \textbf{Evidence engine.} The same statistic recomputed on independent products (for example GPCP, GPM IMERG,
+        Berkeley Earth, GLDAS), a robustness suite (leave-one-year-out, end points, exclusion of strong El Ni\~no
+        years, block bootstrap, single-year leverage) and field significance with spatial correlation preserved.
+  \item \textbf{Held-out test.} The pre-registered specification $\tau$, executed on $\Dho$.
+  \item \textbf{Correction for the number of tests.} The threshold of the registration (Bonferroni or Holm), with a
+        charge for earlier tests in the campaign.
+  \item \textbf{Novelty search.} A NASA ADS literature search. Without a working search, novelty is reported as
+        ``unverified'', never as ``new''.
 \end{enumerate}
 
 \subsection{The evidence ladder and the verdict ratchet}
-Every claim climbs the same ladder, and where it stops is what gets reported (Figure~\ref{fig:ladder}). A claim that
-fails the held-out test or disagrees with a second dataset is \emph{not shown}. A non-significant result is absence of
-evidence, so it is never labelled ``refuted''. A claim that passes but fails the correction is \emph{supported, not
-confirmed}. A confirmed claim that is already published is \emph{known}. The verdict ratchet is enforced in code: only
-the confirmation and novelty gates can move a claim up; referees, the auditor and follow-up tasks can only move it down.
+
+Hypothesis verdicts take values in the ordered set
+\[
+  \mathcal{V} = \{\textsf{refuted/dropped} \prec \textsf{not shown} \prec \textsf{known} \prec \textsf{supported}
+  \prec \textsf{supported, new}\}.
+\]
+``Refuted'' requires a significant result in the opposite direction; a non-significant test yields ``not shown'',
+because absence of evidence is not evidence of absence. A transition $v \to v'$ requested by an actor $a$ is accepted
+only if $v' \preceq v$ (a downgrade), or if $a$ is the confirmation code and $v' = \textsf{supported}$, or if $a$ is
+the novelty gate, $v = \textsf{supported}$ and $v' = \textsf{supported, new}$. Results closed by a code check cannot be
+reopened by any agent, and a result confirmed on held-out data cannot be lowered by an exploring agent that cannot see
+those data. These rules are enforced in \texttt{synaptic/verdicts.py}, not in prompts. Figure~\ref{fig:ladder} shows the
+resulting ladder with the outcomes of our registrations.
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures/fig_ladder.png}
-  \caption{(a) The evidence ladder, with the real outcomes of our campaigns. (b) The verdict ratchet: only code moves a
-  claim up. (Illustration made with AI assistance.)}
+  \includegraphics[width=\linewidth]{figures/pb3_evidence_ladder.pdf}
+  \caption{(a) The evidence ladder, with the real outcomes of our registrations. The UAE result reached the top
+  through control cities and false change dates rather than a second dataset. (b) The verdict ratchet enforced in
+  code: only confirmation code moves a claim up. Illustration drawn with AI assistance.}
   \label{fig:ladder}
 \end{figure*}
 
-% ---------------------------------------------------------------------------------------------------------------
-\section{Results}
+\subsection{Implementation}
+Synaptic is written in Python. The application is a Flask server with a vanilla JavaScript front end; NASA data are
+accessed through Earthdata Cloud (OPeNDAP, Harmony), CMR, GIBS, POWER and Giovanni. Learned models (for example
+per-cell forecasts used to map ``surprise'') run as private Kaggle GPU jobs. A tolerant parser repairs the most frequent
+formatting slips of the agents' JSON actions, and interrupted campaigns resume from the first unfinished stage. The
+repository contains 39 automated tests, including checks that the corrected trend test keeps its false-positive rate
+near the nominal level on synthetic series with carry-over, and a command, \texttt{python -m synaptic reproduce}, that
+recomputes every reported number from bundled evidence.
 
-Table~\ref{tab:results} summarises the four results. For each, we searched NASA ADS and found no published measurement
-(results 2--4) or published re-test (result 1). We do not claim to be the first: we have not read every paper.
+% =====================================================================================================================
+\section{Experimental setup}
+\label{sec:setup}
+
+Table~\ref{tab:registrations} lists the registrations behind the reported results. Each fixes the dataset, the
+regions, the statistic, the direction and the threshold before data are downloaded.
 
 \begin{table}[t]
-  \centering
-  \small
-  \begin{tabularx}{\linewidth}{@{}p{0.27\linewidth}X p{0.2\linewidth}@{}}
+  \centering\small
+  \begin{tabularx}{\linewidth}{@{}p{0.2\linewidth}p{0.17\linewidth}X p{0.17\linewidth}@{}}
     \toprule
-    Result & What the data show & Proof \\
+    Registration & Data & Tests and statistic & Threshold \\
     \midrule
-    1. River-mouth chlorophyll (NASA reference study) & Three trends reported as significant (SeaWiFS 1998--2007)
-      are not detected in MODIS 2002--2025 & $p = 0.37$--$0.43$; two code versions agree \\
-    2. Northern Morocco, winter 2025--26 & 17--21\,km$^3$ more water stored than in a normal winter & SMAP check
-      confirmed, $p = 0.011 < 0.0167$ \\
-    3. Lake Chad basin and central Sahara, 2024 & About 75 and 46--73\,km$^3$; largest gains since 2003 & SMAP: not
-      shown ($p = 0.10$); supported ($p = 0.049$) \\
-    4. UAE weekend change, 2022 & Cleanest day in the air moved from Friday to Sunday & $p = 0.00005$; four control
-      cities null \\
+    1. Water gains: SMAP check & SMAP L3 (SPL3SMP v009), 2015 to 2026 & One test per GRACE lead (3): season-mean surface
+      soil moisture, event-year departure from the trend of other years, Eq.~\eqref{eq:event}; direction $+$ &
+      $p < 0.05/3 = 0.0167$ \\
+    2. Global record scan & SMAP & Five record-season candidates from a worldwide GRACE scan: mean monthly SMAP anomaly
+      over the event months against all other months ($\approx$130 values), AR(1) carry-over & Holm over 5 \\
+    3. Weekend shift & OMI OMNO2d v4, daily, 2004 to 2026 & Four dated weekend changes (UAE 2022, Saudi Arabia 2013,
+      Oman 2013, Algeria 2009), Eq.~\eqref{eq:weekend}, 20{,}000 permutations; 12 placebo city tests & Holm over 4 \\
     \bottomrule
   \end{tabularx}
-  \caption{Summary of results. All $p$-values come from tests registered before their data were downloaded.}
-  \label{tab:results}
+  \caption{Pre-registered confirmation tests behind the results of Section~\ref{sec:results}.}
+  \label{tab:registrations}
 \end{table}
 
+\paragraph{Water storage.} For each region, the seasonal storage gain is the mean of the end-of-season months minus the
+mean of the start-of-season months. The excess gain of an event season is compared both with the mean gain and with
+the trend of the other years, and converted to a volume over the land area. All computations are repeated on two
+independently processed GRACE/GRACE-FO solutions: JPL mascons RL06.3 and NASA GSFC mascons RL06v2.0. The regions are
+the Lake Chad basin ($10$ to $17^\circ$N, $12$ to $18^\circ$E; August to October 2024), the central Sahara
+($15$ to $23^\circ$N, $10$ to $25^\circ$E; August to October 2024) and northern Morocco ($31$ to $36^\circ$N,
+$10$ to $1^\circ$W; December 2025 to April 2026).
+
+\paragraph{River-mouth chlorophyll.} We re-tested the trends reported by a NASA study of SeaWiFS chlorophyll off river
+mouths for 1998 to 2007 \citep{ntrs2009}, using MODIS Aqua monthly log$_{10}$ chlorophyll for July 2002 to December 2025 in
+the same boxes. Slopes are tested with standard errors inflated for lag-one autocorrelation of the monthly residuals.
+Two independent implementations of the re-test were compared.
+
+\paragraph{Weekend shift.} For each city, daily tropospheric NO$_2$ columns (OMNO2d v4, $0.25^\circ$) are averaged over
+a box of about 80\,km; 8{,}017 daily files from October 2004 to October 2026 were used. The test cities are Dubai and
+Abu Dhabi (UAE), Riyadh, Jeddah and Dammam (Saudi Arabia), Muscat (Oman) and Algiers (Algeria). Placebo tests apply the
+same statistic to cities whose weekend did not change on that date (Doha, Tehran, Cairo, Kuwait City).
+
+% =====================================================================================================================
+\section{Results}
+\label{sec:results}
+
+\subsection{Calibration of the statistics}
+On synthetic fields with AR(1) carry-over ($r = 0.5$) and spatial correlation between neighbouring cells, an earlier
+version of the harness produced 25 false ``shift'' cells per run of 225 and flagged 35\% of pure-noise cells with an
+uncorrected Pettitt test. With the corrections of Section~\ref{sec:stats}, the per-series false-positive rate is 2 to 8\%
+at a nominal 5\%; 4 of 40 pure-noise fields produced any false anomaly family, while a planted step of 1.5 standard
+deviations over 49 cells and a planted trend were still found. Change tests whose split year is chosen after
+inspecting the data pay for the search, with a false-positive rate of 6\% and 94\% power for a planted change.
+
 \subsection{A NASA reference study, re-tested}
-The challenge resources include a NASA study of chlorophyll off river mouths (NTRS 20090042747) \cite{ntrs2009}, which
-reported significant trends off the Mississippi (two sites, decreasing) and the Eel (increasing in summer) in SeaWiFS
-data from 1998--2007. We re-tested the same boxes with MODIS Aqua 2002--2025 and a test that accounts for carry-over from
-one month to the next. None of the three trends is detected (corrected $p = 0.43$, $0.40$ and $0.37$), and all three
-MODIS slopes point the opposite way, though none is significant (Figure~\ref{fig:river}). The choice of test matters:
-off Mississippi East, the 2002--2007 overlap with the original period is significant with the original method
-($p = 0.004$) and not once carry-over is corrected ($p = 0.056$). One river, the Guadalquivir, shows a decrease of about
-15\% per decade; a second satellite, VIIRS, does not yet confirm it ($p = 0.19$), so we report it as a lead. ``Not
-detected'' means not significant over a different period and sensor; small trends are not excluded.
+The NASA study \citep{ntrs2009} reported significant trends off the Mississippi (two sites, decreasing) and the Eel
+(increasing in summer). With MODIS Aqua 2002 to 2025 none of the three is detected (Table~\ref{tab:river},
+Figure~\ref{fig:river}); all three MODIS slopes point in the opposite direction, although none is significant. The
+choice of test matters: off Mississippi East, the 2002 to 2007 overlap with the original period is significant without a
+correction for serial correlation ($p = 0.004$) and not with it ($p = 0.056$). Off the Guadalquivir, MODIS shows a
+decrease of about 15\% per decade ($p < 0.001$); a second sensor, VIIRS, does not yet confirm it ($p = 0.19$), so we
+report it as a lead. ``Not detected'' refers to a different period and sensor than the original study and does not
+exclude small trends.
+
+\begin{table}[t]
+  \centering\small
+  \begin{tabular}{@{}lllrrr@{}}
+    \toprule
+    Box & Original study (SeaWiFS 1998 to 2007) & MODIS trend & $p$ (uncorr.) & $p$ (corr.) & carry-over \\
+    \midrule
+    Mississippi West & decreasing, $p \approx 0.002$ & $+3.7\%$/decade & 0.21 & 0.43 & 0.43 \\
+    Mississippi East & decreasing, $p \approx 0.017$ & $+5.8\%$/decade & 0.17 & 0.40 & 0.46 \\
+    Eel (summer)     & increasing, $p \approx 0.035$ & $-6.7\%$/decade & 0.35 & 0.37 & 0.06 \\
+    Guadalquivir     & decreasing, n.s.              & $-15.4\%$/decade & $<0.001$ & $<0.001$ & 0.48 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Re-test of river-mouth chlorophyll trends with MODIS Aqua, July 2002 to December 2025 (monthly
+  log$_{10}$ chlorophyll). ``Corr.'' accounts for lag-one autocorrelation of the monthly residuals.}
+  \label{tab:river}
+\end{table}
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures/river_pvalues.png}
-  \caption{River-mouth chlorophyll: $p$-values reported by the NASA study versus our MODIS re-test.}
+  \includegraphics[width=0.86\linewidth]{figures/river_pvalues.png}
+  \caption{River-mouth chlorophyll: $p$-values reported by the NASA study and those of the MODIS re-test.}
   \label{fig:river}
 \end{figure}
 
-\subsection{How much rain stayed in the ground}
-NASA's GRACE and GRACE-FO satellites measure changes in Earth's gravity, which means they weigh the water stored in
-soil, rivers, lakes and aquifers. For each region we computed the seasonal storage gain (end minus start of the wet
-season), compared it with the mean gain of the other years, and converted the excess into a volume over the land
-area, on two independently processed solutions: JPL mascons RL06.3 and NASA Goddard mascons RL06v2.0.
+\subsection{How much of the rain stayed in the ground}
+Table~\ref{tab:water} gives the excess seasonal gains measured by GRACE/GRACE-FO. The 2024 rainy season added about
+75\km{} more water than a normal season in the Lake Chad basin (Figure~\ref{fig:chad}) and 46 to 73\km{} in the central
+Sahara, the largest gains since 2003 in both regions; about three quarters of the excess was still present in the
+following dry season. Winter 2025-26, which ended a seven-year drought in northern Morocco, added 17 to 21\km{}, the
+second or third largest winter gain since 2003. These three leads emerged from 55 held-out tests, so their own
+$p$-values do not survive a correction for the number of tests; they are treated as leads only.
 
-The 2024 rainy season added about 75\,km$^3$ of extra water in the Lake Chad basin (75 and 76\,km$^3$ on the two
-solutions; Figure~\ref{fig:chad}) and 46--73\,km$^3$ in the central Sahara, the largest seasonal gains since 2003 in both
-regions. About three quarters of the excess was still present seven months later, in the next dry season. In northern
-Morocco, winter 2025--26, which ended a seven-year drought, added 17--21\,km$^3$, the second or third largest winter
-gain since 2003.
+\begin{table}[t]
+  \centering\small
+  \begin{threeparttable}
+  \footnotesize\setlength{\tabcolsep}{4pt}
+  \begin{tabular}{@{}lccccc@{}}
+    \toprule
+    Region, season & Excess vs.\ mean & 90\% range & Excess vs.\ trend ($p$) & Rank & Still present \\
+    \midrule
+    Lake Chad basin, 2024        & 75 / 76\km{} & 43 to 108 & 60 / 60\km{} (0.002 / 0.006) & 1 / 1 & 78\% / 74\% \\
+    Central Sahara, 2024         & 46 / 73\km{} & 29 to 99  & 38 / 64\km{} (0.002 / 0.006) & 1 / 1 & 69\% / 74\% \\
+    Northern Morocco, 2025-26   & 17 / 21\km{} & 2 to 39   & 23 / 31\km{} (0.012 / 0.013) & 2 / 3 & n/a \\
+    \bottomrule
+  \end{tabular}
+  \begin{tablenotes}\footnotesize
+    \item Pairs of values are JPL / GSFC mascon solutions. Rank: among all seasons since 2003. ``Still present'': share of the excess remaining in
+    April to May 2025. The $p$-values are exploratory (one of 55 tests each) and are not used as evidence.
+  \end{tablenotes}
+  \end{threeparttable}
+  \caption{Excess seasonal gains of terrestrial water storage measured by GRACE/GRACE-FO.}
+  \label{tab:water}
+\end{table}
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures/A_lake_chad_grace_gains.png}
-  \caption{Lake Chad basin: water gained each rainy season, weighed by GRACE on two independent solutions.}
+  \includegraphics[width=0.86\linewidth]{figures/A_lake_chad_grace_gains.png}
+  \caption{Lake Chad basin: water gained in each rainy season, measured by GRACE/GRACE-FO on two independent solutions.}
   \label{fig:chad}
 \end{figure}
 
-These leads came out of 55 held-out tests, so their own $p$-values (0.002--0.013) do not survive a correction for the
-number of tests. We therefore registered one fresh test per lead on an instrument never used in the project: NASA SMAP
-L3 soil moisture, a microwave radiometer that shares no measurement, processing or science team with GRACE. The
-statistic is the event season's departure from the linear trend of the other years, with carry-over accounted for, and
-a lead is \emph{confirmed} only if $p < 0.05/3 = 0.0167$. Northern Morocco passed: 2026 is the wettest December--April
-in SMAP's record, $+0.051$\,m$^3$/m$^3$ above the trend, $p = 0.011$ (Figure~\ref{fig:smap}). The central Sahara was
-supported but not confirmed ($p = 0.049$) and Lake Chad was not shown ($p = 0.10$); with only 11 SMAP seasons, this test
-is hard to pass. SMAP sees the top 5\,cm of soil, so it confirms that the land was unusually wet, not the volume.
+\paragraph{Independent confirmation with SMAP.} SMAP shares no measurement, processing or science team with GRACE, and
+none of its data had been used in the project. Registration~1 tested each lead with the event departure of
+Eq.~\eqref{eq:event} on season-mean surface soil moisture (11 seasons each). Northern Morocco passed: 2026 is the
+wettest December to April season in the SMAP record, $+0.051$\,m$^3$\,m$^{-3}$ above the trend of the other years
+($z = 3.32$, $p = 0.011 < 0.0167$; Figure~\ref{fig:smap}). The central Sahara was supported but not confirmed
+($p = 0.049$) and Lake Chad was not shown ($p = 0.10$), although 2024 is the wettest season in the record for both.
+Because SMAP observes only the top 5\,cm of soil, the test confirms that the land was unusually wet, not the volume.
+Registration~2 used a monthly variant of the test, with about 130 monthly values instead of 11 seasons, for five
+candidates from a worldwide GRACE scan of 1{,}534 four-degree block-seasons; 97 blocks were records on both solutions, fewer than the roughly 148 expected by chance, and none of the
+five candidates was confirmed (one supported, three not shown, one could not be tested).
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures/C_north_morocco_smap.png}
-  \caption{Northern Morocco: SMAP surface soil moisture, December--April. 2026 is the wettest season in the record.}
+  \includegraphics[width=0.86\linewidth]{figures/C_north_morocco_smap.png}
+  \caption{Northern Morocco: SMAP surface soil moisture, December to April. 2026 is the wettest season in the record.}
   \label{fig:smap}
 \end{figure}
 
-\subsection{A human-made change, seen from space}
-The searches above look for something unusual and then need a second dataset. Our last registration ran the other way:
-it started from dated facts on the ground. City nitrogen dioxide (NO$_2$), mostly from traffic, power and industry,
-drops on rest days, and four countries moved their weekend on a known date within the record of NASA's OMI instrument.
-For each city we used daily tropospheric NO$_2$ columns (OMNO2d v4, 0.25$^\circ$, October 2004 to October 2026, 8{,}017
-days) averaged over a box of about 80\,km, and expressed each weekday relative to days that were working days both
-before and after the change. The statistic $D$ is the change, from before to after, in the difference between the day
-predicted to rise (it becomes a working day) and the day predicted to fall (it becomes a rest day), averaged over the
-cities. Under the null hypothesis the before/after labels of whole weeks are exchangeable, so they are permuted 20{,}000
-times; a Holm correction is applied across the four countries.
+\subsection{A human-made change seen from space}
+The previous tests start from an unusual signal and need a second dataset. Registration~3 starts instead from dated
+facts on the ground: four countries moved their weekend within the OMI record, and urban NO$_2$, largely from traffic,
+power generation and industry, drops on rest days \citep{beirle2003}. Table~\ref{tab:weekend} gives the results.
 
-On 1 January 2022 the UAE moved its weekend from Friday--Saturday to Saturday--Sunday. Over Dubai and Abu Dhabi, Friday
-went from 24\% below a working day to 5\% below, and Sunday went from 5\% below to 24\% below ($D = 0.38$,
-$p = 0.00005$; Figure~\ref{fig:uae}). Each city shows it separately; Friday was 17--32\% below a working day in every
-year from 2005 to 2021 and 3--10\% below from 2022 on. Control cities (Doha, Tehran, Cairo, Kuwait City) show nothing on
-that date, fake change dates (2019, 2024) show nothing, and removing 2020 changes nothing. The same test passed for Oman
-and Saudi Arabia (2013), but Kuwait City, whose weekend did not change in 2013, shifted by a similar amount, so we do not
-rely on those two. This is a change in a weekly pattern, not a long-term trend and not a claim about emissions.
+\begin{table}[t]
+  \centering\small
+  \footnotesize\setlength{\tabcolsep}{4pt}
+  \begin{tabular}{@{}llllrl@{}}
+    \toprule
+    Test (date of change) & Predicted to rise & Predicted to fall & $D$ & $p$ (Holm) & Verdict \\
+    \midrule
+    UAE (1 Jan 2022)          & Fri: 0.76 $\to$ 0.95 & Sun: 0.95 $\to$ 0.76 & $+0.384$ & $5\times10^{-5}$ (0.0002) & confirmed \\
+    Oman (1 May 2013)         & Thu: 0.96 $\to$ 1.02 & Sat: 1.03 $\to$ 0.93 & $+0.152$ & 0.0001 (0.0003) & confirmed$^\dagger$ \\
+    Saudi Arabia (29 Jun 2013)& Thu: 0.96 $\to$ 0.99 & Sat: 0.98 $\to$ 0.93 & $+0.075$ & 0.010 (0.021) & confirmed$^\dagger$ \\
+    Algeria (14 Aug 2009)     & Thu: 0.94 $\to$ 1.03 & Sat: 0.94 $\to$ 0.92 & $+0.113$ & 0.12 (0.12) & not shown \\
+    \bottomrule
+  \end{tabular}
+  \caption{Weekend-shift tests. Values are NO$_2$ on that weekday relative to working days (1.00 = a working day),
+  before $\to$ after the change, averaged over the test's cities. $^\dagger$Passed the registered test but not relied
+  on, because a control city without a weekend change (Kuwait City) shifted by a similar amount.}
+  \label{tab:weekend}
+\end{table}
+
+On 1 January 2022 the UAE moved its weekend from Friday-Saturday to Saturday-Sunday. Over Dubai and Abu Dhabi, Friday
+went from 24\% below a working day to 5\% below and Sunday from 5\% below to 24\% below ($D = +0.38$); none of the
+20{,}000 permutations reached the observed value. Each city shows the shift separately, and the four placebo cities
+tested on the UAE date are null (Doha $p = 0.16$, Tehran 0.33, Cairo 0.50, Kuwait City 0.98). Overall, 2 of the 12
+placebo tests had $p < 0.05$, both for Kuwait City on the 2013 dates; for this reason we do not rely on the Oman and
+Saudi results. Descriptive checks run after the registered test (not registered, Figure~\ref{fig:uae}) show Friday at
+17 to 32\% below a working day in every year from 2005 to 2021 and 3 to 10\% below from 2022; excluding 2020 leaves
+$D = +0.39$ ($p = 0.0002$), and false change dates inside one regime (mid-2019, 1 January 2024) give $D = +0.07$ and
+$+0.02$ ($p = 0.31$ and $0.81$). This result concerns a change in the weekly pattern of NO$_2$ at the OMI overpass time,
+not a long-term trend or an emissions inventory.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures/UAE_2022_yearly.png}
-  \caption{UAE: nitrogen dioxide on Fridays and Sundays relative to working days, year by year (OMI). The quietest day
-  moves from Friday to Sunday in 2022.}
+  \includegraphics[width=0.86\linewidth]{figures/UAE_2022_yearly.png}
+  \caption{UAE: NO$_2$ on Fridays and Sundays relative to working days, year by year (OMI). The day with the lowest
+  NO$_2$ moves from Friday to Sunday in 2022.}
   \label{fig:uae}
 \end{figure}
 
-\subsection{What we tested and did not find}
-In total we ran 81 pre-registered tests. Everything that would have made the water results surprising came back not
-shown: more water stored than rain minus evaporation explains, slower draining than usual, a darker desert surface
-afterwards, a change in Morocco's winter recharge, and 14 long-term drifts across Africa tested on years no agent had
-seen. A worldwide GRACE scan for record seasons examined 1{,}534 block-seasons; 97 were records on both solutions, fewer
-than the about 148 expected by chance, and none of its five candidates was confirmed on SMAP (one supported, three not
-shown, one could not be tested). Twice during development the harness called a textbook result ``new''; we caught it,
-fixed the novelty check and logged the failure.
+\subsection{What was tested and not shown}
+In total the project ran 81 pre-registered tests. Every hypothesis that would have made the water results surprising
+returned ``not shown'': more water stored than rainfall minus evaporation explains, slower drainage than usual, a
+darker desert surface afterwards, a change in Morocco's winter recharge, and 14 long-term drifts across Africa tested
+on years that no agent had seen. We report these outcomes alongside the positive ones because the rate at which
+registered tests fail is itself informative about how much exploratory signal survives confirmation.
 
-% ---------------------------------------------------------------------------------------------------------------
-\section{Reproducibility}
-The code, data bundles and registrations are public. One command, \texttt{python -m synaptic reproduce}, recomputes every
-reported number offline from the saved evidence bundles (8 of 8 pass), and the test suite has 39 passing tests,
-including checks that the trend test keeps its false-positive rate near 5\% on synthetic series with carry-over. Each
-registration file holds the registered text, then the results exactly as they came out, then any deviations.
+% =====================================================================================================================
+\section{Behaviour of the agents}
+\label{sec:agents}
 
-% ---------------------------------------------------------------------------------------------------------------
+The harness was developed through live campaigns with Nemotron models on NASA data. Several observations shaped the
+design.
+
+\paragraph{Agents can find what they were not told to look for.} In a blind campaign over the West African monsoon
+belt, with a generic brief that mentioned neither Nigeria, 1999 nor data artifacts, the agents noticed that most
+significant breaks in temperature fell in 1998 to 2004, opened their own follow-up tasks, chose CHIRPS as an independent
+rainfall product and showed that NASA POWER rainfall exceeded CHIRPS in 18 of 18 years before 1999 and fell below it
+in 8 of 9 years afterwards. They classified the change as a data-production artifact rather than a climate shift. They
+also attributed it to a cause that cannot affect reanalysis rainfall (a change in the solar radiation source), which
+the supervisor did not catch; the artifact guide and the supervisor instructions were changed accordingly.
+
+\paragraph{Agents over-claim novelty.} In the same campaign, the first four deep dives labelled region-wide warming as a
+``new signal'', one of them while reporting that significance disappeared after correction for serial correlation;
+supervisors accepted these verdicts. Literature searches that returned off-topic results were read as evidence of
+novelty. This led to the novelty gate, the warning that an empty search is not evidence of novelty, and the auditor.
+
+\paragraph{A headline that did not survive.} A whole-Earth campaign (all land between 60$^\circ$S and 80$^\circ$N,
+1981 to 2025, about 18 hours and 695 agent sessions) produced 19 hypotheses, 15 of which the group refuted itself. One,
+a strengthening of the influence of El Ni\~no on winter temperature over western southern Africa around 2007 to 2009,
+survived two independent referees, with ``44 of 52 cells agreeing''. An external expert review pointed out that
+neighbouring cells are not independent; recomputed with the effective number of independent cells, the result is not
+established. This episode motivated the held-out confirmation run by code and the rule that verdicts can only be
+raised by code.
+
+\paragraph{Practical reliability.} Before tuning, 13 of 55 model calls produced malformed actions; after a tolerant
+parser and per-role reasoning settings, the rate fell to about one in 230 actions. Workers use low-effort reasoning,
+which is about four times faster; planner, supervisor, editor and judge use full reasoning.
+
+% =====================================================================================================================
+\section{Discussion}
+\label{sec:discussion}
+
+\paragraph{What the architecture buys.} Language-model agents are useful for exploration: they read raw numbers and
+figures, notice unexpected patterns and propose follow-ups. They are unreliable as judges of their own claims. Moving
+judgement into code that runs a pre-fixed specification on held-out data turns agent errors into ``not shown''
+outcomes instead of reported discoveries. The cost is power: SMAP offers only 11 seasons, so a real event can fail a
+registered test, as Lake Chad may have. We consider this the right failure mode for an automated system whose output
+may be read by non-experts.
+
+\paragraph{The independence of held-out data.} Confirmation is only as strong as the independence between $\Dexp$ and
+$\Dho$. GRACE (gravimetry) and SMAP (microwave radiometry) share no measurement principle or processing chain, whereas
+reanalysis products assimilate many common observations and would make weaker confirmation sets. Choosing $\Dho$ is a
+scientific decision that remains with the human team.
+
+\paragraph{Generality.} Nothing in the ratchet, the pre-registration protocol or the gates is specific to Earth
+observation. Any domain in which an independent measurement of the same quantity exists, or can be reserved, could
+adopt the same separation between exploration and confirmation.
+
+\paragraph{Where new results came from.} With 20 to 25 yearly values, only large and steady changes can be confirmed,
+and those are usually already published. The registered tests that passed concerned recent events (2022 to 2026) or
+dated human interventions, which yield new measurements rather than new mechanisms.
+
+% =====================================================================================================================
 \section{Limitations}
+\label{sec:limitations}
 \begin{itemize}
-  \item GRACE resolves regions of roughly 300\,km and larger; the volumes are for large regions, not towns or dams.
-        The two GRACE solutions disagree on the central Sahara (46 versus 73\,km$^3$), and the full uncertainty is wider
-        than the range between solutions (for example 43--108\,km$^3$ for Lake Chad).
-  \item SMAP measures only the top 5\,cm of soil and has 11 seasons, which limits the power of its checks.
-  \item OMI passes at about 13:30 local time, so the weekend result reflects morning and midday activity.
-  \item ``Not shown'' and ``not detected'' mean not significant; they do not prove the absence of a change.
-  \item The agents are language models and make mistakes. The design does not make them right; it stops their
-        mistakes from becoming claims.
-  \item The application currently runs on the user's computer; a hosted version is future work.
+  \item GRACE resolves regions of roughly 300\,km and larger. The two solutions disagree on the central Sahara (46
+        versus 73\km{}), and the 90\% ranges are wide.
+  \item SMAP observes only the top 5\,cm of soil and provides 11 seasons, which limits the power of its tests.
+  \item OMI overpasses at about 13:30 local time; the weekend result describes the weekly pattern at that time.
+  \item The UAE result did not use a second dataset; it relies on control cities and false change dates instead.
+  \item The river re-test uses a different sensor and period than the original study, so it does not show that the
+        original trends were wrong.
+  \item Novelty is assessed by searches of NASA ADS and other bibliographic services; we do not claim priority.
+  \item The order of events for each registration is recorded in its registration file.
+  \item The agents are language models and make errors. The design does not make them correct; it prevents their
+        errors from becoming reported claims.
 \end{itemize}
 
-% ---------------------------------------------------------------------------------------------------------------
-\section{Use of artificial intelligence}
-We disclose every use of AI. \textbf{In the product}, NVIDIA Nemotron models play the research agents; they propose,
-and code decides. \textbf{To build the project}, an AI coding assistant (Claude, by Anthropic, through Claude Code)
-wrote and revised parts of the code, ran analyses and the confirmation scripts under the team's direction, and drafted
-documentation and this paper, which the authors reviewed. \textbf{Figures}~\ref{fig:app}--\ref{fig:ladder} are
-illustrations made with AI assistance in the PaperBanana style and are labelled as such; all data figures are plotted from NASA data
-by code in the repository. The research question, the design choices and the decisions about what to claim are the
-team's.
-
-% ---------------------------------------------------------------------------------------------------------------
+% =====================================================================================================================
 \section{Conclusion}
-Synaptic shows that an AI research group can search NASA Earth data at scale without over-claiming, if the agents are
-only allowed to propose and code holds the power to decide. The same discipline powers a simple application in which
-anyone can test a trend and get an honest answer. Next, we want students, journalists and water agencies to test a
-trend before they trust it, to hand confirmed leads to scientists, and to add more NASA and partner-agency data.
+Synaptic shows that a group of LLM agents can search NASA Earth data at scale without over-claiming, provided that the
+agents only propose and code decides, on data the agents never saw, with tests fixed in advance. The same statistics
+power an application in which anyone can test a trend and receive an honest answer. Future work includes a hosted
+version of the application, additional held-out sensors, and handing confirmed leads to domain scientists.
 
-\paragraph{Links.} Code: \url{https://github.com/0x-type/Synaptic}. Story map: \url{https://arcg.is/1uOXai3}.
+% =====================================================================================================================
+\section*{Data and code availability}
+All data are NASA open data accessed with one Earthdata login (Appendix~\ref{app:data}). Code, evidence bundles and
+registrations: \url{https://github.com/0x-type/Synaptic}. Story map: \url{https://arcg.is/1uOXai3}. The command
+\texttt{python -m synaptic reproduce} re-checks the eight evidence bundles offline.
 
-\sloppy
-\paragraph{Data.} All data are NASA open data accessed with one Earthdata login: MERRA-2 (doi:10.5067/AP1B0BA5PD2K),
-GPM IMERG V07 (doi:10.5067/GPM/IMERG/3B-MONTH/07), GLDAS Noah 2.1 (doi:10.5067/SXAVCZFAQLNO), MODIS Aqua MYD08\_M3
-C6.1 (doi:10.5067/MODIS/MYD08\_M3.061), MODIS Aqua chlorophyll (doi:10.5067/AQUA/MODIS/L3M/CHL/2022.0), OMI OMNO2d v4
-(doi:10.5067/AURA/OMI/DATA3407), AIRS3STM v7 (doi:10.5067/UBENJB9D3T2H), CERES EBAF-TOA Ed4.2.1, GRACE/GRACE-FO JPL
-mascons RL06.3 (doi:10.5067/TEMSC-3JC634), GRACE/GRACE-FO NASA GSFC mascons RL06v2.0, SMAP SPL3SMP v009
-(doi:10.5067/4XXOGX0OOW1S), and the NASA Giovanni, POWER and ADS services.
+\section*{Use of artificial intelligence}
+\textbf{In the system}, NVIDIA Nemotron models act as the research agents; they propose, and code decides.
+\textbf{In building the project}, an AI coding assistant (Claude, by Anthropic, through Claude Code) wrote and revised
+parts of the code, ran analyses and confirmation scripts under the authors' direction, drafted documentation and
+helped draft this paper, which the authors reviewed. \textbf{Figures}~\ref{fig:app}, \ref{fig:framework},
+\ref{fig:prereg} and~\ref{fig:ladder} are schematic illustrations drawn as vector graphics by code written with the
+same assistant, following the illustration method of PaperBanana \citep{zhu2026}; no image-generation model was used,
+and every number in them was checked against the repository. All data figures are plotted from NASA data by code in the
+repository. The research questions, the design choices and the decisions about what to claim are the authors'.
 
-\begin{thebibliography}{9}\small
-\bibitem{yoon2026} Yoon et al. Autonomous AI agents discover reverse transcriptases with tandem repeat arrays.
-  Anthropic, 2026.
-\bibitem{gottweis2026} J.~Gottweis et al. Accelerating scientific discovery with Co-Scientist. \emph{Nature}, 2026.
-  doi:10.1038/s41586-026-10644-y.
-\bibitem{ntrs2009} Time-series analysis of remotely-sensed SeaWiFS chlorophyll in river-influenced coastal regions.
-  NASA Technical Reports Server, NTRS 20090042747.
-\bibitem{sen1968} P.~K.~Sen. Estimates of the regression coefficient based on Kendall's tau. \emph{Journal of the
-  American Statistical Association}, 63:1379--1389, 1968.
-\bibitem{mann1945} H.~B.~Mann. Nonparametric tests against trend. \emph{Econometrica}, 13:245--259, 1945.
-\bibitem{kendall1975} M.~G.~Kendall. \emph{Rank Correlation Methods}. Griffin, London, 1975.
+\section*{Acknowledgements}
+We thank NASA and the Space Apps Challenge organisers, and the teams that produce and distribute the datasets used
+here.
+
+% =====================================================================================================================
+\small
+\begin{thebibliography}{99}\setlength{\itemsep}{1pt}
+
+\bibitem{acker2007} J.~G. Acker and G.~Leptoukh. Online analysis enhances use of NASA Earth science data.
+  \emph{Eos, Transactions AGU}, 88(2):14-17, 2007.
+\bibitem{beirle2003} S.~Beirle, U.~Platt, M.~Wenig, and T.~Wagner. Weekly cycle of NO$_2$ by GOME measurements: a
+  signature of anthropogenic sources. \emph{Atmospheric Chemistry and Physics}, 3:2225-2232, 2003.
+\bibitem{benjamini1995} Y.~Benjamini and Y.~Hochberg. Controlling the false discovery rate: a practical and powerful
+  approach to multiple testing. \emph{Journal of the Royal Statistical Society B}, 57:289-300, 1995.
+\bibitem{bretherton1999} C.~S. Bretherton, M.~Widmann, V.~P. Dymnikov, J.~M. Wallace, and I.~Blad\'e. The effective
+  number of spatial degrees of freedom of a time-varying field. \emph{Journal of Climate}, 12:1990-2009, 1999.
+\bibitem{entekhabi2010} D.~Entekhabi et al. The Soil Moisture Active Passive (SMAP) mission. \emph{Proceedings of the
+  IEEE}, 98(5):704-716, 2010.
+\bibitem{funk2015} C.~Funk et al. The climate hazards infrared precipitation with stations: a new environmental
+  record for monitoring extremes. \emph{Scientific Data}, 2:150066, 2015.
+\bibitem{gelaro2017} R.~Gelaro et al. The Modern-Era Retrospective Analysis for Research and Applications, version 2
+  (MERRA-2). \emph{Journal of Climate}, 30:5419-5454, 2017.
+\bibitem{ghareeb2026} A.~E. Ghareeb et al. A multi-agent system for automating scientific discovery. \emph{Nature},
+  2026. doi:10.1038/s41586-026-10652-y.
+\bibitem{gottweis2026} J.~Gottweis, W.-H. Weng, A.~Daryin, et al. Accelerating scientific discovery with Co-Scientist.
+  \emph{Nature}, 655:487-496, 2026. doi:10.1038/s41586-026-10644-y.
+\bibitem{hamed1998} K.~H. Hamed and A.~R. Rao. A modified Mann-Kendall trend test for autocorrelated data.
+  \emph{Journal of Hydrology}, 204:182-196, 1998.
 \bibitem{holm1979} S.~Holm. A simple sequentially rejective multiple test procedure. \emph{Scandinavian Journal of
-  Statistics}, 6:65--70, 1979.
+  Statistics}, 6:65-70, 1979.
+\bibitem{ioannidis2005} J.~P.~A. Ioannidis. Why most published research findings are false. \emph{PLoS Medicine},
+  2(8):e124, 2005.
+\bibitem{kendall1975} M.~G. Kendall. \emph{Rank Correlation Methods}. Griffin, London, 4th edition, 1975.
+\bibitem{landerer2020} F.~W. Landerer et al. Extending the global mass change data record: GRACE Follow-On instrument
+  and science data performance. \emph{Geophysical Research Letters}, 47:e2020GL088306, 2020.
+\bibitem{levelt2006} P.~F. Levelt et al. The Ozone Monitoring Instrument. \emph{IEEE Transactions on Geoscience and
+  Remote Sensing}, 44(5):1093-1101, 2006.
+\bibitem{livezey1983} R.~E. Livezey and W.~Y. Chen. Statistical field significance and its determination by Monte Carlo
+  techniques. \emph{Monthly Weather Review}, 111:46-59, 1983.
+\bibitem{loeb2018} N.~G. Loeb et al. Clouds and the Earth's Radiant Energy System (CERES) Energy Balanced and Filled
+  (EBAF) top-of-atmosphere (TOA) edition-4.0 data product. \emph{Journal of Climate}, 31:895-918, 2018.
+\bibitem{loomis2019} B.~D. Loomis, S.~B. Luthcke, and T.~J. Sabaka. Regularization and error characterization of GRACE
+  mascons. \emph{Journal of Geodesy}, 93:1381-1398, 2019.
+\bibitem{lu2024} C.~Lu, C.~Lu, R.~T. Lange, J.~Foerster, J.~Clune, and D.~Ha. The AI Scientist: towards fully automated
+  open-ended scientific discovery. arXiv:2408.06292, 2024.
+\bibitem{mann1945} H.~B. Mann. Nonparametric tests against trend. \emph{Econometrica}, 13:245-259, 1945.
+\bibitem{nosek2018} B.~A. Nosek, C.~R. Ebersole, A.~C. DeHaven, and D.~T. Mellor. The preregistration revolution.
+  \emph{Proceedings of the National Academy of Sciences}, 115(11):2600-2606, 2018.
+\bibitem{ntrs2009} Time-series analysis of remotely-sensed SeaWiFS chlorophyll in river-influenced coastal regions.
+  NASA Technical Reports Server, NTRS 20090042747, 2009.
+\bibitem{pettitt1979} A.~N. Pettitt. A non-parametric approach to the change-point problem. \emph{Applied
+  Statistics}, 28(2):126-135, 1979.
+\bibitem{reichle2017} R.~H. Reichle et al. Assessment of MERRA-2 land surface hydrology estimates. \emph{Journal of
+  Climate}, 30:2937-2960, 2017.
+\bibitem{rodell2004} M.~Rodell et al. The Global Land Data Assimilation System. \emph{Bulletin of the American
+  Meteorological Society}, 85:381-394, 2004.
+\bibitem{sen1968} P.~K. Sen. Estimates of the regression coefficient based on Kendall's tau. \emph{Journal of the
+  American Statistical Association}, 63:1379-1389, 1968.
+\bibitem{simmons2011} J.~P. Simmons, L.~D. Nelson, and U.~Simonsohn. False-positive psychology: undisclosed flexibility
+  in data collection and analysis allows presenting anything as significant. \emph{Psychological Science},
+  22(11):1359-1366, 2011.
+\bibitem{tapley2004} B.~D. Tapley, S.~Bettadpur, M.~Watkins, and C.~Reigber. The Gravity Recovery and Climate
+  Experiment: mission overview and early results. \emph{Geophysical Research Letters}, 31:L09607, 2004.
+\bibitem{theil1950} H.~Theil. A rank-invariant method of linear and polynomial regression analysis.
+  \emph{Indagationes Mathematicae}, 12:85-91, 1950.
+\bibitem{theiler1992} J.~Theiler, S.~Eubank, A.~Longtin, B.~Galdrikian, and J.~D. Farmer. Testing for nonlinearity in
+  time series: the method of surrogate data. \emph{Physica D}, 58:77-94, 1992.
+\bibitem{watkins2015} M.~M. Watkins, D.~N. Wiese, D.-N. Yuan, C.~Boening, and F.~W. Landerer. Improved methods for
+  observing Earth's time variable mass distribution with GRACE using spherical cap mascons. \emph{Journal of
+  Geophysical Research: Solid Earth}, 120:2648-2671, 2015.
+\bibitem{wilks2011} D.~S. Wilks. \emph{Statistical Methods in the Atmospheric Sciences}. Academic Press, 3rd edition,
+  2011.
+\bibitem{wilks2016} D.~S. Wilks. ``The stippling shows statistically significant grid points'': how research results
+  are routinely overstated and overinterpreted, and what to do about it. \emph{Bulletin of the American Meteorological
+  Society}, 97:2263-2273, 2016.
+\bibitem{yoon2026} P.~H. Yoon, J.~S. Athukoralage, E.~Ameisen, E.~Kauderer-Abrams, N.~T. Perry, and M.~G. Durrant.
+  Autonomous AI agents discover reverse transcriptases with tandem repeat arrays. Anthropic preprint, 2026.
+\bibitem{yue2002} S.~Yue, P.~Pilon, B.~Phinney, and G.~Cavadias. The influence of autocorrelation on the ability to
+  detect trend in hydrological series. \emph{Hydrological Processes}, 16:1807-1829, 2002.
+\bibitem{zhu2026} D.~Zhu, R.~Meng, Y.~Song, X.~Wei, S.~Li, T.~Pfister, and J.~Yoon. PaperBanana: automating academic
+  illustration for AI scientists. arXiv:2601.23265, 2026.
 \end{thebibliography}
+\normalsize
+
+% =====================================================================================================================
+\appendix
+\section{Example of a confirmation specification}
+\label{app:spec}
+The registration for northern Morocco (Registration~1, lead C), written as a harness specification:
+\begin{verbatim}
+{ "dataset": "SPL3SMP",           "box": [31, 36, -10, -1],
+  "months": [12, 1, 2, 3, 4],     "kind": "event",
+  "event_years": [2026],          "direction": "+",
+  "alpha": 0.0167 }
+\end{verbatim}
+The registered text also fixes the SMAP variable (AM retrieval of the baseline algorithm), the valid range of
+retrievals ($0 < \theta \le 0.6$\,m$^3$\,m$^{-3}$), the daily and monthly coverage rules (at least 30\% of the box's
+cells per day and at least 8 valid days per month) and that a season needs all its months.
+
+\section{Harness parameters}
+\label{app:params}
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+  \toprule
+  Parameter & Value \\
+  \midrule
+  Hypotheses written by the PI & 10 to 16, with a reserve pool \\
+  Lab meeting & after every 6 finished tasks \\
+  Supervisor revision rounds & at most 3 \\
+  Referee checks per supported claim & at least 3 \\
+  Share of the task budget for hypothesis tests & up to one half \\
+  Tournament & every pair judged in both orders; Bradley-Terry ranking \\
+  Agent code & sandboxed: no network, no credentials, read-only data \\
+  Models & Nemotron 3.5 Super VL (workers); Nemotron 3 Ultra (PI, auditor, judge) \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Data products}
+\label{app:data}
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+  \toprule
+  Product & Identifier \\
+  \midrule
+  MERRA-2 & doi:10.5067/AP1B0BA5PD2K \\
+  GPM IMERG V07 & doi:10.5067/GPM/IMERG/3B-MONTH/07 \\
+  GLDAS Noah 2.1 & doi:10.5067/SXAVCZFAQLNO \\
+  MODIS Aqua MYD08\_M3 C6.1 & doi:10.5067/MODIS/MYD08\_M3.061 \\
+  MODIS Aqua chlorophyll & doi:10.5067/AQUA/MODIS/L3M/CHL/2022.0 \\
+  OMI OMNO2d v4 & doi:10.5067/AURA/OMI/DATA3407 \\
+  AIRS3STM v7 & doi:10.5067/UBENJB9D3T2H \\
+  CERES EBAF-TOA Ed4.2.1 & NASA Langley ASDC \\
+  GRACE/GRACE-FO JPL mascons RL06.3 & doi:10.5067/TEMSC-3JC634 \\
+  GRACE/GRACE-FO GSFC mascons RL06v2.0 & NASA GSFC \\
+  SMAP SPL3SMP v009 & doi:10.5067/4XXOGX0OOW1S \\
+  Services & NASA Giovanni, POWER, CMR, GIBS, ADS \\
+  \bottomrule
+\end{tabularx}
+\end{center}
 
 \end{document}
